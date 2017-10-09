@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Sample Category"
+            id="parseoAST.commands.category">
+      </category>
+      <command
+            name="Sample Command"
+            categoryId="parseoAST.commands.category"
+            id="parseoAST.commands.sampleCommand">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="parseoAST.commands.sampleCommand"
+            class="parseoast.handlers.MethodVisitor">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="parseoAST.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Sample Menu"
+               mnemonic="M"
+               id="parseoAST.menus.sampleMenu">
+            <command
+                  commandId="parseoAST.commands.sampleCommand"
+                  mnemonic="S"
+                  id="parseoAST.menus.sampleCommand">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="parseoAST.toolbars.sampleToolbar">
+            <command
+                  commandId="parseoAST.commands.sampleCommand"
+                  icon="icons/sample.png"
+                  tooltip="Say hello world"
+                  id="parseoAST.toolbars.sampleCommand">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+</plugin>

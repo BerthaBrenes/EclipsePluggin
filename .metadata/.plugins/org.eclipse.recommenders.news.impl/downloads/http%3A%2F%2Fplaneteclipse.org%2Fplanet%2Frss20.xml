@@ -8,6 +8,13 @@
 	<description>Planet Eclipse - http://planeteclipse.org/planet/</description>
 
 <item>
+	<title>InfoQ Eclipse feed: Article: The Java Evolution of Eclipse Collections</title>
+	<guid isPermaLink="true">http://www.infoq.com/articles/eclipse-collections?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=Eclipse</guid>
+	<link>http://www.infoq.com/articles/eclipse-collections?utm_campaign=infoq_content&amp;utm_source=infoq&amp;utm_medium=feed&amp;utm_term=Eclipse</link>
+	<description>&lt;img src=&quot;https://cdn.infoq.com/statics_s1_20171003-0323/resource/articles/eclipse-collections/en/headerimage/logo-eclipse-big-1506697105275.jpg&quot; /&gt;&lt;p&gt;With each successive version of Java, frameworks must adapt and transform in order to stay current. This article aims to describe some of the new Java 8 features in Eclipse Collections, a high performance collections framework for Java, and looks ahead at some of the new things we’ve done to prepare for Java 9. This article will walk through these new features and changes.&lt;/p&gt; &lt;i&gt;By Kristen O'Leary&lt;/i&gt;</description>
+	<pubDate>Mon, 09 Oct 2017 20:55:00 +0000</pubDate>
+</item>
+<item>
 	<title>typefox.io: YANG-Tools: One Language Server for Four IDEs</title>
 	<guid isPermaLink="false">http://typefox.io/?p=14378</guid>
 	<link>http://typefox.io/yang-tools-one-language-server-for-four-ides</link>
@@ -28,15 +35,15 @@
 &lt;li&gt;the config files for a VSCode extension.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;See also &lt;a href=&quot;http://typefox.io/building-a-vs-code-extension-with-xtext-and-the-language-server-protocol&quot;&gt;Miro’s blogpost&lt;/a&gt; on VSCode extensions with Xtext for more details.&lt;/p&gt;
-&lt;p&gt;You can install the yang extension directly from VSCode’s marketplace. If you want to build it from the sources, you have to have the yang-lsp project checked out and readily build in a folder next to the yang-vscode repo, as it will be copied during the build.&lt;/p&gt;
+&lt;p&gt;You can install the yang extension directly from &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=typefox.yang-vscode&quot;&gt;VSCode’s marketplace&lt;/a&gt;. If you want to build it from the sources, you have to have the yang-lsp project checked out and readily built in a folder next to the yang-vscode repo, as it will be copied during the build.&lt;/p&gt;
 &lt;div class=&quot;wp-caption aligncenter&quot; id=&quot;attachment_14380&quot; style=&quot;width: 776px;&quot;&gt;&lt;img alt=&quot;&quot; class=&quot;wp-image-14380&quot; height=&quot;482&quot; src=&quot;http://typefox.io/wp-content/uploads/2017/10/Screen-Shot-2017-10-06-at-14.00.17-300x189.png&quot; width=&quot;766&quot; /&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;The YANG editor in Theia (browser mode)&lt;/p&gt;&lt;/div&gt;
 &lt;h3&gt;The Theia Client&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;http://typefox.io/theia-one-ide-for-desktop-cloud&quot;&gt;Theia&lt;/a&gt; is a new framework for IDEs that run in the browser or as rich-clients using the same code. It is written in TypeScript, has first class support for the LSP and uses of Microsoft’s editor widget Monaco. Theia is not officially released yet, but a beta 1.0 is scheduled for December 2017.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://typefox.io/theia-one-ide-for-desktop-cloud&quot;&gt;Theia&lt;/a&gt; is a new framework for IDEs that run in the browser or as rich-clients using the same code. It is written in TypeScript, has first class support for the LSP and uses Microsoft’s editor widget Monaco. Theia is not officially released yet, but a beta 1.0 is scheduled for December 2017.&lt;/p&gt;
 &lt;p&gt;The project &lt;a href=&quot;https://github.com/theia-ide/yangster&quot;&gt;yangster&lt;/a&gt; contains the Theia extension for the YANG language. The project is layouted as a mono-repo, containing various npm packages and linking in others as Git submodules. While this setup looks complicated at the first glance, it makes it possible to work on YANG, Theia, and sprotty at the same time. As in the VSCode extension, the yang-lsp will be copied during the build from a adjacent directory.&lt;/p&gt;
 &lt;p&gt;The core package is the theia-yang-extension: It adds the bindings for the YANG specific services to Theia’s DI container, registers context menus, and sets up syntax highlighting for the frontend. It also starts the language server on demand in the backend.&lt;/p&gt;
 &lt;p&gt;The packages yangster-app and yangster-app-electron contain the code to run Theia with the YANG extension as browser app or electron rich-client. Theia comes with a command line tool that will populate these packages with generated code during the build.&lt;/p&gt;
 &lt;div class=&quot;wp-caption aligncenter&quot; id=&quot;attachment_14383&quot; style=&quot;width: 776px;&quot;&gt;&lt;img alt=&quot;&quot; class=&quot;wp-image-14383&quot; height=&quot;476&quot; src=&quot;http://typefox.io/wp-content/uploads/2017/10/Screen-Shot-2017-10-06-at-13.50.13-300x186.png&quot; width=&quot;766&quot; /&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;The YANG editor in Theia (electron mode)&lt;/p&gt;&lt;/div&gt;
-&lt;p&gt;For build instruction please refer to the project’s readme.&lt;/p&gt;
+&lt;p&gt;For build instructions please refer to the project’s readme.&lt;/p&gt;
 &lt;h3&gt;The Eclipse Client&lt;/h3&gt;
 &lt;p&gt;Last but not least, we’ve integrated the yang-lsp into Eclipse. We are using the &lt;a href=&quot;https://projects.eclipse.org/projects/technology.lsp4e&quot;&gt;lsp4e&lt;/a&gt; here, which allows a generic Eclipse editor to be backed by a language server. The project &lt;a href=&quot;https://github.com/theia-ide/yang-eclipse&quot;&gt;yang-eclipse&lt;/a&gt; mainly contains a plug-in to adapt to lsp4e, i.e.&lt;/p&gt;
 &lt;ul&gt;
@@ -51,7 +58,7 @@
 &lt;p&gt;If you have watched the screenshots closely or if you have browsed the code, you may have stumbled across the fancy diagrams. To keep the suspense, we will cover that in a separate blogpost.&lt;/p&gt;
 &lt;h3&gt;tl;dr&lt;/h3&gt;
 &lt;p&gt;In the post you have seen how a single language server implemented in Xtext is adding support for the YANG language to four different IDEs. Only little IDE specific boilerplate is necessary, mainly to start the server and to implement services that are considered client-only by the LSP, like syntax highlighting.&lt;/p&gt;
-&lt;p&gt;We stopped at four IDEs, but there are also LSP bindings for sublime, Emacs, vim and more editors. It should be easy to serve these same way.&lt;/p&gt;
+&lt;p&gt;We stopped at four IDEs, but there are also LSP bindings for sublime, Emacs, vim and more editors. It should be easy to serve these in the same way.&lt;/p&gt;
 &lt;p&gt;I hope I convinced you that the combination of Xtext with the LSP is a viable way to add language support to more than one IDE.&lt;/p&gt;
 &lt;div class=&quot;fusion-clearfix&quot;&gt;&lt;/div&gt;
 			&lt;/div&gt;
@@ -545,29 +552,6 @@ Subject: [ANN] - CDT project changes Date: Fri, 7 Jun 2002 17:20:34 -040&lt;/p&g
 	<link>http://feedproxy.google.com/~r/eclipse/fnews/~3/yLHMta_TI9M/20170928_open_iot_challenge_4.php</link>
 	<description>IoT enthusiast? This Challenge is for you! Submit your IoT solution proposal by November 13.&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/eclipse/fnews/~4/yLHMta_TI9M&quot; width=&quot;1&quot; /&gt;</description>
 	<pubDate>Thu, 28 Sep 2017 14:10:00 +0000</pubDate>
-</item>
-<item>
-	<title>Maximilian and Jonas: EMF Forms and EMF Client Platform 1.14.0 released! – Join us at EclipseCon Europe 2017</title>
-	<guid isPermaLink="false">https://eclipsesource.com/?p=35643</guid>
-	<link>https://eclipsesource.com/blogs/2017/09/28/emf-forms-and-emf-client-platform-1-14-0-released-join-us-at-eclipsecon-europe-2017/</link>
-	<description>&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;We are happy to announce that together with Oxygen.1, we have released  &lt;/span&gt;&lt;a href=&quot;http://eclipse.org/ecp/emfforms&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;EMF Forms&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; and &lt;/span&gt;&lt;a href=&quot;http://eclipse.org/ecp&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;EMF Client Platform&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; 1.14.0! &lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;We want to thank our continuously active team of &lt;/span&gt;&lt;b&gt;10 contributors &lt;/b&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;(&lt;/span&gt;&lt;b&gt;38 contributors&lt;/b&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; over all) for completing on &lt;/span&gt;&lt;a href=&quot;https://bugs.eclipse.org/bugs/buglist.cgi?bug_status=UNCONFIRMED&amp;amp;bug_status=NEW&amp;amp;bug_status=ASSIGNED&amp;amp;bug_status=REOPENED&amp;amp;bug_status=RESOLVED&amp;amp;bug_status=VERIFIED&amp;amp;bug_status=CLOSED&amp;amp;classification=Modeling&amp;amp;component=Common&amp;amp;component=Editor&amp;amp;component=EMF%20Forms&amp;amp;component=Model%20Workspace&amp;amp;component=Navigator&amp;amp;component=Validation&amp;amp;list_id=16486599&amp;amp;product=ECP&amp;amp;query_format=advanced&amp;amp;target_milestone=1.14.0&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;29 bug reports and feature requests&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;.  &lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;If you want to learn more about the new features and related frameworks: Join us at &lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;EclipseCon Europe 2017&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;!&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img alt=&quot;&quot; class=&quot;alignnone size-full wp-image-35645&quot; height=&quot;79&quot; src=&quot;https://eclipsesource.com/wp-content/uploads/2017/09/image11.png&quot; width=&quot;275&quot; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;In the session “&lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/building-form-based-uis-emf-forms-101&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Building form-based UIs with EMF Forms – 101&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;” we will provide a jump start with the framework and answer most frequent questions for beginners.&lt;/span&gt;&lt;/li&gt;
-&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;In the session “&lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/help-your-users-enter-data-correctly-and-easily-emf-forms&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Help your users to enter data correctly and easily with EMF Forms&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;” we will introduce some of the more advanced features from recent releases, with a focus on input validation.&lt;/span&gt;&lt;/li&gt;
-&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Related to EMF Forms, we will show the native web renderer “JSON Forms” in the session “&lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/developing-business-web-applications-form-based-uis&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Developing business web applications with form-based UIs&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;”&lt;/span&gt;&lt;/li&gt;
-&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;If you want to get in contact with the project leads and the community of contributors and adopters, please join our “&lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/bof-session/emfforms-emf-client-platform-emfstore-json-forms-and-edapt&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;BOF&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;”&lt;/span&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;As you can see, &lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;EclipseCon Europe 2017&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; is a great place to learn more about EMF Forms, but of course also about many other great topics. Finally, please get in contact with us personally during the event in case you have any question or feedback. We will be around the whole week, typically at the EclipseSource Booth.&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Besides EclipseCon: In case you don’t know EMF Forms: It is a framework focused on the creation of form-based UIs. EMF Client Platform is designed to support the development of applications based on an EMF data model. If you are not yet familiar with EMF Forms, please refer to &lt;/span&gt;&lt;a href=&quot;http://eclipsesource.com/blogs/tutorials/getting-started-with-EMF-Forms/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;this tutorial&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; for a introduction.&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Both of these frameworks are part of Eclipse Modeling Tools Oxygen.1, but you can also find the new release on our download pages:&lt;/span&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;a href=&quot;http://eclipse.org/ecp/download.html&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Download EMF Client Platform&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;a href=&quot;http://eclipse.org/ecp/emfforms/download.html&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Download EMF Forms&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description>
-	<pubDate>Thu, 28 Sep 2017 12:06:33 +0000</pubDate>
 </item>
 
 </channel>

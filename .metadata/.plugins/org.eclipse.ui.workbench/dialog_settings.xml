@@ -15,7 +15,8 @@
 	<section name="NewWizardAction">
 		<item value="org.eclipse.pde.ui.NewProjectWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
-			<item value="org.eclipse.e4.tools"/>
 		</list>
+	</section>
+	<section name="ImportExportAction">
 	</section>
 </section>

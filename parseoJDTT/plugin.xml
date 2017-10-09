@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Sample Category"
+            id="parseoJDTT.commands.category">
+      </category>
+      <command
+            name="Sample Command"
+            categoryId="parseoJDTT.commands.category"
+            id="parseoJDTT.commands.sampleCommand">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="parseoJDTT.commands.sampleCommand"
+            class="parseojdtt.handlers.SampleHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="parseoJDTT.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Sample Menu"
+               mnemonic="M"
+               id="parseoJDTT.menus.sampleMenu">
+            <command
+                  commandId="parseoJDTT.commands.sampleCommand"
+                  mnemonic="S"
+                  id="parseoJDTT.menus.sampleCommand">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="parseoJDTT.toolbars.sampleToolbar">
+            <command
+                  commandId="parseoJDTT.commands.sampleCommand"
+                  icon="icons/sample.png"
+                  tooltip="Say hello world"
+                  id="parseoJDTT.toolbars.sampleCommand">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+</plugin>
