@@ -1,5 +1,0 @@
-INDEX VERSION 1.130+/home/berta/eclipse-workspace3/.metadata/.plugins/org.eclipse.jdt.core
-3591133693.index
-2197252180.index
-2922604545.index
-4179660371.index
