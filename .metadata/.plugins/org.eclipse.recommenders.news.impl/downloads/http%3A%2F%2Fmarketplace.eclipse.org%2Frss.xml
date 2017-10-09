@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xml:base="http://marketplace.eclipse.org/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Eclipse Plugins, Bundles and Products - Eclipse Marketplace</title>
+    <link>http://marketplace.eclipse.org/</link>
+    <description></description>
+    <language>en</language>
+     <atom:link href="http://marketplace.eclipse.org/rss.xml" rel="self" type="application/rss+xml" />
+      <item>
+    <title>Spark Builder Generator</title>
+    <link>http://marketplace.eclipse.org/content/spark-builder-generator</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/sparkbuildergeneratoricon.png&quot; width=&quot;110&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Sun, 2016-10-23 07:09&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Sun, 2017-10-08 15:03&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/hsparkwpb/listings&quot; title=&quot;Helo Spark&quot;&gt;Helo Spark&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_start --&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;p&gt;Generates a builder according to the GoF pattern for Java domain objects.&lt;/p&gt;
+&lt;h2&gt;
+	&lt;strong&gt;Features&lt;/strong&gt;&lt;/h2&gt;
+&lt;ul&gt;&lt;li&gt;
+		Generates a builder with custom name patterns&lt;/li&gt;
+&lt;li&gt;
+		Can generate &lt;a href=&quot;http://blog.crisp.se/2013/10/09/perlundholm/another-builder-pattern-for-java&quot; rel=&quot;nofollow&quot;&gt;staged builder&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+		Capable of regenerating the builder&lt;/li&gt;
+&lt;li&gt;
+		Compatible with most version of Eclipse&lt;/li&gt;
+&lt;li&gt;
+		Highly configurable, check the plugin&#039;s preferences page&lt;/li&gt;
+&lt;li&gt;
+		Capable of generate builder methods for visible fields in superclass&lt;/li&gt;
+&lt;li&gt;
+		Encourages and supports null-safe programming practices&lt;/li&gt;
+&lt;li&gt;
+		Open source (with very permissible MIT license)&lt;/li&gt;
+&lt;/ul&gt;&lt;h2&gt;
+	&lt;strong&gt;Usage&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;To invoke the generation have a Java file active and press either the icon on the toolbar (the hammer) or Ctrl+Shift+B.&lt;br /&gt;
+	You can click the small arrow next to the main icon to generate a different builder type (like staged builder), if you usually generate a certain kind of builder, set the default builder in the preferences page.&lt;br /&gt;
+	You can set the preferences under: &lt;strong&gt;&lt;em&gt;Window-&amp;gt;Preferences-&amp;gt;Java-&amp;gt;Spark Builder Generator&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;
+	&lt;strong&gt;Example result:&lt;/strong&gt;&lt;/h2&gt;
+&lt;pre&gt;
+  public class Clazz {
+        private Integer firstField;
+        private Long secondField;
+        @Generated(&quot;SparkTools&quot;)
+        private Clazz(Builder builder) {
+            this.firstField = builder.firstField;
+            this.secondField = builder.secondField;
+        }
+        /**
+         * Creates builder to build {@link Clazz}.
+         * @return created builder
+         */
+        @Generated(&quot;SparkTools&quot;)
+        public static Builder builder() {
+            return new Builder();
+        }
+        /**
+         * Builder to build {@link Clazz}.
+         */
+        @Generated(&quot;SparkTools&quot;)
+        public static class Builder {
+            private Integer firstField;
+            private Long secondField;
+
+            private Builder() {
+            }
+
+            /**
+            * Builder method for firstField parameter.
+            * @return builder
+            */
+            @Nonnull
+            public Builder withFirstField(@Nonnull Integer firstField) {
+                this.firstField = firstField;
+                return this;
+            }
+
+            /**
+            * Builder method for secondField parameter.
+            * @return builder
+            */
+            @Nonnull
+            public Builder withSecondField(@Nonnull Long secondField) {
+                this.secondField = secondField;
+                return this;
+            }
+
+            /**
+            * Builder method of the builder.
+            * @return built class
+            */
+            @Nonnull
+            public Clazz build() {
+                return new Clazz(this);
+            }
+        }
+    }
+&lt;/pre&gt;&lt;h2&gt;
+	&lt;strong&gt;Release notes&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;0.0.5&lt;/strong&gt; Added handling for code style prefix and suffix, see &lt;a href=&quot;https://github.com/helospark/SparkBuilderGenerator/issues/5&quot; rel=&quot;nofollow&quot;&gt;Github issue 5&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;0.0.6&lt;/strong&gt; Added staged builder support., see &lt;a href=&quot;https://github.com/helospark/SparkBuilderGenerator/issues/4&quot; rel=&quot;nofollow&quot;&gt;Github issue 4&lt;/a&gt; Staged builder allows you to verify that all of the mandatory fields are set at compile time.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;0.0.7&lt;/strong&gt; Option to add visible fields from superclasses to the builder, see &lt;a href=&quot;https://github.com/helospark/SparkBuilderGenerator/issues/7&quot; rel=&quot;nofollow&quot;&gt;Github issue 7&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;0.0.8&lt;/strong&gt; Fixed regression bug that was introduced in 0.0.7. While collection visible fields from superclasses, under some Eclipse configurations IllegalArgumentException occurred during java.lang.Object parsing.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;0.0.9&lt;/strong&gt; Added option to generate builder to selected class (in case of nested classes, or multiple classes in a single file), see &lt;a href=&quot;https://github.com/helospark/SparkBuilderGenerator/issues/10&quot; rel=&quot;nofollow&quot;&gt;Github issue 10&lt;/a&gt; Improvements to previous Builder class removing logic&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;0.0.10&lt;/strong&gt; Added the option to select which fields are generated in the builder, see &lt;a href=&quot;https://github.com/helospark/SparkBuilderGenerator/issues/8&quot; rel=&quot;nofollow&quot;&gt;Github issue 8&lt;/a&gt;&lt;br /&gt;
+	Fixed a small bug that deleted the previous builder when pressing the cancel button on the staging builder generator dialog Added MIT license file to plugin&#039;s site.xml, so it will show up on installation&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;0.0.11 &lt;/strong&gt;Initialize Optional value to Optional.empty() to follow nullsafe programming practices&lt;br /&gt;
+	Initialize Collections with empty collections via java.util.Collections class&lt;br /&gt;
+	Various bugfixes related to overriding previous builder&lt;br /&gt;
+	Logging improvement&lt;/p&gt;
+&lt;h2&gt;
+	&lt;strong&gt;Troubleshooting installation failure&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;Here are some common reasons installation fails, and steps to resolve&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;sun.security.validator.ValidatorException: PKIX path building failed&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This happens, because your Java is unable to verify the certificate used by the update site. The update site uses valid certificate from &lt;strong&gt;Let&#039;s Encrypt&lt;/strong&gt;, older Java (before 1.8.101) does not contain this root certificate. This together with some firewall settings can cause this error.&lt;br /&gt;
+	See this article: &lt;a href=&quot;https://dzone.com/articles/eclipse-plug-ins-via-https-amp-lets-encrypt&quot; rel=&quot;nofollow&quot;&gt;https://dzone.com/articles/eclipse-plug-ins-via-https-amp-lets-encrypt&lt;/a&gt;&lt;br /&gt;
+	Possible way to fix:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;
+		Update Java version to at lest 1.8.101&lt;/li&gt;
+&lt;li&gt;
+		Import Let&#039;s Encrypt root certificate manually (refer to above article)&lt;/li&gt;
+&lt;li&gt;
+		Use my FTP download site (See below)&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Connection timeout&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This is a temporary problem, while accessing the update site. The server most of the times will be available again in a couple of minutes.&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;
+		You may try the FTP download site (see below)&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;&lt;em&gt;For any other failure please contact me in the comments or Github.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Installing via FTP update site&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In your Eclipse go to:&lt;/p&gt;
+&lt;p&gt;Help-&amp;gt;Install new software-&amp;gt;Copy and paste the following URI:&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;ftp://helospark.com:21/eclipse_plugin/SparkBuilderGeneratorPlugin/&quot; rel=&quot;nofollow&quot;&gt;ftp://helospark.com:21/eclipse_plugin/SparkBuilderGeneratorPlugin/&lt;/a&gt;&lt;br /&gt;
+	(alternatively if port 21 is blocked, use port 799)&lt;br /&gt;
+	Select the latest version (should be under SparkTools category) and install.&lt;/p&gt;
+&lt;p&gt;	&lt;strong&gt;Installing from backup&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In case both FTP and HTTPS update sites are unavailable, you can install jar file from Mediafire backup:&lt;br /&gt;
+	Latest: &lt;a href=&quot;http://www.mediafire.com/file/kkudgx6w4oxan3p&quot; rel=&quot;nofollow&quot;&gt;http://www.mediafire.com/file/kkudgx6w4oxan3p&lt;/a&gt; (entire update site: &lt;a href=&quot;http://www.mediafire.com/folder/ya4g0y69b24vu/plugins&quot; rel=&quot;nofollow&quot;&gt;www.mediafire.com/folder/ya4g0y69b24vu/plugins&lt;/a&gt;)&lt;br /&gt;
+	Locate the jar file, you wish to install (probably the latest), and copy it to your Eclipse&#039;s dropin folder.&lt;/p&gt;
+&lt;h3&gt;
+	&lt;strong&gt;Additional information:&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;On the GitHub page: &lt;a href=&quot;https://github.com/helospark/SparkBuilderGenerator&quot; rel=&quot;nofollow&quot;&gt;https://github.com/helospark/SparkBuilderGenerator&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_end --&gt;</description>
+     <pubDate>Sun, 23 Oct 2016 11:09:34 +0000</pubDate>
+ <dc:creator>hsparkwpb</dc:creator>
+ <guid isPermaLink="false">3130970 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/spark-builder-generator#comments</comments>
+  </item>
+  <item>
+    <title>VLINX Java Protector</title>
+    <link>http://marketplace.eclipse.org/content/vlinx-java-protector</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/locker_0.png&quot; width=&quot;80&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2017-06-27 05:41&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Sat, 2017-10-07 21:26&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22VLINX%20Software%22&quot;&gt;VLINX Software&lt;/a&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/ylin0gf/listings&quot; title=&quot;Yongfa Lin&quot;&gt;Yongfa Lin&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_start --&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;p&gt;A new solution to protect Java class from decompiling.We make a native ClassLoader by modifying OpenJDK. The Java classes are encrypted by AES and decrypted in our ClassLoader.You can publish your software safety without worrying to be decompiled now.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;For more information please visit  &lt;a href=&quot;https://j.vlinx.io&quot; rel=&quot;nofollow&quot;&gt;https://j.vlinx.io&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_end --&gt;</description>
+     <pubDate>Tue, 27 Jun 2017 09:41:40 +0000</pubDate>
+ <dc:creator>ylin0gf</dc:creator>
+ <guid isPermaLink="false">3513853 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/vlinx-java-protector#comments</comments>
+  </item>
+  <item>
+    <title>impulse CANbus Extension</title>
+    <link>http://marketplace.eclipse.org/content/impulse-canbus-extension</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/impulse110_80_7.png&quot; width=&quot;110&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Fri, 2017-09-29 06:09&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Sat, 2017-10-07 07:11&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22toem%20GmbH%22&quot;&gt;toem GmbH&lt;/a&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/thaberm7n/listings&quot; title=&quot;Thomas Haber&quot;&gt;Thomas Haber&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_start --&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;p&gt;A Controller Area Network (CAN bus) is a robust vehicle bus standard designed to allow microcontrollers and devices to communicate with each other in applications without a host computer.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&quot;http://toem.de/index.php/projects/impulse-opcua&quot; rel=&quot;nofollow&quot;&gt;CANBus extension&lt;/a&gt; enables the reading and writing of messages from several CAN bus adapters as well as the extraction and tracing of message contents such as bits, integer and text. CAN-Bus symbols can be imported from symbol files.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://toem.de/index.php/projects/impulse&quot; rel=&quot;nofollow&quot;&gt;impulse&lt;/a&gt; is a powerful waveform viewer and analyser tool, helping engineers to comfortably understand and debug complex semiconductor and multi-core software systems.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_end --&gt;</description>
+     <pubDate>Fri, 29 Sep 2017 10:09:46 +0000</pubDate>
+ <dc:creator>thaberm7n</dc:creator>
+ <guid isPermaLink="false">3681355 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/impulse-canbus-extension#comments</comments>
+  </item>
+  <item>
+    <title>Pkg-config support for Eclipse CDT</title>
+    <link>http://marketplace.eclipse.org/content/pkg-config-support-eclipse-cdt</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/logo_2.jpg&quot; width=&quot;68&quot; height=&quot;55&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Fri, 2011-06-10 07:53&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Fri, 2017-10-06 08:07&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22Petri%20Tuononen%22&quot;&gt;Petri Tuononen&lt;/a&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/ptuononen/listings&quot; title=&quot;Petri Tuononen&quot;&gt;Petri Tuononen&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_start --&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;p&gt;Provides automation of configuration needed for projects using pkg-config, such as GTK+ and gtkmm. Pkg-config utility outputs the necessary options needed to build a given package(s) that can be passed as compiler options.&lt;/p&gt;
+&lt;p&gt;Pkg-config support will set compiler and linker flags automatically that GCC needs to build selected packages - specifically includes, libraries, and some other GCC flags.&lt;/p&gt;
+&lt;h4&gt;
+	Cross platform support&lt;/h4&gt;
+&lt;p&gt;Project can be held in a version control system and even if the packages have been selected in Linux, pulling the project in Windows will automatically update the flags (file-system paths etc).&lt;/p&gt;
+&lt;h4&gt;
+	Cross compilation environment support&lt;/h4&gt;
+&lt;p&gt;Pkg-config plugin configuration is now per-project configuration rather than a global configuration. Path to the pkg-config binary can be set per-project.&lt;/p&gt;
+&lt;h2&gt;
+	UI Features&lt;/h2&gt;
+&lt;h4&gt;
+	Property page&lt;/h4&gt;
+&lt;p&gt;Used to select packages and set pkg-config configurations.&lt;/p&gt;
+&lt;h2&gt;
+	How to use&lt;/h2&gt;
+&lt;p&gt;Find Pkg-config settings in project properties -&amp;gt; C/C++ Build -&amp;gt; Settings -&amp;gt; Pkg-config tab&lt;br /&gt;
+	Select packages that your project needs to build correctly. Under Advanced dialog you can set path to pkg-config utility and adjust the path with your custom parameters if you wish.&lt;/p&gt;
+&lt;h2&gt;
+	Requirements&lt;/h2&gt;
+&lt;p&gt;* Pkg-config utility installed * Libraries you need (e.g. gtk+, gtkmm) * For Windows: MinGW or Cygwin * CDT 8.0 and Eclipse 3.7.x (Indigo) or newer&lt;/p&gt;
+&lt;h4&gt;
+	Update site&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&quot;https://raw.githubusercontent.com/TuononenP/pkg-config.p2/master/site.xml&quot; rel=&quot;nofollow&quot;&gt;https://raw.githubusercontent.com/TuononenP/pkg-config.p2/master/site.xml&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;
+	Development site&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/TuononenP/pkg-config-support-for-eclipse-cdt&quot; rel=&quot;nofollow&quot;&gt;https://github.com/TuononenP/pkg-config-support-for-eclipse-cdt&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;
+	Mailing list&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&quot;http://groups.google.com/group/pkg-config-support-for-eclipse-cdt&quot; rel=&quot;nofollow&quot;&gt;http://groups.google.com/group/pkg-config-support-for-eclipse-cdt&lt;/a&gt;&lt;br /&gt;&lt;a href=&quot;mailto:pkg-config-support-for-eclipse-cdt@googlegroups.com&quot; rel=&quot;nofollow&quot;&gt;pkg-config-support-for-eclipse-cdt@googlegroups.com&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;
+	Note:&lt;/h4&gt;
+&lt;p&gt;If you are having problems installing it is most probably because of not having CDT 8.0 or above.&lt;/p&gt;
+&lt;p&gt;Windows users: Do not install Gtk+ or Gtkmm in a path containing spaces, because pkg-config does not support spaces in paths.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_end --&gt;</description>
+     <pubDate>Fri, 10 Jun 2011 11:53:29 +0000</pubDate>
+ <dc:creator>ptuononen</dc:creator>
+ <guid isPermaLink="false">62482 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/pkg-config-support-eclipse-cdt#comments</comments>
+  </item>
+  <item>
+    <title>WindowBuilder</title>
+    <link>http://marketplace.eclipse.org/content/windowbuilder</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/default_images/default_2.png&quot; width=&quot;110&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Thu, 2016-09-22 09:02&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Thu, 2017-10-05 10:59&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22Eclipse%20Foundation%22&quot;&gt;Eclipse Foundation&lt;/a&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/hvoormann/listings&quot; title=&quot;Holger Voormann&quot;&gt;Holger Voormann&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_start --&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;p&gt;&lt;strong&gt;WindowBuilder&lt;/strong&gt; is composed of &lt;strong&gt;SWT Designer&lt;/strong&gt; and &lt;strong&gt;Swing Designer&lt;/strong&gt; and makes it very easy to create Java GUI applications without spending a lot of time writing code. Use the &lt;strong&gt;WYSIWYG visual designer&lt;/strong&gt; and layout tools to create simple forms to complex windows; the Java code will be generated for you. Easily add controls using drag-and-drop, add event handlers to your controls, change various properties of controls using a property editor, internationalize your app and much more.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_end --&gt;</description>
+     <pubDate>Thu, 22 Sep 2016 13:02:40 +0000</pubDate>
+ <dc:creator>hvoormann</dc:creator>
+ <guid isPermaLink="false">3085446 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/windowbuilder#comments</comments>
+  </item>
+  <item>
+    <title>Palladio 4.1 for Eclipse 4.6/.4.7 (Neon/Oxygen) </title>
+    <link>http://marketplace.eclipse.org/content/palladio-41-eclipse-4647-neonoxygen</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/palladio-logo-eclipse-marketplace-2010.png&quot; width=&quot;110&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Wed, 2017-10-04 07:51&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Thu, 2017-10-05 08:17&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22The%20Palladio%20Team%22&quot;&gt;The Palladio Team&lt;/a&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/sseifermannnuk/listings&quot; title=&quot;Stephan Seifermann&quot;&gt;Stephan Seifermann&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_start --&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;p&gt;Palladio is a software architecture simulation approach which analyses your software at the model level for performance bottlenecks, scalability issues, reliability threats, and allows for a subsequent optimisation. Palladio requires neither buying expensive execution environments (servers, networks, or storage) nor fully implementing a software product. Construction rules are automatically checked by Palladio and thus allow optimal software architectures without costly trial-and-error-cycles. Like in other engineering disciplines, Palladio enables software engineers to construct software straight and in the right way.&lt;/p&gt;
+&lt;p&gt;Use Palladio to&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;
+		Forecast the impact of your design decisions&lt;/li&gt;
+&lt;li&gt;
+		Lower the costs for trial-and-error-cycles&lt;/li&gt;
+&lt;li&gt;
+		Build highly reliable, scalable, and resource-efficient software architectures&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;The Palladio Component Model is implemented using the Eclipse Modeling Framework (EMF). We have implemented an integrated modelling environment (called Palladio-Bench) based on the Eclipse IDE. It enables developers to create PCM model instances with graphical editors and derive performance metrics from the models using analytical techniques and simulation.&lt;/p&gt;
+&lt;p&gt;The best way for getting started with the Palladio-Bench is looking through the &lt;a href=&quot;http://www.palladio-simulator.com/tools/screencasts/&quot; rel=&quot;nofollow&quot;&gt;screencasts&lt;/a&gt; and &lt;a href=&quot;http://www.palladio-simulator.com/tools/tutorials/&quot; rel=&quot;nofollow&quot;&gt;tutorials&lt;/a&gt; provided on the &lt;a href=&quot;http://www.palladio-simulator.com/&quot; rel=&quot;nofollow&quot;&gt;webpage&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The project community is managed by project leads of: the Karlsruhe Institute of Technology (&lt;a href=&quot;http://www.kit.edu&quot; rel=&quot;nofollow&quot;&gt;www.kit.edu&lt;/a&gt;), the FZI - Research Center for Information Technology (&lt;a href=&quot;http://www.fzi.de&quot; rel=&quot;nofollow&quot;&gt;www.fzi.de&lt;/a&gt;), Chemnitz University of Technology (&lt;a href=&quot;https://www.tu-chemnitz.de&quot; rel=&quot;nofollow&quot;&gt;www.tu-chemnitz.de&lt;/a&gt;), and University of Stuttgart (&lt;a href=&quot;https://www.uni-stuttgart.de&quot; rel=&quot;nofollow&quot;&gt;www.uni-stuttgart.de&lt;/a&gt;).&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_end --&gt;</description>
+     <pubDate>Wed, 04 Oct 2017 11:51:13 +0000</pubDate>
+ <dc:creator>sseifermannnuk</dc:creator>
+ <guid isPermaLink="false">3688958 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/palladio-41-eclipse-4647-neonoxygen#comments</comments>
+  </item>
+  <item>
+    <title>ABAP Favorites</title>
+    <link>http://marketplace.eclipse.org/content/abap-favorites</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/IMG_0123.PNG&quot; width=&quot;80&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Sun, 2017-07-02 10:48&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Wed, 2017-10-04 18:05&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22ABAPBlog.com%22&quot;&gt;ABAPBlog.com&lt;/a&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/lpegiel/listings&quot; title=&quot;Łukasz Pęgiel&quot;&gt;Łukasz Pęgiel&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_start --&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;p&gt;A small plugin to create ABAP favorites list for transactions and urls. Editing of entries now available.&lt;/p&gt;
+&lt;p&gt;It contains two views:&lt;/p&gt;
+&lt;ol&gt;&lt;li&gt;
+		Favorites&lt;/li&gt;
+&lt;li&gt;
+		Favorites Dev Objects&lt;/li&gt;
+&lt;/ol&gt;&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Favorites view you can add Folders which are dependent or not from the SAP system as well as you can create a Folders with Development objecs. The difference is that The Folders which are not favorites of DevObjects are opened as &quot;Run&quot;, where DevObject Folders are open in editor.&lt;/p&gt;
+&lt;p&gt;For Favorites Dev Objects view, you can store there only DevObjects folders, so every entry is opened in editor.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_end --&gt;</description>
+     <pubDate>Sun, 02 Jul 2017 14:48:52 +0000</pubDate>
+ <dc:creator>lpegiel</dc:creator>
+ <guid isPermaLink="false">3522403 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/abap-favorites#comments</comments>
+  </item>
+  <item>
+    <title>Eclipse BPMN2 Modeler</title>
+    <link>http://marketplace.eclipse.org/content/eclipse-bpmn2-modeler</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/bpmn2-modeler-logo.png&quot; width=&quot;110&quot; height=&quot;71&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Mon, 2016-03-28 13:30&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Wed, 2017-10-04 13:46&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22Red%20Hat%22&quot;&gt;Red Hat&lt;/a&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/rbrodt/listings&quot; title=&quot;Robert Brodt&quot;&gt;Robert Brodt&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_start --&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;p&gt;The Eclipse BPMN2 Modeler is a graphical modeling tool for authoring BPMN 2.0 compliant business processes. The editor is fully customizable for any process engine that supports BPMN 2.0. Installable features include a plug-in for jBPM, the JBoss Business Process engine. This plug-in is compatible with process files created in the KIE Workbench and can be used interchangeably with the browser-based Web Designer. There are also several example plug-ins which extend the editor in various ways. Please visit our &lt;a href=&quot;https://wiki.eclipse.org/BPMN2-Modeler&quot; rel=&quot;nofollow&quot;&gt;Wiki Pages&lt;/a&gt; for more information, including tutorials for writing your own extension plug-ins.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_end --&gt;</description>
+     <pubDate>Mon, 28 Mar 2016 17:30:06 +0000</pubDate>
+ <dc:creator>rbrodt</dc:creator>
+ <guid isPermaLink="false">2799080 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/eclipse-bpmn2-modeler#comments</comments>
+  </item>
+  <item>
+    <title>SAP Hybris Commerce Development Tools for Eclipse</title>
+    <link>http://marketplace.eclipse.org/content/sap-hybris-commerce-development-tools-eclipse</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/saphybris-logo.png&quot; width=&quot;110&quot; height=&quot;31&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2017-07-25 15:04&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2017-10-03 17:06&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22SAP%20Hybris%22&quot;&gt;SAP Hybris&lt;/a&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/bdobbs6r0/listings&quot; title=&quot;Brendan Dobbs&quot;&gt;Brendan Dobbs&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_start --&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;p&gt;Development toolkit for developing with SAP Hybris Commerce. This plugin is open source and also sponsored by SAP.&lt;/p&gt;
+&lt;p&gt;Features include:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;
+		Import platform into workspace&lt;/li&gt;
+&lt;li&gt;
+		Synchronize extensions with the Hybris Commerce Suite platform including synchronizing libraries and classpaths managed in the platform&lt;/li&gt;
+&lt;li&gt;
+		Configure the runtime JVM with optimal settings to run JUnit tests&lt;/li&gt;
+&lt;li&gt;
+		Add the JDBC driver to the classpath (required to be able to run JUnit tests)&lt;/li&gt;
+&lt;li&gt;
+		Actions to build the platform, ensuring projects are refreshed after the platform has generated files&lt;/li&gt;
+&lt;li&gt;
+		Impex editor with type ahead and formatting functionality&lt;/li&gt;
+&lt;li&gt;
+		Create working sets from localextensions.xml&lt;/li&gt;
+&lt;li&gt;
+		Disable unnecessary extension modules&lt;/li&gt;
+&lt;li&gt;
+		Classpath resolution for JUnit integration tests&lt;/li&gt;
+&lt;li&gt;
+		ImpEx importer&lt;/li&gt;
+&lt;li&gt;
+		Optimization of Tomcat startup time&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_end --&gt;</description>
+     <pubDate>Tue, 25 Jul 2017 19:04:22 +0000</pubDate>
+ <dc:creator>bdobbs6r0</dc:creator>
+ <guid isPermaLink="false">3565771 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/sap-hybris-commerce-development-tools-eclipse#comments</comments>
+  </item>
+  <item>
+    <title>Bndtools</title>
+    <link>http://marketplace.eclipse.org/content/bndtools</link>
+    <description>&lt;div class=&quot;field field-name-field-resource-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;img class=&quot;img-responsive&quot; src=&quot;http://marketplace.eclipse.org/sites/default/files/bndtools-logo-text-110x80_0.png&quot; width=&quot;110&quot; height=&quot;80&quot; alt=&quot;&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-created field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Created:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2010-05-18 23:11&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-shared-date-updated field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Date Updated:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Tue, 2017-10-03 14:26&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;a href=&quot;/search/content/%22Neil%20Bartlett%20and%20others%22&quot;&gt;Neil Bartlett and others&lt;/a&gt;&lt;div class=&quot;field field-name-shared-submitted-by field-type-text field-label-inline clearfix&quot;&gt;&lt;div class=&quot;field-label&quot;&gt;Submitted by:&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;/user/nbartlett/listings&quot; title=&quot;Neil Bartlett&quot;&gt;Neil Bartlett&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_start --&gt;&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;Bndtools: the Development Environment for OSGi Bundles and Applications
+&lt;h2&gt;
+	What is Bndtools?&lt;/h2&gt;
+&lt;p&gt;Bndtools is an Eclipse based development environment that significantly simplifies the development of OSGi Bundles and application. It provides all the features one can expect from a popular IDE. On top these formidable shoulders it adds thousands of functions to simplify the development of OSGi and help create more resilient bundles. For this, it is based on bnd, a library that is used in the majority of OSGi builds to make the bundles more robust. Since bnd is used by the OSGi Alliance to build some of the reference implementations and all test suites, it is guaranteed to support every latest OSGi feature and beyond.&lt;/p&gt;
+&lt;h2&gt;
+	Coding in Bndtools&lt;/h2&gt;
+&lt;p&gt;Coding in Bndtools is highly interactive. Often you code bundles in a life environment. Any changes you make in the workspace are immediately build into bundles and then deployed to active framework that is either on your local machine or remotely. Sometimes you will forget that you have not restarted the framework for days or that you test code unnecessarily on a remote machine.&lt;/p&gt;
+&lt;p&gt;Related projects are grouped in a workspace. This simplifies the development of cohesive components by sharing information without forcing that information to become public. I.e. a workspace is a module that consists of bundles. In Bndtools you don’t write a Manifest file, you write a bnd file. This is a property file that supports all kinds of conveniences over the Manifest writing like they do in PDE. You can use wildcards when applicable and a powerful macro language makes it very easy to only define facts in one place to avoid redundant information. It is also possible to create manifest headers through annotations. For all important headers there are very useful defaults like for example the Bundle Symbolic Name (which is the project name). For most bundle projects, the actual information in the bnd file is quite small and does not change often.&lt;/p&gt;
+&lt;p&gt;The state of the art of OSGi is to use declarative services with their standardized annotations. Bndtools has wizards for DS components and reports and misuse of the annotations at the place where they happen. Since Bndtools always builds after any change, the feedback is direct.&lt;/p&gt;
+&lt;p&gt;There are several editors provided with Bndtools. The bnd editor provides completion of instructions and tooltips on headers and instructions. It is directly integrated with the error reporting. The JAR editor shows the contents of a JAR and can print an overview of the OSGi relevant details of a JAR.&lt;/p&gt;
+&lt;p&gt;Bndtools has a flexible model for Workspace templates and Project templates. Workspace templates can come from a remote repository, for example from your organization. A wizard allows a workspace template to update an existing workspace or create a new workspace. The project templates can come from repositories and use a powerful templating language (Moustache). This makes it easy to add organization specific project templates.&lt;/p&gt;
+&lt;h2&gt;
+	Versioning Bndtools&lt;/h2&gt;
+&lt;p&gt;In a component system versioning is unavoidable, systems that do not version their packages will be very hard to evolve over time. Bndtools supports semantic package versions using the OSGi annotations for package versions and consumer/producer types in the package folder. By placing all the information in the package folder, close to where the changes happen, makes it easy to maintain proper versions. When the manifest is calculated by bnd all this information is taken into account, verified, and then used to generate the OSGi headers using OSGi’s definition of _semantic versioning_. With Bndtools, package versions are natural, hardly require work, and mistakes are caught before they percolate through the system. If you violate the rules of semantic versioning, for example you add a method to an interface without bumping the version, then Bndtools can tell you that you just broke backward compatibility. If you work with other people then you have to be careful when you change API! Even experienced users tend to forget in their rush to pay attention to this backward compatibility. Fortunately, Bndtools can continuously check your new bundle against the previously released version. If bnd detects any incompatible changes (without the appropriate version change) then it will balk and point out where to fix it: either the version or the line that caused the incompatibility. This alone could be a reason to switch to Bndtools.&lt;/p&gt;
+&lt;h2&gt;
+	Build Support in Bndtools&lt;/h2&gt;
+&lt;p&gt;Bndtools is the user interface on top of bnd, where bnd is the headless build library that provides a build model. This library is used in Gradle, Maven, Ant, SBT, and other build tools. Over time it has been expanded with lots of functions to make builds easier.&lt;/p&gt;
+&lt;p&gt;First, bnd is a pull model. Instead of taking the contents of a project bnd makes you define what packages are part of the bundle. These packages can come from your project but also from other projects or other JARs. This provides a lot of leeway in designing the packaging of a bundle. You can also specify what resources should be included and at what path. Overall the bnd file has much more flexibility than most other build environments to package a bundle.&lt;/p&gt;
+&lt;p&gt;The bnd files can use a very powerful macro language. The macros can be used to define facts in one place and use it in different places. However, built in macros provide access to the current operation like the actual exported packages, the imports, the time. You can also access the file system or OS commands. For example, the macros can be used to add a number of JAR files in a local directory to the Bundle-ClassPath.&lt;/p&gt;
+&lt;p&gt;Dependencies in bnd come from repositories. In Bndtools the repositories can be viewed and edited. Currently, bnd supports repositories for OSGi XML files with Capabilities &amp;amp; Requirements, Maven, simple file repositories, and others. It is quite easy to add additional repositories to bnd.&lt;/p&gt;
+&lt;p&gt;Bndtools provides extensive support to collaborate with maven projects. Bundles can be created with a POM file inside in the same way Maven does. The contents of this POM is derived from the manifest headers. With the Maven Bnd Repository that is included there is full maven repository support. It integrates with Nexus, Artifactory, and the local machine based repository. It supports snapshots and releases. Bndtools dependencies can come from Maven repositories and can be released to them as well. Try it out, in contrast to m2e Bndtools is much more interactive.&lt;/p&gt;
+&lt;h2&gt;
+	Assembly with Bndtools&lt;/h2&gt;
+&lt;p&gt;OSGi is a reusable component system. One stage in the development of an application is therefore to &lt;em&gt;assemble&lt;/em&gt; a set of components and configure them. Bndtools supports assembly with a resolver that can create the list of bundles needed to satisfy a set of initial requirements. Instead of discovering more and more dependencies by dragging in a new dependency, in Bndtools you can just drag the XRay bundle to the initial requirements list and then the resolver will include Web Console, an Http Server, DS, and all other required bundles. This tool can be an enormous time saver because it can be really hard to create a consistent set of bundles that actually works when deployed.&lt;/p&gt;
+&lt;h2&gt;
+	Debugging in Bndtools&lt;/h2&gt;
+&lt;p&gt;In Bndtools when you debug or launch an application your code sees an environment that is identical to the runtime of the application when it runs standalone, unlike PDE. This avoids the Heisenbugs that only occur in runtime. It also has the effect that your code becomes much more robust because any errors in handling the OSGi dynamics will be found quickly because you can develop so interactively. Bndtools uses the hot deployment mechanisms of OSGi to deploy updated bundles from the workspace in the framework seamlessly. Bndtools has almost the feeling of a dynamic language with REPL (Read, Eval, Print, Loop). For people used to PDE or even normal Java development this is jaw-dropping. Try it, developing bundles is fun with Bndtools. Debugging applications can happen locally on your machine but it can also happen on a remote, potentially much smaller like a Raspberry Pi, machine. Both local and remote are completely interactive.&lt;/p&gt;
+&lt;h2&gt;
+	Verification in Bndtools&lt;/h2&gt;
+&lt;p&gt;Every Bundle made with bnd is verified as much as possible. Many errors are directly reported in the source code at the proper place. The bnd library is continuously expanded to diagnose problems and warn about them.&lt;/p&gt;
+&lt;h2&gt;
+	Testing with Bndtools&lt;/h2&gt;
+&lt;p&gt;Bndtools supports proper JUnit testing with the standard Eclipse GUI. However, bnd also supports testing in a life OSGi framework. This bnd test framework is fully integrated with the Eclipse JUnit GUI; it is hard to see the difference.&lt;/p&gt;
+&lt;h2&gt;
+	Continuous Integration with Bndtools&lt;/h2&gt;
+&lt;p&gt;Any Bndtools workspace can also be built with Gradle because bnd also provides an excellent Gradle plugin that guarantees the same output that Eclipse generates from the same bnd files. This Gradle plugin can also be used standalone for classic Gradle projects.&lt;/p&gt;
+&lt;h2&gt;
+	Getting started with Bndtools via OSGi enRoute&lt;/h2&gt;
+&lt;p&gt;The OSGi Alliance has invested in making it easier to get started with OSGi. Work done in extending Bndtools/bnd is one part of this effort. You can find documentation, tutorials, examples, application notes and a forum on the &lt;a href=&quot;//enroute.osgi.org”&quot; rel=&quot;nofollow&quot;&gt;OSGi enRoute site&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;
+	Contributing to Bndtools&lt;/h2&gt;
+&lt;p&gt;Bndtools and bnd are fully build with Bndtools. You can find the Git repositories on &lt;a href=&quot;//github.com/bndtools”&quot; rel=&quot;nofollow&quot;&gt;Github&lt;/a&gt;. Any feedback can be reported there and we welcome PRs.&lt;/p&gt;
+
+	What is new in Bndtools 3.3.0?
+&lt;ul&gt;&lt;li&gt;
+		Task Progress / Non-blocking UI&lt;/li&gt;
+&lt;li&gt;
+		Bnd Workspace Improvements&lt;/li&gt;
+&lt;li&gt;
+		Standalone support — for launching OSGi apps without a bnd workspace&lt;/li&gt;
+&lt;li&gt;
+		Improved integration with Eclipse debugger&lt;/li&gt;
+&lt;li&gt;
+		Repositories View Improvements&lt;/li&gt;
+&lt;li&gt;
+		Lots of smaller improvements&lt;/li&gt;
+&lt;/ul&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;!-- google_ad_section_end --&gt;</description>
+     <pubDate>Wed, 19 May 2010 03:11:17 +0000</pubDate>
+ <dc:creator>nbartlett</dc:creator>
+ <guid isPermaLink="false">1220 at http://marketplace.eclipse.org</guid>
+ <comments>http://marketplace.eclipse.org/content/bndtools#comments</comments>
+  </item>
+  </channel>
+</rss>

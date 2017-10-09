@@ -1,0 +1,574 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+
+<channel>
+	<title>Planet Eclipse</title>
+	<link>http://planeteclipse.org/planet/</link>
+	<language>en</language>
+	<description>Planet Eclipse - http://planeteclipse.org/planet/</description>
+
+<item>
+	<title>typefox.io: YANG-Tools: One Language Server for Four IDEs</title>
+	<guid isPermaLink="false">http://typefox.io/?p=14378</guid>
+	<link>http://typefox.io/yang-tools-one-language-server-for-four-ides</link>
+	<description>&lt;div class=&quot;fusion-fullwidth fullwidth-box nonhundred-percent-fullwidth&quot; style=&quot;background-color: rgba(255,255,255,0); background-position: center center; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px;&quot;&gt;&lt;div class=&quot;fusion-builder-row fusion-row &quot;&gt;&lt;div class=&quot;fusion-layout-column fusion_builder_column fusion_builder_column_1_1  fusion-one-full fusion-column-first fusion-column-last 1_1&quot; style=&quot;margin-top: 0px; margin-bottom: 0px;&quot;&gt;
+			&lt;div class=&quot;fusion-column-wrapper&quot;&gt;
+				&lt;p&gt;There is a lot of hype around the &lt;a href=&quot;https://github.com/Microsoft/language-server-protocol&quot;&gt;Language Server Protocol:&lt;/a&gt; It allows language implementors to encapsulate the editor support for their language in a server that can talk to various clients through a JSON-based protocol. While initially designed for Visual Studio Code, lots of other editor clients started supporting it, and lots of language servers for all kind of languages have emerged.&lt;/p&gt;
+&lt;p&gt;In this post we will showcase a single language server for the YANG language, implemented with &lt;a href=&quot;http://www.eclipse.org/Xtext/&quot;&gt;Xtext&lt;/a&gt;, that is attached to three different client frameworks: VSCode, the Theia IDE and Eclipse. As Theia allows for both, a browser-based IDE and an Electron-based rich-client, this yields four different kinds of IDEs. All sources are openly available on Github.&lt;/p&gt;
+&lt;h3&gt;The YANG Language Server&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.yang-central.org&quot;&gt;YANG&lt;/a&gt; is a data modeling language used to model configuration and state data manipulated by the NETCONF protocol, remote procedure calls, and notifications.&lt;/p&gt;
+&lt;p&gt;In the project &lt;a href=&quot;https://github.com/theia-ide/yang-lsp&quot;&gt;yang-lsp&lt;/a&gt; we implemented a YANG language server using Xtext. As Christian pointed out in a &lt;a href=&quot;http://typefox.io/tutorial-building-a-language-server-for-your-dsl&quot;&gt;previous blogpost&lt;/a&gt;, Xtext can generate an LSP with little effort. Like almost every language, YANG has some pecularites that required to customize services like validation, scoping, and formatting. To improve the user experience, we also tweaked some language server IDE services such as content assist, code lens, symbols and more. Xtext’s dependency injection makes such customizations easy. Nevertheless, the extra effort is something you would like to avoid redoing for every IDE out there using the respective native APIs.&lt;/p&gt;
+&lt;p&gt;The YANG language server is written in &lt;a href=&quot;http://www.eclipse.org/xtend/&quot;&gt;Xtend&lt;/a&gt;, a Java dialect, so you have to run Gradle to build it. A language server is typically run in its own process, so this build also creates some scripts to start the LS. The running server is then connected to the client via standard input/output or a socket.&lt;/p&gt;
+&lt;div class=&quot;wp-caption aligncenter&quot; id=&quot;attachment_14382&quot; style=&quot;width: 776px;&quot;&gt;&lt;img alt=&quot;&quot; class=&quot;wp-image-14382&quot; height=&quot;480&quot; src=&quot;http://typefox.io/wp-content/uploads/2017/10/Screen-Shot-2017-10-06-at-13.51.50-300x188.png&quot; width=&quot;766&quot; /&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;The YANG editor in VSCode&lt;/p&gt;&lt;/div&gt;
+&lt;h3&gt;The VSCode Client&lt;/h3&gt;
+&lt;p&gt;VSCode is an extensible, lightweight, open source IDE from Microsoft. In &lt;a href=&quot;https://github.com/theia-ide/yang-vscode&quot;&gt;yang-vscode&lt;/a&gt;, we implemented an extension for VSCode based on yang-lsp. It mostly consists of&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;an activate method that starts the language server,&lt;/li&gt;
+&lt;li&gt;the configuration for things like syntax highlighting and bracket matching, which in VSCode are always done by the client, and&lt;/li&gt;
+&lt;li&gt;the config files for a VSCode extension.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;See also &lt;a href=&quot;http://typefox.io/building-a-vs-code-extension-with-xtext-and-the-language-server-protocol&quot;&gt;Miro’s blogpost&lt;/a&gt; on VSCode extensions with Xtext for more details.&lt;/p&gt;
+&lt;p&gt;You can install the yang extension directly from VSCode’s marketplace. If you want to build it from the sources, you have to have the yang-lsp project checked out and readily build in a folder next to the yang-vscode repo, as it will be copied during the build.&lt;/p&gt;
+&lt;div class=&quot;wp-caption aligncenter&quot; id=&quot;attachment_14380&quot; style=&quot;width: 776px;&quot;&gt;&lt;img alt=&quot;&quot; class=&quot;wp-image-14380&quot; height=&quot;482&quot; src=&quot;http://typefox.io/wp-content/uploads/2017/10/Screen-Shot-2017-10-06-at-14.00.17-300x189.png&quot; width=&quot;766&quot; /&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;The YANG editor in Theia (browser mode)&lt;/p&gt;&lt;/div&gt;
+&lt;h3&gt;The Theia Client&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://typefox.io/theia-one-ide-for-desktop-cloud&quot;&gt;Theia&lt;/a&gt; is a new framework for IDEs that run in the browser or as rich-clients using the same code. It is written in TypeScript, has first class support for the LSP and uses of Microsoft’s editor widget Monaco. Theia is not officially released yet, but a beta 1.0 is scheduled for December 2017.&lt;/p&gt;
+&lt;p&gt;The project &lt;a href=&quot;https://github.com/theia-ide/yangster&quot;&gt;yangster&lt;/a&gt; contains the Theia extension for the YANG language. The project is layouted as a mono-repo, containing various npm packages and linking in others as Git submodules. While this setup looks complicated at the first glance, it makes it possible to work on YANG, Theia, and sprotty at the same time. As in the VSCode extension, the yang-lsp will be copied during the build from a adjacent directory.&lt;/p&gt;
+&lt;p&gt;The core package is the theia-yang-extension: It adds the bindings for the YANG specific services to Theia’s DI container, registers context menus, and sets up syntax highlighting for the frontend. It also starts the language server on demand in the backend.&lt;/p&gt;
+&lt;p&gt;The packages yangster-app and yangster-app-electron contain the code to run Theia with the YANG extension as browser app or electron rich-client. Theia comes with a command line tool that will populate these packages with generated code during the build.&lt;/p&gt;
+&lt;div class=&quot;wp-caption aligncenter&quot; id=&quot;attachment_14383&quot; style=&quot;width: 776px;&quot;&gt;&lt;img alt=&quot;&quot; class=&quot;wp-image-14383&quot; height=&quot;476&quot; src=&quot;http://typefox.io/wp-content/uploads/2017/10/Screen-Shot-2017-10-06-at-13.50.13-300x186.png&quot; width=&quot;766&quot; /&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;The YANG editor in Theia (electron mode)&lt;/p&gt;&lt;/div&gt;
+&lt;p&gt;For build instruction please refer to the project’s readme.&lt;/p&gt;
+&lt;h3&gt;The Eclipse Client&lt;/h3&gt;
+&lt;p&gt;Last but not least, we’ve integrated the yang-lsp into Eclipse. We are using the &lt;a href=&quot;https://projects.eclipse.org/projects/technology.lsp4e&quot;&gt;lsp4e&lt;/a&gt; here, which allows a generic Eclipse editor to be backed by a language server. The project &lt;a href=&quot;https://github.com/theia-ide/yang-eclipse&quot;&gt;yang-eclipse&lt;/a&gt; mainly contains a plug-in to adapt to lsp4e, i.e.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;start the yang-lsp,&lt;/li&gt;
+&lt;li&gt;define syntax highlighting using TextMate syntax, and&lt;/li&gt;
+&lt;li&gt;add some nice icons.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note that event though the client is also written in Xtend/Java here, we start the language server using the same mechanisms as above in a separate process.&lt;/p&gt;
+&lt;div class=&quot;wp-caption aligncenter&quot; id=&quot;attachment_14384&quot; style=&quot;width: 776px;&quot;&gt;&lt;img alt=&quot;&quot; class=&quot;wp-image-14384&quot; height=&quot;482&quot; src=&quot;http://typefox.io/wp-content/uploads/2017/10/Screen-Shot-2017-10-06-at-13.46.59-300x189.png&quot; width=&quot;766&quot; /&gt;&lt;p class=&quot;wp-caption-text&quot;&gt;The YANG editor in Eclipse&lt;/p&gt;&lt;/div&gt;
+&lt;p&gt;Xtext can of course generate a native Eclipse editor as well, which would usually have a few more features and a slightly better user experience. We refrained from this approach this time, not only for the sake of demoing an LSP in Eclipse, but also because we would have had to reimplement some IDE features using the native Eclipse APIs and as such have twice as much code to maintain.&lt;/p&gt;
+&lt;h3&gt;And Where Do The Diagrams Come From?&lt;/h3&gt;
+&lt;p&gt;If you have watched the screenshots closely or if you have browsed the code, you may have stumbled across the fancy diagrams. To keep the suspense, we will cover that in a separate blogpost.&lt;/p&gt;
+&lt;h3&gt;tl;dr&lt;/h3&gt;
+&lt;p&gt;In the post you have seen how a single language server implemented in Xtext is adding support for the YANG language to four different IDEs. Only little IDE specific boilerplate is necessary, mainly to start the server and to implement services that are considered client-only by the LSP, like syntax highlighting.&lt;/p&gt;
+&lt;p&gt;We stopped at four IDEs, but there are also LSP bindings for sublime, Emacs, vim and more editors. It should be easy to serve these same way.&lt;/p&gt;
+&lt;p&gt;I hope I convinced you that the combination of Xtext with the LSP is a viable way to add language support to more than one IDE.&lt;/p&gt;
+&lt;div class=&quot;fusion-clearfix&quot;&gt;&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+	<pubDate>Sat, 07 Oct 2017 17:55:17 +0000</pubDate>
+</item>
+<item>
+	<title>PapyrusUML: Papyrus IC at MODELS 2017</title>
+	<guid isPermaLink="false">http://papyrusuml.wordpress.com/?p=941</guid>
+	<link>https://papyrusuml.wordpress.com/2017/10/06/papyrus-ic-at-models-2017/</link>
+	<description>&lt;div&gt;The Papyrus Industry Consortium had a significant presence at the ACM/IEEE 20th International Conference on Model Driven Engineering Languages and Systems (&lt;a href=&quot;https://www.cs.utexas.edu/models2017/home&quot;&gt;MODELS 2017&lt;/a&gt;), held from Sunday, September 17, 2017 through Friday, September 22 in Austin, Texas, U.S.A..&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;The Consortium was a GOLD sponsor of the event and had a booth with posters from several of its members. It also sponsored an event at the Easy Tiger pub near the conference hotel.&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;The conference was a great opportunity to meet many academic and industrial members of the MODELS community, and spread the word about the Papyrus ecosystem and the Papyrus IC. Members and participants of the consortium presented keynotes, conference and workshop papers and tutorials, and organized several workshops.&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;Prof. Juergen Dingel from Queen’s University gave a very well-received keynote of the EXE workshop, titled “UML-RT and Papyrus-RT: Towards an Open-Source MDE Tooling Infrastructure for the Internet of Things.”&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;The two tutorials on Papyrus and Papyrus-RT, “Embedded and reactive systems development with UML-RT and Papyrus-RT” by Nicolas Hili, Juergen Dingel (Queen’s University), Ernesto Posse (Zeligsoft) and “Developing Domain-specific Modeling Tools with Papyrus” by Philip Langer (EclipseSource), Florian Noyrit (CEA) and Rémi Schneckenburger (CEA), where also quite well-received.&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;The &lt;a href=&quot;https://wiki.polarsys.org/Papyrus_IC/Research_Academia&quot;&gt;Papyrus IC Research/Academia&lt;/a&gt; committee has begun planning a Papyrus event for &lt;a href=&quot;http://www.modelsconference.org&quot;&gt;next year’s conference&lt;/a&gt; which will be held in Copenhagen, Denmark. We hope to see you there!&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;img alt=&quot;Models 2017 PIC Booth-ori enhanced&quot; class=&quot;alignnone size-full wp-image-944&quot; src=&quot;https://papyrusuml.files.wordpress.com/2017/10/models-2017-pic-booth-ori-enhanced.jpeg?w=604&quot; /&gt;&lt;/div&gt;
+&lt;div&gt;(Papyrus IC booth at MODELS 2017 in Austin, Texas, U.S.A.)&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;
+&lt;div&gt;&lt;/div&gt;&lt;br /&gt;Filed under: &lt;a href=&quot;https://papyrusuml.wordpress.com/category/uncategorized/&quot;&gt;Uncategorized&lt;/a&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/papyrusuml.wordpress.com/941/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/papyrusuml.wordpress.com/941/&quot; /&gt;&lt;/a&gt; &lt;a href=&quot;http://feeds.wordpress.com/1.0/godelicious/papyrusuml.wordpress.com/941/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/delicious/papyrusuml.wordpress.com/941/&quot; /&gt;&lt;/a&gt; &lt;a href=&quot;http://feeds.wordpress.com/1.0/gofacebook/papyrusuml.wordpress.com/941/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/facebook/papyrusuml.wordpress.com/941/&quot; /&gt;&lt;/a&gt; &lt;a href=&quot;http://feeds.wordpress.com/1.0/gotwitter/papyrusuml.wordpress.com/941/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/twitter/papyrusuml.wordpress.com/941/&quot; /&gt;&lt;/a&gt; &lt;a href=&quot;http://feeds.wordpress.com/1.0/gostumble/papyrusuml.wordpress.com/941/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/stumble/papyrusuml.wordpress.com/941/&quot; /&gt;&lt;/a&gt; &lt;a href=&quot;http://feeds.wordpress.com/1.0/godigg/papyrusuml.wordpress.com/941/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/digg/papyrusuml.wordpress.com/941/&quot; /&gt;&lt;/a&gt; &lt;a href=&quot;http://feeds.wordpress.com/1.0/goreddit/papyrusuml.wordpress.com/941/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/reddit/papyrusuml.wordpress.com/941/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=papyrusuml.wordpress.com&amp;amp;blog=72365150&amp;amp;post=941&amp;amp;subd=papyrusuml&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Fri, 06 Oct 2017 17:08:56 +0000</pubDate>
+</item>
+<item>
+	<title>Wayne Beaton: Legal Documentation Requirements for Eclipse Projects</title>
+	<guid isPermaLink="false">http://waynebeaton.wordpress.com/?p=5258</guid>
+	<link>https://waynebeaton.wordpress.com/2017/10/06/legal-documentation-requirements-for-eclipse-projects/</link>
+	<description>&lt;p&gt;Late last week, I pushed out an update to our documentation regarding the legal documentation requirements for Eclipse projects that Sharon Corbett and I have been working on over the past quarter. In the process, we moved the guidelines off of the main website and rolled them in to the &lt;a href=&quot;https://www.eclipse.org/projects/handbook/#legaldoc&quot;&gt;Eclipse Project Handbook&lt;/a&gt;. Our primary goal in revising this documentation was to make it more generally applicable to all open source projects and bring us more in line with what the rest of the open source world does.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Update&lt;/em&gt; probably isn’t the right word. It’s more accurate to say that we’ve pushed out some general guidelines and that the old/existing documentation becomes instructions for how to apply those general guidelines in the case where your project builds &lt;em&gt;Eclipse Platform Plug-ins and Features&lt;/em&gt;.  In this regard, the existing documentation was very much concerned with the technical aspects of how to provide legal documentation in a manner that they can be presented to the user via the “About Eclipse” dialog (there’s no particular value in changing how all that works).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;That is, if you’re building Eclipse Platform Plug-ins and Features under the Eclipse Public License (EPL) 1.0, we’re not asking you to change anything. &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I’m going to repeat that. &lt;strong&gt;Don’t panic.&lt;/strong&gt; If you’re building Eclipse Platform Plug-ins and Features, just keep doing what you’re doing. If you’re planning to update to the &lt;a href=&quot;https://www.eclipse.org/legal/epl-2.0/&quot;&gt;Eclipse Public License 2.0&lt;/a&gt; (EPL-2.0), we’ll need to talk (more on this later).&lt;/p&gt;
+&lt;p&gt;The gist of it is that in the general case, project teams are required to include &lt;a href=&quot;https://www.eclipse.org/projects/handbook/#legaldoc-license&quot;&gt;license&lt;/a&gt; and &lt;a href=&quot;https://www.eclipse.org/projects/handbook/#legaldoc-notice&quot;&gt;notices&lt;/a&gt; in both their project repositories and in the output form of their project code (generally the result of compiling/building, e.g. JAR files). For consistency across our own projects and the greater community, we’re recommending that these files be named &lt;em&gt;LICENSE&lt;/em&gt; and &lt;em&gt;NOTICE&lt;/em&gt; (with optional extensions). Variations based on technical limitations are acceptable. The license and notice files should be in plain text. The use of a favourite markup language is fine, but not required.&lt;/p&gt;
+&lt;p&gt;There’s a lot more information in the document, so I’ll avoid trying to repeat it here. One thing that you’ll notice is that we’ve tightened up the copyright header text a bit by removing the “All rights reserved”. &lt;em&gt;There’s no need to change any headers that include this statement: &lt;/em&gt;it’s not necessarily wrong to include the statement, it just doesn’t really add any value.&lt;/p&gt;
+&lt;p&gt;You’ll notice that there’s an appendix in the document for projects that are building &lt;a href=&quot;https://www.eclipse.org/projects/handbook/#legaldoc-plugins&quot;&gt;Eclipse Platform Plug-ins and Features under the EPL-2.0&lt;/a&gt;. There’s a few rough edges here that we still need to work out (there a link to an issue in Bugzilla if you want to contribute your thoughts). One thing that we discovered while working on these changes is that basically nobody in the open source community has anything like our &lt;a href=&quot;https://www.eclipse.org/legal/epl/notice.php&quot;&gt;Software User Agreement&lt;/a&gt; (SUA) which is effectively an End User License Agreement (EULA). Since a project that updates to the EPL-2.0 will have to update all of their legal documentation, we figured that we use the opportunity to drop the SUA and instead just use the license text in places that call for a license (AFAICT most third party plug-in providers do this).&lt;/p&gt;
+&lt;p&gt;To make getting the legal documentation right a little easier for project teams, I’ve started working on an &lt;em&gt;experimental&lt;/em&gt; script that uses the information in the Eclipse Foundation database to generate at least some or all of the required documentation.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.eclipse.org/projects/tools/about.php?id=%5BProjectId%5D&quot; rel=&quot;nofollow&quot;&gt;https://www.eclipse.org/projects/tools/about.php?id=%5BProjectId%5D&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Take note that this script is experimental and may not be entirely correct (maybe consider using this as a template or a starting point; ultimately it’s up to the project teams to make sure that the notice file is correct). If you do notice something that seems wrong with the data (e.g. wrong license or trademark statement), send a quick note to emo@eclipse.org; if it looks like the rendering is wrong or that there is some technical issue, please open a bug against &lt;a href=&quot;https://bugs.eclipse.org/bugs/enter_bug.cgi?product=Community&amp;amp;component=Process&quot;&gt;Community/Process&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.eclipsecon.org/europe2017&quot;&gt;&lt;img alt=&quot;EclipseCon Europe 2017&quot; border=&quot;0&quot; height=&quot;90&quot; src=&quot;https://www.eclipsecon.org/europe2017/sites/default/files/ece_2017_728%20x%2090.png&quot; width=&quot;728&quot; /&gt;&lt;/a&gt;&lt;/p&gt;&lt;br /&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/waynebeaton.wordpress.com/5258/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/waynebeaton.wordpress.com/5258/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=waynebeaton.wordpress.com&amp;amp;blog=19425814&amp;amp;post=5258&amp;amp;subd=waynebeaton&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Fri, 06 Oct 2017 16:12:13 +0000</pubDate>
+</item>
+<item>
+	<title>Benjamin Cabe: Hack the Eclipse IoT Open Testbeds at EclipseCon Europe</title>
+	<guid isPermaLink="false">https://blog.benjamin-cabe.com/?p=2935</guid>
+	<link>http://feedproxy.google.com/~r/benjamin-cabe-planet-eclipse/~3/AWvt_e8GX9M/iot-testbeds-hackday-eclipsecon</link>
+	<description>&lt;p&gt;By now you are probably pretty aware that EclipseCon Europe, coming in just a few weeks in Ludwigsburg, Germany, Oct 22-25, will feature &lt;a href=&quot;https://www.eclipsecon.org/europe2017/iot&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;All Things IoT&lt;/strong&gt;&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;But wait, there’s more! We will use the opportunity of having a lot of people from the Eclipse IoT community in the same location to spend some time hacking the &lt;a href=&quot;https://iot.eclipse.org/testbeds&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;Open IoT Testbeds&lt;/strong&gt;&lt;/a&gt; on Wednesday, October 24.&lt;/p&gt;
+&lt;h2&gt;“What can I expect from the Testbed Hackday?”&lt;/h2&gt;
+&lt;p&gt;As we will be unveiling a new testbed focusing on Production Performance Management of industrial equipment, and with the Asset Tracking Management testbed well on its way, there will be many people who have been working on these testbeds attending the hack day.&lt;/p&gt;
+&lt;p&gt;They will be available all day to discuss (and experiment live!) how to extend them, and of course ready to show you how they are built.&lt;/p&gt;
+&lt;h2&gt;“Why should I attend?”&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;If your company is creating &lt;strong&gt;IoT products that you would like to integrate&lt;/strong&gt; with the &lt;a href=&quot;https://iot.eclipse.org/testbeds&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;existing testbeds&lt;/a&gt;,&lt;/li&gt;
+&lt;li&gt;If you are involved in an Eclipse or Eclipse IoT project and would like to &lt;strong&gt;see how your project can get involved&lt;/strong&gt; complement the solutions already demonstrated in the existing testbeds,&lt;/li&gt;
+&lt;li&gt;You want to experiment with the actual &lt;strong&gt;hardware&lt;/strong&gt; that the testbeds are featuring,&lt;/li&gt;
+&lt;li&gt;You are interested in &lt;strong&gt;starting a new testbed&lt;/strong&gt; and would like to gauge the interest of the community and brainstorm some ideas face-to-face.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Please let me know if you plan on attending! I think the Open IoT Testbeds are a great opportunity for people and companies to collaborate on real use cases, and to demonstrate by example how open source, complemented by a strong commercial ecosystem, can jump-start the development of IoT solutions.&lt;/p&gt;
+&lt;p&gt;I really think the Open IoT Testbeds are a great opportunity for people and companies to collaborate on real use cases, and to demonstrate by example how open source, complemented by a strong commercial ecosystem, can jump-start the development of IoT solutions. If you share this conviction, you really don’t want to miss the hack day… and all the other days of &lt;a href=&quot;https://www.eclipsecon.org/europe2017&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;strong&gt;EclipseCon Europe&lt;/strong&gt;&lt;/a&gt;!&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.eclipsecon.org/europe2017&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;&lt;img alt=&quot;EclipseCon Europe 2017&quot; border=&quot;0&quot; height=&quot;90&quot; src=&quot;https://www.eclipsecon.org/europe2017/sites/default/files/ece_2017_728%20x%2090.png&quot; width=&quot;728&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+ &lt;p&gt;The post &lt;a href=&quot;https://blog.benjamin-cabe.com/2017/10/06/iot-testbeds-hackday-eclipsecon&quot; rel=&quot;nofollow&quot;&gt;Hack the Eclipse IoT Open Testbeds at EclipseCon Europe&lt;/a&gt; appeared first on &lt;a href=&quot;https://blog.benjamin-cabe.com&quot; rel=&quot;nofollow&quot;&gt;Benjamin Cabé&lt;/a&gt;.&lt;/p&gt;
+&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/benjamin-cabe-planet-eclipse/~4/AWvt_e8GX9M&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Fri, 06 Oct 2017 15:48:26 +0000</pubDate>
+</item>
+<item>
+	<title>Orion: Announcing Orion 16</title>
+	<guid isPermaLink="false">http://planetorion.org/news/?p=908</guid>
+	<link>http://planetorion.org/news/2017/10/announcing-orion-16/</link>
+	<description>&lt;p&gt;We are pleased to announce the sixteenth release of Orion, “Your IDE in the Cloud”. You can run it now at &lt;a href=&quot;https://orionhub.org/&quot;&gt;OrionHub,&lt;/a&gt; from &lt;a href=&quot;https://www.npmjs.com/package/orion&quot;&gt;NPM&lt;/a&gt; or &lt;a href=&quot;http://download.eclipse.org/orion/drops/R-16.0-201710030941/index.html&quot;&gt;download the server&lt;/a&gt; to run your own instance locally. Once again, thank you to all committers and contributors for your hard work this release. There were 169 bugs and enhancements fixed, across 236 commits from 16 authors!&lt;/p&gt;
+&lt;p&gt;This release was focussed on making compatibility, stability and overall quality improvements to the Node.js server. We also dark launched debugging support directly in Orion – although not completely polished, it is available for the community to try.&lt;/p&gt;</description>
+	<pubDate>Wed, 04 Oct 2017 18:56:20 +0000</pubDate>
+</item>
+<item>
+	<title>Eclipse Announcements: On Naming Eclipse Enterprise for Java (EE4J)</title>
+	<guid isPermaLink="true">http://feedproxy.google.com/~r/eclipse/fnews/~3/81N6T19IgGA/</guid>
+	<link>http://feedproxy.google.com/~r/eclipse/fnews/~3/81N6T19IgGA/</link>
+	<description>What is EE4J? Will it become the brand that replaces Java EE? Read the blog post to find out.&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/eclipse/fnews/~4/81N6T19IgGA&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Wed, 04 Oct 2017 13:48:00 +0000</pubDate>
+</item>
+<item>
+	<title>EclipseCon Europe 2017: Java at EclipseCon Europe</title>
+	<guid isPermaLink="false">https://www.eclipsecon.org/europe2017/news/3143 at https://www.eclipsecon.org/europe2017</guid>
+	<link>https://www.eclipsecon.org/europe2017/news/java-eclipsecon-europe</link>
+	<description>&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;p class=&quot;h4&quot;&gt;by Ian Skerrett&lt;/p&gt;
+&lt;p&gt;Java 9 is finally out the door and Eclipse is ready, with Java 9 support provided by &lt;a href=&quot;https://www.eclipse.org/jdt/&quot; target=&quot;_blank&quot;&gt;the Eclipse JDT project&lt;/a&gt;. EclipseCon Europe talks will bring you up to speed on trends in the Java world and introduce you to the technologies and ecosystem behind them.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-field-news-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/news/java-eclipsecon-europe&quot;&gt;&lt;img alt=&quot;&quot; class=&quot;img-responsive block-center&quot; height=&quot;250&quot; src=&quot;https://www.eclipsecon.org/europe2017/sites/default/files/styles/solstice_news_-_default_-_thumbnail/public/news/Java.png?itok=gX0N_jxt&quot; width=&quot;250&quot; /&gt;&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+	<pubDate>Tue, 03 Oct 2017 20:09:32 +0000</pubDate>
+</item>
+<item>
+	<title>Eclipse Announcements: EclipseCon Europe: Last Chance for the Early Price</title>
+	<guid isPermaLink="true">http://feedproxy.google.com/~r/eclipse/fnews/~3/LLbL-9E10GA/registration</guid>
+	<link>http://feedproxy.google.com/~r/eclipse/fnews/~3/LLbL-9E10GA/registration</link>
+	<description>October 5 is the last day to save €100 on ECE registration.&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/eclipse/fnews/~4/LLbL-9E10GA&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Tue, 03 Oct 2017 16:30:00 +0000</pubDate>
+</item>
+<item>
+	<title>Doug Schaefer: Happy 15'th Anniversary CDT!</title>
+	<guid isPermaLink="false">https://cdtdoug.ca/tag/eclipse/rss/59d39e1b4bfcdf78894a43ad</guid>
+	<link>https://cdtdoug.ca/happy-15th-anniversary-cdt/</link>
+	<description>&lt;div class=&quot;kg-card-markdown&quot;&gt;&lt;p&gt;As I was putting together my slides for EclipseCon, I occasionally like to bring up the forum post from John Duimovich, the Tools PMC lead, that announced the changes QNX was bringing to the CDT project, the birth of the new CDT project.&lt;/p&gt;
+&lt;p&gt;CDT started out as this remote development thing built by the mainframe tools team at IBM, with the remote parts of that evolving into RSE. With the reboot of the project, QNX brought what we have today, essentially a JDT look alike that added C/C++-things like calling ‘make’ to do builds and a gdb integration called CDI.&lt;/p&gt;
+&lt;p&gt;Below is link and excerpt of that post. What hit me now was that happened in the summer of 2002. That makes CDT officially 15 years old! Happy Anniversary CDT!&lt;/p&gt;
+&lt;p&gt;Huge thanks to everyone who has helped us over those years grow this thing into the best industry leading community built C/C++ IDE we all know and love.&lt;/p&gt;
+&lt;p&gt;I have to give a special thanks to the original team that started it here at QNX, some are still at the company, some moved on, and to Sebastien Marineau who was our first project lead and a great community builder who I still struggle to live up to 😊.&lt;/p&gt;
+&lt;p&gt;And a huge thanks to everyone who is helping today and are thinking of coming on board to help us take CDT into the next 15 years. It doesn’t happen without you!&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.eclipse.org/forums/index.php/t/11372/&quot;&gt;https://www.eclipse.org/forums/index.php/t/11372/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;From: &quot;John Duimovich&quot;&lt;br /&gt;
+Newsgroups: eclipse.tools.cdt&lt;br /&gt;
+Subject: [ANN] - CDT project changes Date: Fri, 7 Jun 2002 17:20:34 -040&lt;/p&gt;
+&lt;p&gt;The Eclipse Tools PMC is pleased to announce some exciting developments to the CDT project hosted on &lt;a href=&quot;http://eclipse.org&quot;&gt;eclipse.org&lt;/a&gt;. First, QNX will be contributing some C/C++ core technology from their recently announced product to &lt;a href=&quot;http://eclipse.org&quot;&gt;eclipse.org&lt;/a&gt;. We believe that this will enhance the value of the technology hosted on &lt;a href=&quot;http://eclipse.org&quot;&gt;eclipse.org&lt;/a&gt; and bring some industrial strength technology into the CDT project.&lt;/p&gt;
+&lt;p&gt;In addition, the Eclipse Tools PMC has been working on getting additional cross-company project participation on the C/C++ project (&lt;a href=&quot;http://www.eclipse.org/cdt&quot;&gt;www.eclipse.org/cdt&lt;/a&gt;). There has been lot of interest from many of the eclipse member companies and the community at large on this project and we've been working with many of them in helping them get involved with the C/C++ project at &lt;a href=&quot;http://eclipse.org&quot;&gt;eclipse.org&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;As part of this additional participation we're excited to be able to announce that there is a new project leader, Sebastien Marineau from QNX who has agreed to lead the C/C++ IDE (CDT) project on &lt;a href=&quot;http://Eclipse.org&quot;&gt;Eclipse.org&lt;/a&gt;. In his role as project leader, there will be a re-plan of the V2.0 CDT deliverables to include the new technology.&lt;/p&gt;
+&lt;/div&gt;</description>
+	<pubDate>Tue, 03 Oct 2017 14:29:20 +0000</pubDate>
+</item>
+<item>
+	<title>Doug Schaefer: Just in time for Halloween, Ghost</title>
+	<guid isPermaLink="false">https://cdtdoug.ca/tag/eclipse/rss/59d2eb504bfcdf78894a43a7</guid>
+	<link>https://cdtdoug.ca/just-in-time-for-halloween-ghost/</link>
+	<description>&lt;div class=&quot;kg-card-markdown&quot;&gt;&lt;p&gt;When I started my blog &lt;a href=&quot;https://cdtdoug.ca/welcome-to-my-blog/&quot;&gt;almost 12 years ago&lt;/a&gt;, I chose Blogger. For the time it was really cool, being able to easily create content on-line and publish with a click of a button. It served me well.&lt;/p&gt;
+&lt;p&gt;A couple of years ago, I decided I needed to upgrade my skills and learn more about web development. With servers at Digital Ocean only $5 a month, I dove in. Everyone seemed to be throwing love at Wordpress so I chose that and started &lt;a href=&quot;https://cdtdoug.ca&quot;&gt;cdtdoug.ca&lt;/a&gt; importing all my posts from Blogger. PHP and MySQL can be pretty taxing on a $5/month server but I managed to find settings to make it work.&lt;/p&gt;
+&lt;p&gt;As things tend to go, we started doing real web development at work and I ended up using a lot of those skills I gained working with my own server. I learned a lot about AWS and quickly fell in love with the power of it. I chose to grab a free year and I migrated cdtdoug over to an AWS machine. I love how developer friendly Digital Ocean is, but AWS is, well, AWS.&lt;/p&gt;
+&lt;p&gt;Well, the free year ran out and I was running on a $10/month server. And I really wanted to do other things with this server and Wordpress was taking a lot of juice. Googling around for alternatives, &lt;a href=&quot;https://ghost.org&quot;&gt;I ran across Ghost&lt;/a&gt;. Ghost runs on node instead of PHP and when run with the SQLite option, it's very lightweight and fast. If I become super famous, it probably won't scale, but I don't think I need to worry about that.&lt;/p&gt;
+&lt;p&gt;So I set up a new server, a $5/month t2.nano and migrated my Wordpress blog to Ghost with Disqus for comments. &lt;a href=&quot;https://www.ghostforbeginners.com/migrating-your-wordpress-blog-to-ghost/&quot;&gt;I used mainly this guide (click)&lt;/a&gt; and the Ghost docs themselves. It went pretty smooth and I'm pretty happy with it so far. It force me to learn Markdown (what was so wrong with WSIWYG?). And it leaves a lot of room, even on this tiny server, to do some IoT things I've been meaning to try. It'll do for now, until I get the itch to change it yet again.&lt;/p&gt;
+&lt;/div&gt;</description>
+	<pubDate>Tue, 03 Oct 2017 13:00:40 +0000</pubDate>
+</item>
+<item>
+	<title>EclipseCon Europe 2017: Sponsor Testimonial: Orange Eclipse OM2M contributors</title>
+	<guid isPermaLink="false">https://www.eclipsecon.org/europe2017/news/3144 at https://www.eclipsecon.org/europe2017</guid>
+	<link>https://www.eclipsecon.org/europe2017/news/sponsor-testimonial-orange-eclipse-om2m-contributors</link>
+	<description>&lt;div class=&quot;field field-name-body field-type-text-with-summary field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;p&gt;Orange has contributed for several years to Eclipse projects in Smart Home and OM2M, and it’s a great pleasure to be part of the EclipseCon Europe meeting once again. This year is particularly special for Orange because we are officially joining the Eclipse Foundation. Smart home represents for us the natural extension of our core business, telecommunications, and Eclipse represents to us a wonderful community of both open source developers and partners working together to think and built the future of smart home.&lt;/p&gt;
+&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;field field-name-field-news-image field-type-image field-label-hidden&quot;&gt;&lt;div class=&quot;field-items&quot;&gt;&lt;div class=&quot;field-item even&quot;&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/news/sponsor-testimonial-orange-eclipse-om2m-contributors&quot;&gt;&lt;img alt=&quot;&quot; class=&quot;img-responsive block-center&quot; height=&quot;250&quot; src=&quot;https://www.eclipsecon.org/europe2017/sites/default/files/styles/solstice_news_-_default_-_thumbnail/public/news/OM2M.png?itok=P-nbVONe&quot; width=&quot;250&quot; /&gt;&lt;/a&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</description>
+	<pubDate>Tue, 03 Oct 2017 10:27:14 +0000</pubDate>
+</item>
+<item>
+	<title>Christopher Guindon: Eclipse Foundation Webdev Report [Q3 2017]</title>
+	<guid isPermaLink="true">https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/</guid>
+	<link>https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/</link>
+	<description>&lt;p&gt;A few months ago, I created a discussion on &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=519264&quot;&gt;Eclipse Bugzila&lt;/a&gt; about creating a new blog for the Eclipse Foundation Webdev team. The idea is to raise awareness about what we are currently working on and hopefully, in return, we will get some feedback from the community.&lt;/p&gt;
+
+&lt;p&gt;I am new to the blogging world and I am really excited to kick off this new challenge with this report.&lt;/p&gt;
+
+&lt;p&gt;My blog posts will be on the following topics:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Quarterly reports on web developpement at the foundation;&lt;/li&gt;
+&lt;li&gt;Maintenance window calendar;&lt;/li&gt;
+&lt;li&gt;Web developpement tips and tricks for Eclipse projects;&lt;/li&gt;
+&lt;li&gt;Discussion on new features.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Here’s a top-level list of items that we worked on in Q3 2017:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#api-eclipse-org&quot;&gt;Api.eclipse.org&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#bug-516914-create-public-documentation-for-api-eclipse-org-rest-api&quot;&gt;Bug 516914 - Create public documentation for api.eclipse.org REST Api&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#bug-502485-activity-tab-error-reports-from-aeri&quot;&gt;Bug 502485 - Activity tab - Error reports from AERI&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#eclipse-org&quot;&gt;Eclipse.org&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=519264&quot;&gt;Bug 519264 - Create an Eclipse Foundation webdev blog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#infra-2507-donate-campaign-plan-fall-2017&quot;&gt;Infra 2507 - Donate Campaign Plan - Fall 2017&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#bug-521084-add-epl-2-0-to-the-website&quot;&gt;Bug 521084 - Add epl-2.0 to the website&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#bug-261658-status-eclipse-org&quot;&gt;Bug 261658 - status.eclipse.org&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#marketplace&quot;&gt;Eclipse Marketplace&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#bug-520850-possible-adware-in-marketplace-plugin-eclipse-class-decompiler&quot;&gt;Bug 520850 - Possible adware in marketplace plugin (Eclipse Class Decompiler)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#bug-501861-selecting-a-favorite-on-eclipse-marketplace-is-slow&quot;&gt;Bug 501861 - Selecting a favorite on Eclipse Marketplace is slow&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#eclipse-project-management-infrastructure-pmi&quot;&gt;Eclipse Project Management Infrastructure (PMI)&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#bug-519694-remove-solr-on-projects-eclipse-org&quot;&gt;Bug 519694 - Remove solr on projects.eclipse.org&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=469321&quot;&gt;Bug 469321 - Portal Shutdown plan: Transfer all portal functionality to PMI, website&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#eclipse-working-groups&quot;&gt;Eclipse Working Groups&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#bug-520121-need-a-new-conference-website-for-foss4g-na-2018&quot;&gt;Bug 520121 - Need a new conference website for FOSS4G NA 2018&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.chrisguindon.com/post/q3-2017-eclipse-foundation-webdev-report/#bug-514542-create-initial-website-for-openpass&quot;&gt;Bug 514542 - Create initial website for openPASS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;api-eclipse-org&quot;&gt;Api.eclipse.org&lt;/h2&gt;
+
+&lt;h3 id=&quot;bug-516914-create-public-documentation-for-api-eclipse-org-rest-api&quot;&gt;Bug 516914 - Create public documentation for api.eclipse.org REST Api&lt;/h3&gt;
+
+&lt;p&gt;&lt;img alt=&quot;Documentation for api.eclipse.org&quot; src=&quot;https://www.chrisguindon.com/images/report-q3/api-eclipse-org.jpg&quot; title=&quot;Documentation for api.eclipse.org&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The documentation for &lt;a href=&quot;https://api.eclipse.org&quot;&gt;api.eclipse.org&lt;/a&gt; was  all over the place and we needed to &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=516914&quot;&gt;fix&lt;/a&gt; that.&lt;/p&gt;
+
+&lt;p&gt;Some documentation was available on our &lt;a href=&quot;https://wiki.eclipse.org/Eclipse_USS&quot;&gt;wiki page&lt;/a&gt; but most of it was written in our source code and in a Google document. We decided to resolve this issue by converting our GDOC to static HTML.&lt;/p&gt;
+
+&lt;p&gt;After trying out &lt;a href=&quot;https://swagger.io/&quot;&gt;SWAGGER&lt;/a&gt; and &lt;a href=&quot;https://raml.org/&quot;&gt;RAML&lt;/a&gt;, we decided to use &lt;a href=&quot;https://apiblueprint.org/&quot;&gt;API Blueprint&lt;/a&gt; to generate our API docs.&lt;/p&gt;
+
+&lt;p&gt;API Blueprint is a documentation-oriented web API description language. The API Blueprint is essentially a set of semantic assumptions laid on top of the Markdown syntax used to describe a web API. In addition to the regular Markdown syntax, API Blueprint conforms to the GitHub Flavored Markdown syntax.&lt;/p&gt;
+
+&lt;p&gt;If you are interested in this project, our documentation source code is available on &lt;a href=&quot;https://github.com/chrisguindon/eclipse_api&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;bug-502485-activity-tab-error-reports-from-aeri&quot;&gt;Bug 502485 - Activity tab - Error reports from AERI&lt;/h3&gt;
+
+&lt;p&gt;&lt;img alt=&quot;Error reports from AERI&quot; src=&quot;https://www.chrisguindon.com/images/report-q3/accounts-eclipse-org-aeri-reports.jpg&quot; title=&quot;Error reports from AERI&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As of June 2015, with the Eclipse Mars simultaneous release, all Eclipse packages are shipped with the &lt;a href=&quot;https://wiki.eclipse.org/EPP/Logging&quot;&gt;Automated Error Reporting client&lt;/a&gt; (called AERI).&lt;/p&gt;
+
+&lt;p&gt;Ever since AERI became a part of the Eclipse packages, eclipse.org has seen a steady stream of incoming error reports. Eclipse users currently send around 70,000 reports per week. That is a total of 3 million reports in the past 12 months!&lt;/p&gt;
+
+&lt;p&gt;This quarter, we added a new &lt;strong&gt;Error Reports&lt;/strong&gt; tab for each user profile on &lt;a href=&quot;https://accounts.eclipse.org&quot;&gt;accounts.eclipse.org&lt;/a&gt;. This tab allows users to review reports they submitted.&lt;/p&gt;
+
+&lt;p&gt;You can try it out now by &lt;a href=&quot;https://accounts.eclipse.org&quot;&gt;log in&lt;/a&gt; with your Eclipse account.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;eclipse-org&quot;&gt;Eclipse.org&lt;/h2&gt;
+
+&lt;h3 id=&quot;infra-2507-donate-campaign-plan-fall-2017&quot;&gt;Infra 2507 - Donate Campaign Plan - Fall 2017&lt;/h3&gt;
+
+&lt;p&gt;&lt;img alt=&quot;October Donation Campaign&quot; src=&quot;https://www.chrisguindon.com/images/report-q3/donate.jpg&quot; title=&quot;Eclipse Foundation: October Donation Campaign&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;On September 29, we launched the &lt;a href=&quot;https://ianskerrett.wordpress.com/2017/09/29/annual-donation-campaign-end-user-support-for-the-eclipse-foundation/&quot;&gt;October Donation Campaign&lt;/a&gt;. The goal is to have over 1000 individual donations to the Eclipse Foundation and help support the overall community.&lt;/p&gt;
+
+&lt;p&gt;We implemented a new &lt;a href=&quot;https://www.eclipse.org/donate/&quot;&gt;donation&lt;/a&gt; page that allows donors to give back using their credit card. I expect this to be useful for user’s who can’t or won’t use Paypal or Bitpay.&lt;/p&gt;
+
+&lt;p&gt;We investigated a few options to incorportate credit card donations and we chose &lt;a href=&quot;https://www.stripe.com&quot;&gt;Stripe&lt;/a&gt;. Regarding it’s implementation, we are using the &lt;a href=&quot;https://www.drupal.org/project/stripe&quot;&gt;Drupal Stripe&lt;/a&gt; module with the latest &lt;a href=&quot;https://github.com/stripe/stripe-php&quot;&gt;Stripe PHP API Library&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A few days before pushing this to production we noticed that the Drupal Stripe module did not support web proxies. This was a last minute oversight because our testing servers did not require us to use a web proxy to connect to Stripe’s API.&lt;/p&gt;
+
+&lt;p&gt;I created an issue on drupal.org to &lt;a href=&quot;https://www.drupal.org/node/2912208&quot;&gt;enable web proxy support&lt;/a&gt; and I am hoping the contribute a patch to fix this very soon.&lt;/p&gt;
+
+&lt;p&gt;You can help support the overall Eclipse community by &lt;a href=&quot;https://www.eclipse.org/donate/&quot;&gt;donating now&lt;/a&gt; to the Eclipse Foundation.&lt;/p&gt;
+
+&lt;h3 id=&quot;bug-521084-add-epl-2-0-to-the-website&quot;&gt;Bug 521084 - Add epl-2.0 to the website&lt;/h3&gt;
+
+&lt;p&gt;On August 24, The &lt;a href=&quot;https://www.eclipse.org/org/press-release/20170829eplv2.php&quot;&gt;Eclipse Foundation announced&lt;/a&gt; that version 2 of the &lt;a href=&quot;https://www.eclipse.org/legal/epl-2.0/&quot;&gt;Eclipse Public License (EPL v2)&lt;/a&gt; was approved by the Eclipse Foundation Board of Directors and the &lt;a href=&quot;https://opensource.org/&quot;&gt;Open Source Initiative&lt;/a&gt; (OSI).&lt;/p&gt;
+
+&lt;p&gt;I was tasked by &lt;a href=&quot;https://mmilinkov.wordpress.com/2017/04/07/eplv2-a-new-version-of-the-eclipse-public-license/&quot;&gt;Mike Milinkovich&lt;/a&gt; to format the final &lt;a href=&quot;https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.html&quot;&gt;HTML&lt;/a&gt; and &lt;a href=&quot;https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.txt&quot;&gt;plain text&lt;/a&gt; document for this new version.&lt;/p&gt;
+
+&lt;p&gt;I was really excited to create these digital documents that will be included in many open source projects in the future.&lt;/p&gt;
+
+&lt;p&gt;For more information, you can visit the Eclipse Foundation &lt;a href=&quot;https://www.eclipse.org/org/press-release/20170829eplv2.php&quot;&gt;press release&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;bug-261658-status-eclipse-org&quot;&gt;Bug 261658 - status.eclipse.org&lt;/h3&gt;
+
+&lt;p&gt;&lt;img alt=&quot;status.eclipse.org&quot; src=&quot;https://www.chrisguindon.com/images/report-q3/status-eclipse-org.jpg&quot; title=&quot;Eclipse Foundation: Status page.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Denis, our IT Director, built this very nifty &lt;a href=&quot;https://status.eclipse.org&quot;&gt;status page&lt;/a&gt; and by doing so, won the award for closing the oldest &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=261658&quot;&gt;bug&lt;/a&gt; this quarter!&lt;/p&gt;
+
+&lt;p&gt;The status page measures performance of various Eclipse.org services from our monitoring agent in Portland, Oregon (many thanks to &lt;a href=&quot;https://osuosl.org/&quot;&gt;OSU Open Source Lab&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;If you are experiencing issues with some of our services, please take a look at our &lt;a href=&quot;https://status.eclipse.org&quot;&gt;Service Status&lt;/a&gt; page for more information.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;marketplace&quot;&gt;Marketplace&lt;/h2&gt;
+
+&lt;h3 id=&quot;bug-520850-possible-adware-in-marketplace-plugin-eclipse-class-decompiler&quot;&gt;Bug 520850 - Possible adware in marketplace plugin (Eclipse Class Decompiler)&lt;/h3&gt;
+
+&lt;p&gt;It was &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=520850&quot;&gt;brought to my attention&lt;/a&gt; that a listing on Eclipse Marketplace, called Eclipse Class Decompiler, contained binary code that could be used for adware and could potentially download files to Eclipse workspaces.&lt;/p&gt;
+
+&lt;p&gt;This issue was initially reported in a blog post from a community member. After a bit of testing with &lt;a href=&quot;https://portswigger.net/burp/freedownload&quot;&gt;Burp Suite Free Edition&lt;/a&gt;, I was able to confirm his findings. It was clear that this plugin included code that was not appropriate for the Eclipse users and community.&lt;/p&gt;
+
+&lt;p&gt;We removed the listing from Eclipse Marketplace and the Eclipse Foundation strongly suggests any Eclipse user to uninstall this plugin from their workspace.&lt;/p&gt;
+
+&lt;p&gt;To remove this plugin, please do the following:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Go to Help &amp;gt; About Eclipse &amp;gt; Installation Details&lt;/li&gt;
+&lt;li&gt;Select the feature(s) belonging to the entry&lt;/li&gt;
+&lt;li&gt;Press “Uninstall”&lt;/li&gt;
+&lt;li&gt;Follow the wizard&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;If you have any questions, please send an email to &lt;a href=&quot;mailto:emo@eclipse-foundation.org&quot;&gt;EMO&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;bug-501861-selecting-a-favorite-on-eclipse-marketplace-is-slow&quot;&gt;Bug 501861 - Selecting a favorite on Eclipse Marketplace is slow&lt;/h3&gt;
+
+&lt;p&gt;Two years ago, we decided to move Eclipse Marketplace Favorites to &lt;a href=&quot;https://api.eclipse.org/#eclipse-uss&quot;&gt;Eclipse USS&lt;/a&gt;. This move allowed the &lt;a href=&quot;https://projects.eclipse.org/projects/technology.packaging.mpc&quot;&gt;Eclipse Marketplace Client (MPC)&lt;/a&gt; to leverage the &lt;a href=&quot;https://projects.eclipse.org/projects/technology.usssdk&quot;&gt;Eclipse User Storage Service SDK&lt;/a&gt; to add/remove user favorites.&lt;/p&gt;
+
+&lt;p&gt;The Eclipse User Storage Service SDK provides an idiomatic Java library for easy use of the USS by Eclipse RCP-based applications. The USS SDK transparently handles the authentication and login capabilities required to use the USS from an Eclipse installation.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, this move created a &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=501861&quot;&gt;regression&lt;/a&gt; on our website because it required the page to reload each time a favorite was added or removed.&lt;/p&gt;
+
+&lt;p&gt;To speed up this action, our team decided to &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=501933&quot;&gt;enable the implicit grant flow&lt;/a&gt; for the Marketplace API endpoint on &lt;a href=&quot;https://api.eclipse.org&quot;&gt;api.eclipse.org&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The implicit grant flow is used to obtain access tokens and is optimized for public clients.  These clients are typically implemented in a browser using a scripting language such as JavaScript.&lt;/p&gt;
+
+&lt;p&gt;This update allowed us to create a &lt;a href=&quot;https://github.com/EclipseFdn/jquery-eclipsefdn-api&quot;&gt;jQuery library&lt;/a&gt; for adding/removing favorites. This new library can add and remove favorites without a page reload each time.&lt;/p&gt;
+
+&lt;p&gt;You can test this new change now on the &lt;a href=&quot;https://marketplace.eclipse.org&quot;&gt;Eclipse Marketplace&lt;/a&gt; website.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;eclipse-project-management-infrastructure-pmi&quot;&gt;Eclipse Project Management Infrastructure (PMI)&lt;/h2&gt;
+
+&lt;h3 id=&quot;bug-519694-remove-solr-on-projects-eclipse-org&quot;&gt;Bug 519694 - Remove solr on projects.eclipse.org&lt;/h3&gt;
+
+&lt;p&gt;&lt;img alt=&quot;New project search page&quot; src=&quot;https://www.chrisguindon.com/images/report-q3/projects-eclipse-org-solr.jpg&quot; title=&quot;New project search page&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We’ve been using &lt;a href=&quot;http://lucene.apache.org/solr/&quot;&gt;Apache Solr&lt;/a&gt; for a few years now to run the Eclipse Projects search page. The search result page was very quick to load but our users often reported issues regarding the results.&lt;/p&gt;
+
+&lt;p&gt;Since Solr was a service that the Eclipse IT team needed to maintain, I considered &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=519694&quot;&gt;removing Solr&lt;/a&gt; from projects.eclipse.org and replacing it with a simple Drupal view.&lt;/p&gt;
+
+&lt;p&gt;It didn’t take long before it was obvious that this new page did a better job at meeting the needs of our community.&lt;/p&gt;
+
+&lt;p&gt;This was a win/win for both the Eclipse IT team and our community. We now have a better search results page for our users and the Eclipse IT team can drop the support of Solr instances for this website.&lt;/p&gt;
+
+&lt;p&gt;You can try this new search page now on &lt;a href=&quot;https://projects.eclipse.org&quot;&gt;projects.eclipse.org&lt;/a&gt;.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;eclipse-working-groups&quot;&gt;Eclipse Working Groups&lt;/h2&gt;
+
+&lt;h3 id=&quot;bug-520121-need-a-new-conference-website-for-foss4g-na-2018&quot;&gt;Bug 520121 - Need a new conference website for FOSS4G NA 2018&lt;/h3&gt;
+
+&lt;p&gt;&lt;img alt=&quot;FOSS4G North America 2018&quot; src=&quot;https://www.chrisguindon.com/images/report-q3/foss4g-2018.jpg&quot; title=&quot;FOSS4G North America 2018&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This year’s &lt;a href=&quot;https://2018.foss4g-na.org/&quot;&gt;FOSS4G NA conference&lt;/a&gt; is a collaborative effort involving &lt;a href=&quot;http://www.osgeo.org/&quot;&gt;OSGeo&lt;/a&gt; and &lt;a href=&quot;https://www.locationtech.org/&quot;&gt;LocationTech&lt;/a&gt;. The conference provides opportunities for the FOSS4G community to learn, explore, share, and collaborate on the latest ideas and information.&lt;/p&gt;
+
+&lt;p&gt;The conference is next year from May 14 to the 16 in St. Louis.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://2018.foss4g-na.org/&quot;&gt;FOSS4G - North America 2018&lt;/a&gt; website is now available and you can follow &lt;a href=&quot;https://twitter.com/foss4gna&quot;&gt;@foss4gna&lt;/a&gt; on twitter or the latest news.&lt;/p&gt;
+
+&lt;h3 id=&quot;bug-514542-create-initial-website-for-openpass&quot;&gt;Bug 514542 - Create initial website for openPASS&lt;/h3&gt;
+
+&lt;p&gt;&lt;img alt=&quot;OpenPASS Working Group&quot; src=&quot;https://www.chrisguindon.com/images/report-q3/openpass.jpg&quot; title=&quot;OpenPASS Working Group&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The goal of the Eclipse OpenPASS Working Group is to support the development of advanced driver assistance systems (also known as autonomous driving systems) providing tools and adapters for standardized openly-available and vendor-neutral platforms for simulation of traffic scenarios.&lt;/p&gt;
+
+&lt;p&gt;Eric Poirier did a great job at building this new website using Drupal and the Eclipse Solstice look and feel.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;http://openpass.eclipse.org/&quot;&gt;OpenPASS Working Group&lt;/a&gt; website is now available!&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;I am very proud of the work that my team did this quarter and I am looking forward to new and exciting projects for Q4.&lt;/p&gt;
+
+&lt;p&gt;I am still working on a final list of MBO’s for Q4 2017 but here’s a shortlist of what’s on my radar:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Migrate our Conference platform to &lt;a href=&quot;https://www.drupal.org/project/cod&quot;&gt;COD 7.x-2.x&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Build a new conference website for Eclipse France 2018.&lt;/li&gt;
+&lt;li&gt;Pursue the work done so far with &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=469321&quot;&gt;Bug 469321&lt;/a&gt; - Portal Shutdown plan: Transfer all portal functionality to PMI, website, etc.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=421727&quot;&gt;Bug 421727&lt;/a&gt; - Use mysqli extension instead.&lt;/li&gt;
+&lt;li&gt;Archive some EclipseCon websites to static HTML to reduce maintenance.&lt;/li&gt;
+&lt;li&gt;Migrate mailing list subscriptions to accounts.eclipse.org.&lt;/li&gt;
+&lt;/ol&gt;</description>
+	<pubDate>Tue, 03 Oct 2017 00:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>Ian Skerrett: 5 Trends to Watch in the Java Ecosystem</title>
+	<guid isPermaLink="false">http://ianskerrett.wordpress.com/?p=4330</guid>
+	<link>http://feedproxy.google.com/~r/IanSkerrett/~3/KYDnbCQzfzE/</link>
+	<description>&lt;p&gt;Over the last couple of months a number of announcements have been made that change the the Java ecosystem. These changes could have a long-term impact on Java developers and the Eclipse community. This week at JavaOne I expect we will hear about a lot of these changes. For the most part I think there are 5 key trends that all Java developers will need to watch.  If you can’t make it to JavaOne, many of these trends will also be highlighted at EclipseCon Europe.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;1. Adoption of Java 9&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Java 9 is finally out the door. This release has been a long time in development so now the process of adoption will begin. First step in adoption is making sure developers tools work with Java 9.  Eclipse JDT supports Java 9 from day 1.&lt;/p&gt;
+&lt;p&gt;At EclipseCon Europe, there are a number of sessions focused on Java 9, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/eclipse-and-java%E2%84%A2-9&quot;&gt;Eclipse JDT supports Java 9&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/%E2%80%9C-future-async%E2%80%9D-or-java-concurrency-change-time&quot;&gt;Session on Java 9 Reactive Streams&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/jdt-embraces-java%E2%84%A2-9-insiders-view&quot;&gt;JDT embraces Java™ 9 – An insiders’ view&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/java-se-9-and-application-server&quot;&gt;Experience report on using Java 9 as an application server&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;b&gt;2. A more open Java SE future&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Oracle has made two key announcements for Java SE and openJDK: 1) openJDK is moving to a 6 month release schedule. This should allow for more rapid innovation in Java SE but it will have an impact of the overall ecosystem, and 2) openJDK will start shipping Java SE binaries that are equivalent to the Oracle JDK. This essentially removes the field of use restrictions for Java SE. This could have a big impact for Java in areas like the Internet of Things (IoT).&lt;/p&gt;
+&lt;p&gt;Donald Smith, the Oracle Product Manger for Java SE, will be talking about the current &lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/java-se-current-status&quot;&gt;status of Java SE&lt;/a&gt; and future changes.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;3. Release of Eclipse OpenJ9&lt;/b&gt;&lt;/p&gt;&lt;b&gt;
+&lt;/b&gt;&lt;p&gt;&lt;b&gt;&lt;/b&gt;Earlier this year, IBM announced their intention to open source their J9 VM. The first release of the Eclipse OpenJ9 is now available and the response has been very positive. The potential of having another production ready Java virtual machine available in open source is going to given Java developers more choice.&lt;/p&gt;
+&lt;p&gt;Charlie Grace from the Eclipse OpenJ9 project will be giving an &lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/introducing-openj9-eclipses-new-java-vm-sponsored-ibm&quot;&gt;introduction to OpenJ9 at ECE.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;4. A focus on Java microservices with Eclipse Microprofile&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;The movement towards microservices architecture is a theme pervasive across the entire software industry. Creating and deploying Java as microservices is something I expect we will hear a lot about at JavaOne and beyond.  The Eclipse Microprofile project is working very hard and fast to create specifications for Java microservices. The project has accomplish a lot over the last year and I expect we will hear a lot more in the coming months.&lt;/p&gt;
+&lt;p&gt;At EclipseCon Europe, lots of sessions from the leaders in the Microprofile project:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/eclipse-microprofile-what-it-it-javaee-replacement&quot;&gt;Eclipse MicroProfile: What is it? Is it a JavaEE replacement?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/microprofile-java-ee-and-application-server-oh-my&quot;&gt;MicroProfile, Java EE, and the Application Server — Oh My!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/monitoring-aspects-eclipse-microprofile&quot;&gt;The Monitoring aspects of Eclipse MicroProfile&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/eclipse-microprofile-config-and-osgi-config-admin&quot;&gt;Eclipse MicroProfile Config and OSGi Config Admin&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt; &lt;br /&gt;
+&lt;b&gt;5. Java EE Moves to the Eclipse Foundation&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;Finally, Oracles announcement to move Java EE to the Eclipse Foundation will be something to watch in the coming year. Oracle is moving very fast and the large Java EE community to beginning to engage. It is definitely going to be a process that will need the contribution of many many people.&lt;/p&gt;
+&lt;p&gt;At EclipseCon Europe we will have two talks on Java EE:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;David Delabassée from Oracle will give &lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/java-ee-8-final-now-what&quot;&gt;Java EE 8 is final… Now what?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;There will be a &lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/opening-java-ee-panel-discussion&quot;&gt;panel to discuss&lt;/a&gt; the process of moving Java EE to the Eclipse Foundation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Next year at JavaOne, the Java ecosystem could be substantially different. It is definitely going to be more open and in my experience that will bring a lot of innovation. For the Eclipse community, it is exciting that the Eclipse Foundation is becoming the home for many of the open source communities for Java developers. If you don’t make it to JavaOne, plan to attend &lt;a href=&quot;https://www.eclipsecon.org/europe2017/&quot;&gt;EclipseCon Europe&lt;/a&gt; to learn more about these key Java trends.&lt;/p&gt;&lt;br /&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/ianskerrett.wordpress.com/4330/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/ianskerrett.wordpress.com/4330/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=ianskerrett.wordpress.com&amp;amp;blog=405862&amp;amp;post=4330&amp;amp;subd=ianskerrett&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/IanSkerrett/~4/KYDnbCQzfzE&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Mon, 02 Oct 2017 16:01:00 +0000</pubDate>
+</item>
+<item>
+	<title>Karsten Thoms: Resolve NullPointerException in ModelServiceImpl constructor</title>
+	<guid isPermaLink="false">http://kthoms.wordpress.com/?p=793</guid>
+	<link>https://kthoms.wordpress.com/2017/10/02/resolve-nullpointerexception-in-modelserviceimpl-constructor/</link>
+	<description>&lt;p&gt;I was creating a launch configuration for a plug-in test and wanted to have only a minimal set of plugins configured. Thus I am using PDE to add all required plug-ins of the test. The “Validate Plug-ins” action does not recognize any issue.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;screenshot 3.png&quot; class=&quot;alignnone size-full wp-image-798&quot; src=&quot;https://kthoms.files.wordpress.com/2017/10/screenshot-3.png?w=584&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;However, when starting the test it fails with a &lt;code&gt;NullPointerException&lt;/code&gt; in &lt;code&gt;ModelServiceImpl&lt;/code&gt;‘s constructor. The reason here is that no instance of &lt;code&gt;IEventBroker&lt;/code&gt; was retrieved from the application context. To enhance the situation I have opened &lt;a href=&quot;https://bugs.eclipse.org/bugs/show_bug.cgi?id=522051&quot;&gt;Bug#522051&lt;/a&gt; and giving this as an error message.&lt;/p&gt;
+&lt;p&gt;To solve this issue when running on Equinox, the bundle &lt;b&gt;&lt;code&gt;org.eclipse.equinox.event&lt;/code&gt;&lt;/b&gt; has to be added to the launch configuration. Also configure this bundle to start automatically at start level 2.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;screenshot 4.png&quot; class=&quot;alignnone size-full wp-image-814&quot; src=&quot;https://kthoms.files.wordpress.com/2017/10/screenshot-4.png?w=584&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;I would have liked to give this hint already with the improved error message, but theoretically the &lt;code&gt;IEventBroker&lt;/code&gt; could be also provided by another OSGi implementation, so this additional hint was rejected with reason. I hope that this post will help you then further.&lt;/p&gt;&lt;br /&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/kthoms.wordpress.com/793/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/kthoms.wordpress.com/793/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=kthoms.wordpress.com&amp;amp;blog=6829080&amp;amp;post=793&amp;amp;subd=kthoms&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Mon, 02 Oct 2017 09:19:17 +0000</pubDate>
+</item>
+<item>
+	<title>Mike Milinkovich: On Naming, or Why EE4J Does Not Suck</title>
+	<guid isPermaLink="false">http://mmilinkov.wordpress.com/?p=1387</guid>
+	<link>https://mmilinkov.wordpress.com/2017/09/30/on-naming/</link>
+	<description>&lt;p style=&quot;padding-left: 60px;&quot;&gt;&lt;i&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;“You keep using that word. I do not think it means what you think it means.” — Inigo Montoya, The Princess Bride, on Vizzini’s use of the word “inconceivable”.&lt;/span&gt;&lt;/i&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;On Thursday we &lt;a href=&quot;https://mmilinkov.wordpress.com/2017/09/28/introducing-ee4j/&quot;&gt;announced&lt;/a&gt; that the &lt;a href=&quot;https://projects.eclipse.org/projects/ee4j/charter&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;draft top-level project charter&lt;/a&gt; for Eclipse Enterprise for Java (EE4J) was available for community feedback. Since that time, we haven’t received any feedback on the charter, but we have certainly had a lot of passionate feedback on the choice of name. If I could, I would summarize the bulk of the feedback that we’ve seen as “…EE4J is a pretty good acronym, but WTF is Eclipse doing in the name?” A lot of that feedback is based on some incorrect assumptions about what the EE4J name means. Which is totally my fault, because my initial blog post did not provide any context for how EE4J will be used, and not used, as a name and a brand. Hopefully this post will correct that.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Before I begin, I have to mention that a very large caveat on everything that follows. This post is based on my best guess on how things are going to work out, with the information I have at this moment. However, there are a significant number of agreements that have to be discussed regarding names, trademarks, and so on that have not yet been completed. It is possible that the future will not unfold as I think it will. So with that said….&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;EE4J is not the brand&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;I think that many people are assuming that EE4J will become the brand that replaces Java EE. Wrong. Java EE is a certification mark. To label something as “Java EE”, you need to get a license from Oracle and pass the TCKs. There are many implementations of Java EE such as WebLogic, WebSphere, JBoss, and Glassfish. EE4J is the name of the top-level project  at the Eclipse Foundation. As such it is the umbrella under which the source code and TCKs for Glassfish, EclipseLink, and (hopefully) Eclipse MicroProfile will exist. &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;We are months away from even starting to define the specification process that will be used in the future. However, when we do I expect that this new process will create a new certification mark which can be properly considered the new “Java EE” name. We will be engaging with the community in the selection of that name. &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;The existing project names will continue to be used&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;I have seen some comments along the lines of “…it’ll be weird to install Eclipse Enterprise for Java into IntelliJ”. I’m actually pretty sure that what people will be installing is more likely to be called something like Eclipse Glassfish, or Eclipse MicroProfile. &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Again, EE4J is the name of the top-level project at Eclipse. The projects within EE4J will continue to have their own identity, just as they do today. The committers and the PMC for EE4J will be deciding what artifacts they will be releasing and whether anything actually ships under the name EE4J. Maybe they will, maybe they won’t. But only time will tell.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;The solution space is smaller than you think&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Anyone who has ever built and maintained a large piece of software knows that naming is hard. Naming widely used technologies that take on a brand identity and which require trademarking are harder still. Selecting the EE4J name had to solve a number of real world constraints:&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;We wanted it to contain the word Java, but it also had to comply with the Java trademark guidelines. Oracle is the only entity that can use the word Java at the beginning of a name. Which meant that using “for Java” was pretty much a fixed requirement. &lt;/span&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;
+&lt;p&gt;&lt;/p&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Whether you call it JEE, J2EE, or Java EE for the entire life of the enterprise Java platform “EE” has been in the name. Continuing that tradition provides some clear benefits in terms of continuity and brand recognition. For what it is worth, we basically selected the acronym first and then backed into what the letters in the acronym might mean.&lt;/span&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;
+&lt;p&gt;&lt;/p&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;The name has to be available to be trademarked. We actually ran full legal trademark searches on a couple of alternate names, and EE4J was the clear winner in terms of availability. &lt;/span&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;&lt;br /&gt;
+&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;b&gt;Summary&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Hopefully this post provides some context for the naming choice that will help people understand what EE4J is, and is not, as a project name, brand, and trademark. &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;As Mark Little of Red Hat said &lt;a href=&quot;https://planet.jboss.org/post/ee4j_life_beyond_java_ee_begins_today&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;in his post earlier today&lt;/a&gt;, &lt;/span&gt;&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;There’s a lot of pent-up passion and energy around Java EE and it would be so much better if individuals focused that on the charter at this point than complaining about the name. Yes, I understand that some people feel the name is important to the success of this effort but I can tell you all that there’s a lot more to choosing a name for a foundation or massively successful project than just … choosing the name.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;The passion and commitment of the people in the Java EE community is amazing. Working with this community and welcoming you all to Eclipse is an opportunity and a responsibility that all of us at the Eclipse Foundation take very seriously. The future success of EE4J and the enterprise Java platform is going to be determined by whether we can get you talented, smart, and passionate Javaistas to contribute to the projects and the community. &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;I am looking forward to JavaOne next week, and hope to see many of you there!&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;P.S. Comments and discussion are welcomed over on the &lt;a href=&quot;https://dev.eclipse.org/mailman/listinfo/ee4j-community&quot; rel=&quot;noopener&quot; target=&quot;_blank&quot;&gt;ee4j-community list&lt;/a&gt;. There are already over 100 subscribers there!&lt;/p&gt;&lt;br /&gt;Filed under: &lt;a href=&quot;https://mmilinkov.wordpress.com/category/foundation/&quot;&gt;Foundation&lt;/a&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/mmilinkov.wordpress.com/1387/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/mmilinkov.wordpress.com/1387/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=mmilinkov.wordpress.com&amp;amp;blog=19461799&amp;amp;post=1387&amp;amp;subd=mmilinkov&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Sat, 30 Sep 2017 21:30:39 +0000</pubDate>
+</item>
+<item>
+	<title>Eclipse Announcements: Annual Donation Campaign: End User Support for the Eclipse Foundation</title>
+	<guid isPermaLink="true">http://feedproxy.google.com/~r/eclipse/fnews/~3/B7MSfmAKHzE/</guid>
+	<link>http://feedproxy.google.com/~r/eclipse/fnews/~3/B7MSfmAKHzE/</link>
+	<description>To encourage end-user support,  we are launching the October Donation Campaign. The goal is to have over 1000 individuals donate to the Eclipse Foundation and help support the overall community.&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/eclipse/fnews/~4/B7MSfmAKHzE&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Fri, 29 Sep 2017 16:00:00 +0000</pubDate>
+</item>
+<item>
+	<title>Ian Skerrett: Annual Donation Campaign: End User Support for the Eclipse Foundation</title>
+	<guid isPermaLink="false">http://ianskerrett.wordpress.com/?p=4289</guid>
+	<link>http://feedproxy.google.com/~r/IanSkerrett/~3/B7MSfmAKHzE/</link>
+	<description>&lt;p&gt;The Eclipse Foundation is a not-for-profit organization that is mainly funded by fees from our &lt;a href=&quot;https://www.eclipse.org/membership/exploreMembership.php&quot;&gt;corporate members&lt;/a&gt;. Our corporate members definitely get a lot of value from their involvement with the Eclipse Foundation. Their support of the Eclipse Foundation is essential to the ongoing operations.&lt;/p&gt;
+&lt;p&gt;There are also millions of software developers who make use of Eclipse technology on a daily basis. For the most part these developers and their organization use the Eclipse IDE and other projects free of charge. Of course this is perfectly fine given the open source license for Eclipse projects. However, to sustain a community the size of the Eclipse Foundation requires ongoing support and resources. End user support for open source foundations, including the Eclipse Foundation, is important to the ongoing sustainability of the community.&lt;/p&gt;
+&lt;p&gt;To encourage end-user support,  we are launching the &lt;a href=&quot;https://www.eclipse.org/donate/&quot;&gt;October Donation Campaign&lt;/a&gt;. The goal is to have over 1000 individuals donate to the Eclipse Foundation and help support the overall community. Last year we ran our first annual donation campaign which resulted in 847 people donating to our community.  This year I am sure we can do better.&lt;/p&gt;
+&lt;p&gt;Please take the time to &lt;a href=&quot;https://www.eclipse.org/donate/&quot;&gt;donate to the Eclipse Foundation&lt;/a&gt;. For those &lt;a href=&quot;https://www.eclipse.org/donate/donorlist.php&quot;&gt;who have donated&lt;/a&gt; in the past, thank you! You will also notice that we now accept credit cards. This will make it easier for people who can’t/won’t use Paypal or bitcoin.&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;master-donate-middletext-v2&quot; class=&quot;alignnone size-full wp-image-4327&quot; src=&quot;https://ianskerrett.files.wordpress.com/2017/09/master-donate-middletext-v2.jpg?w=450&quot; /&gt;&lt;/p&gt;&lt;br /&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/ianskerrett.wordpress.com/4289/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/ianskerrett.wordpress.com/4289/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=ianskerrett.wordpress.com&amp;amp;blog=405862&amp;amp;post=4289&amp;amp;subd=ianskerrett&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/IanSkerrett/~4/B7MSfmAKHzE&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Fri, 29 Sep 2017 14:18:26 +0000</pubDate>
+</item>
+<item>
+	<title>Mike Milinkovich: Introducing EE4J: The first  step towards Java EE at the Eclipse Foundation</title>
+	<guid isPermaLink="false">http://mmilinkov.wordpress.com/?p=1382</guid>
+	<link>https://mmilinkov.wordpress.com/2017/09/28/introducing-ee4j/</link>
+	<description>&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;I am very excited and proud to introduce the new top-level &lt;/span&gt;&lt;a href=&quot;https://projects.eclipse.org/projects/ee4j/charter&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Eclipse Enterprise for Java (EE4J) project&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;. For those that might not have heard, Oracle has announced their intention to move Java EE to the Eclipse Foundation. Creating the EE4J top-level project is the first step to making this a reality. &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mmilinkov.wordpress.com/2017/09/12/java-ee-moves-to-the-eclipse-foundation/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Moving Java EE to the Eclipse Foundation&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; is going to be an exciting and massive undertaking. It is a significant opportunity to use the Eclipse open development model to accelerate innovation in Java for enterprise and cloud native computing. We look forward to engaging with the millions of developers and organizations using Java EE. &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;The Java EE technology is a very large portfolio of source code, TCKs and specifications. Moving all of Java EE will be a significant undertaking for the community. For instance,&lt;/span&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;The GlassFish open source project includes 130 github repos. Moving these existing GlassFish open source projects to the Eclipse Foundation, and getting all of the various sub-projects set up and under the Eclipse development process will take some time.&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;The Java EE TCKs will be moved to Eclipse open source projects and be available to the community.  What this means and how the community interacts with the TCKs needs to be defined. &lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Create an open build infrastructure so EE4J can be built and tested by the community.&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Establish a new specification process under the auspices of the Eclipse Foundation.&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;The good news is Oracle, along with IBM and Red Hat, is moving incredibly fast. Publishing the top-level project charter is an important first step. However, we are aware that there are literally millions of developers who have a vested interest in the future of the enterprise edition of the Java Platform, and who quite rightfully would like to have detailed plans now for how and when the above list are going to be completed. Unfortunately, the details are going to take some time to plan and execute. Moving Java EE to the Eclipse Foundation is going to be process, not an event. I do expect this will be an open process that encourages community members to contribute.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Today marks a very significant milestone in our journey. We are pleased to announce that the &lt;/span&gt;&lt;a href=&quot;https://projects.eclipse.org/projects/ee4j/charter&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;draft charter&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; for the Eclipse Enterprise for Java top-level project is now available for community review and feedback. We have created the &lt;/span&gt;&lt;a href=&quot;https://dev.eclipse.org/mailman/listinfo/ee4j-community&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;ee4j-community&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; mailing list for the community to use to provide that feedback, so please subscribe to the list and join the conversation!&lt;/span&gt;&lt;/p&gt;&lt;br /&gt;Filed under: &lt;a href=&quot;https://mmilinkov.wordpress.com/category/foundation/&quot;&gt;Foundation&lt;/a&gt;, &lt;a href=&quot;https://mmilinkov.wordpress.com/category/open-source/&quot;&gt;Open Source&lt;/a&gt;  &lt;a href=&quot;http://feeds.wordpress.com/1.0/gocomments/mmilinkov.wordpress.com/1382/&quot; rel=&quot;nofollow&quot;&gt;&lt;img alt=&quot;&quot; border=&quot;0&quot; src=&quot;http://feeds.wordpress.com/1.0/comments/mmilinkov.wordpress.com/1382/&quot; /&gt;&lt;/a&gt; &lt;img alt=&quot;&quot; border=&quot;0&quot; height=&quot;1&quot; src=&quot;https://pixel.wp.com/b.gif?host=mmilinkov.wordpress.com&amp;amp;blog=19461799&amp;amp;post=1382&amp;amp;subd=mmilinkov&amp;amp;ref=&amp;amp;feed=1&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Fri, 29 Sep 2017 00:30:17 +0000</pubDate>
+</item>
+<item>
+	<title>Eclipse Announcements: Eclipse IoT Announces Fourth Edition of the Open IoT Challenge</title>
+	<guid isPermaLink="true">http://feedproxy.google.com/~r/eclipse/fnews/~3/yLHMta_TI9M/20170928_open_iot_challenge_4.php</guid>
+	<link>http://feedproxy.google.com/~r/eclipse/fnews/~3/yLHMta_TI9M/20170928_open_iot_challenge_4.php</link>
+	<description>IoT enthusiast? This Challenge is for you! Submit your IoT solution proposal by November 13.&lt;img alt=&quot;&quot; height=&quot;1&quot; src=&quot;http://feeds.feedburner.com/~r/eclipse/fnews/~4/yLHMta_TI9M&quot; width=&quot;1&quot; /&gt;</description>
+	<pubDate>Thu, 28 Sep 2017 14:10:00 +0000</pubDate>
+</item>
+<item>
+	<title>Maximilian and Jonas: EMF Forms and EMF Client Platform 1.14.0 released! – Join us at EclipseCon Europe 2017</title>
+	<guid isPermaLink="false">https://eclipsesource.com/?p=35643</guid>
+	<link>https://eclipsesource.com/blogs/2017/09/28/emf-forms-and-emf-client-platform-1-14-0-released-join-us-at-eclipsecon-europe-2017/</link>
+	<description>&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;We are happy to announce that together with Oxygen.1, we have released  &lt;/span&gt;&lt;a href=&quot;http://eclipse.org/ecp/emfforms&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;EMF Forms&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; and &lt;/span&gt;&lt;a href=&quot;http://eclipse.org/ecp&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;EMF Client Platform&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; 1.14.0! &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;We want to thank our continuously active team of &lt;/span&gt;&lt;b&gt;10 contributors &lt;/b&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;(&lt;/span&gt;&lt;b&gt;38 contributors&lt;/b&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; over all) for completing on &lt;/span&gt;&lt;a href=&quot;https://bugs.eclipse.org/bugs/buglist.cgi?bug_status=UNCONFIRMED&amp;amp;bug_status=NEW&amp;amp;bug_status=ASSIGNED&amp;amp;bug_status=REOPENED&amp;amp;bug_status=RESOLVED&amp;amp;bug_status=VERIFIED&amp;amp;bug_status=CLOSED&amp;amp;classification=Modeling&amp;amp;component=Common&amp;amp;component=Editor&amp;amp;component=EMF%20Forms&amp;amp;component=Model%20Workspace&amp;amp;component=Navigator&amp;amp;component=Validation&amp;amp;list_id=16486599&amp;amp;product=ECP&amp;amp;query_format=advanced&amp;amp;target_milestone=1.14.0&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;29 bug reports and feature requests&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;.  &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;If you want to learn more about the new features and related frameworks: Join us at &lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;EclipseCon Europe 2017&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;!&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;&quot; class=&quot;alignnone size-full wp-image-35645&quot; height=&quot;79&quot; src=&quot;https://eclipsesource.com/wp-content/uploads/2017/09/image11.png&quot; width=&quot;275&quot; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;In the session “&lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/building-form-based-uis-emf-forms-101&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Building form-based UIs with EMF Forms – 101&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;” we will provide a jump start with the framework and answer most frequent questions for beginners.&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;In the session “&lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/help-your-users-enter-data-correctly-and-easily-emf-forms&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Help your users to enter data correctly and easily with EMF Forms&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;” we will introduce some of the more advanced features from recent releases, with a focus on input validation.&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Related to EMF Forms, we will show the native web renderer “JSON Forms” in the session “&lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/session/developing-business-web-applications-form-based-uis&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Developing business web applications with form-based UIs&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;”&lt;/span&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;If you want to get in contact with the project leads and the community of contributors and adopters, please join our “&lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/bof-session/emfforms-emf-client-platform-emfstore-json-forms-and-edapt&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;BOF&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;”&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;As you can see, &lt;/span&gt;&lt;a href=&quot;https://www.eclipsecon.org/europe2017/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;EclipseCon Europe 2017&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; is a great place to learn more about EMF Forms, but of course also about many other great topics. Finally, please get in contact with us personally during the event in case you have any question or feedback. We will be around the whole week, typically at the EclipseSource Booth.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Besides EclipseCon: In case you don’t know EMF Forms: It is a framework focused on the creation of form-based UIs. EMF Client Platform is designed to support the development of applications based on an EMF data model. If you are not yet familiar with EMF Forms, please refer to &lt;/span&gt;&lt;a href=&quot;http://eclipsesource.com/blogs/tutorials/getting-started-with-EMF-Forms/&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;this tutorial&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt; for a introduction.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Both of these frameworks are part of Eclipse Modeling Tools Oxygen.1, but you can also find the new release on our download pages:&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;a href=&quot;http://eclipse.org/ecp/download.html&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Download EMF Client Platform&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li style=&quot;font-weight: 400;&quot;&gt;&lt;a href=&quot;http://eclipse.org/ecp/emfforms/download.html&quot;&gt;&lt;span style=&quot;font-weight: 400;&quot;&gt;Download EMF Forms&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+	<pubDate>Thu, 28 Sep 2017 12:06:33 +0000</pubDate>
+</item>
+
+</channel>
+</rss>
