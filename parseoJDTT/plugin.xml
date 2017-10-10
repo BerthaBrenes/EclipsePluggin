@@ -9,7 +9,7 @@
             id="parseoJDTT.commands.category">
       </category>
       <command
-            name="Sample Command"
+            name="JDT"
             categoryId="parseoJDTT.commands.category"
             id="parseoJDTT.commands.sampleCommand">
       </command>
@@ -26,7 +26,7 @@
       <key
             commandId="parseoJDTT.commands.sampleCommand"
             contextId="org.eclipse.ui.contexts.window"
-            sequence="M1+6"
+            sequence="M1+7"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
    </extension>
@@ -35,7 +35,7 @@
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
-               label="Sample Menu"
+               label="JDT"
                mnemonic="M"
                id="parseoJDTT.menus.sampleMenu">
             <command
@@ -52,7 +52,7 @@
             <command
                   commandId="parseoJDTT.commands.sampleCommand"
                   icon="icons/sample.png"
-                  tooltip="Say hello world"
+                  tooltip="Generate JDT in console"
                   id="parseoJDTT.toolbars.sampleCommand">
             </command>
          </toolbar>
