@@ -52,6 +52,8 @@ public class GetInfo extends AbstractHandler{
 			parse.accept(visitor);
 			for(MethodDeclaration method : visitor.getMethods()) {
 				System.out.println("Method name: " + method.getName() + "Return Type: "+ method.getReturnType2());
+				
+				System.out.println("Pruebas" + method.FOR_STATEMENT);
 			}
 		}
 		

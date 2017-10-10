@@ -17,4 +17,5 @@ public class MethodVisitor extends ASTVisitor {
 	public List<MethodDeclaration> getMethods(){
 		return methods;
 	}
+	
 }
