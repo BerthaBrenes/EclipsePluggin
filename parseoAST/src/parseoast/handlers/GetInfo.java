@@ -1,8 +1,12 @@
 package parseoast.handlers;
 
+import java.beans.Statement;
+import java.lang.reflect.Method;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.internal.resources.RegexFileInfoMatcher;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
@@ -53,7 +57,17 @@ public class GetInfo extends AbstractHandler{
 			for(MethodDeclaration method : visitor.getMethods()) {
 				System.out.println("Method name: " + method.getName() + "Return Type: "+ method.getReturnType2());
 				
-				System.out.println("Pruebas" + method.FOR_STATEMENT);
+				String regex = method.getBody().statements().get(0).toString();
+				String [] arrOfStr = regex.split(" ");
+				//System.out.println("Pruebas"+ regex);
+		        for (String a : arrOfStr) {
+		            System.out.println("["+a+"]");
+		            if(a.equals("if")) {
+		            	System.out.println("salio un if");
+		            }else if(a.equals("for")) {
+		            	System.out.println("encontre un for");
+		            }
+		   }
 			}
 		}
 		
