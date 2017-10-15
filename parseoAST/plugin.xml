@@ -60,11 +60,17 @@
    </extension>
    <extension
          point="org.eclipse.ui.views">
+      <category
+            id="parseoAST"
+            name="Diagrama de Flujo">
+      </category>
       <view
-            class="parseoast.Diagrama"
-            id="parseoAST.Diagrama"
-            name="Diagrama de Flujo"
-            restorable="true">
+            category="parseoAST"
+            class="parseoast.views.Diagrama"
+            icon="icons/workflow1600.png"
+            id="parseoast.views.DiagramaFlujo"
+            inject="true"
+            name="Diagrama de Flujo">
       </view>
    </extension>
 

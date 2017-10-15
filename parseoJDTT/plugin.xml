@@ -58,39 +58,5 @@
          </toolbar>
       </menuContribution>
    </extension>
-   <extension
-         point="org.eclipse.ui.views">
-      <category
-            id="parseoJDTT"
-            name="Sample Category">
-      </category>
-      <view
-            allowMultiple="false"
-            category="parseoJDTT"
-            class="parseojdtt.views.SampleView"
-            icon="icons/sample.png"
-            id="parseojdtt.views.SampleView"
-            inject="true"
-            name="Sample View">
-      </view>
-   </extension>
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="org.eclipse.jdt.ui.JavaPerspective">
-         <view
-               id="parseojdtt.views.SampleView"
-               ratio="0.5"
-               relationship="right"
-               relative="org.eclipse.ui.views.ProblemView">
-         </view>
-      </perspectiveExtension>
-   </extension>
-   <extension
-         point="org.eclipse.help.contexts">
-      <contexts
-            file="contexts.xml">
-      </contexts>
-   </extension>
 
 </plugin>
