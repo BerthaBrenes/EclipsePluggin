@@ -2,42 +2,73 @@ package parseoast.views;
 
 
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.widgets.ProgressBar;
+import org.eclipse.wb.swt.ResourceManager;
+
+import swing2swt.layout.BoxLayout;
+
 
 public class Diagrama extends ViewPart {
-
 	public Diagrama() {
-		// TODO Auto-generated constructor stub
 	}
+	private Action action;
+	private Action action1;
+	private Action action2;
+	
 
 	@Override
-	public void createPartControl(Composite parent) {
-		parent.setLayout(new GridLayout(2,false));
+    public void createPartControl(Composite parent) {
+		parent.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
 		
-		Label lblNewLabel = new Label (parent,SWT.NONE);
-		lblNewLabel.setLayoutData(new GridData(SWT.FILL,SWT.CENTER,false,false,1,1));
-		lblNewLabel.setText("Hello World");
+		Label image2 = new Label(parent, SWT.SHADOW_IN | SWT.CENTER);
+		image2.setToolTipText("");
+		image2.setImage(ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/decision-symbol.png"));
 		
-		ProgressBar progressBar = new ProgressBar(parent, SWT.NONE);
+		Label image = new Label(parent, SWT.IMAGE_PNG);
+		image.setImage(ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/action-process-symbol.png"));
 		
-		Button btnNewButton_1 = new Button(parent, SWT.NONE);
-		btnNewButton_1.setText("New Button");
-		new Label(parent, SWT.NONE);
+		
+	        
+		
 
-	}
 
-	@Override
-	public void setFocus() {
-		// TODO Auto-generated method stub
+		
+        createActions();
+        initializeToolBar();
+    }
 
-	}
+    private void createActions() {
+        // Create the actions
+    	{
+    		action = new Action("Step Into") {
+    		};
+    		action.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepinto_co.png"));
+    		action1 = new Action("Step Over") {
+    		};
+    		action1.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepover_co.png"));
+    		action2  = new Action ("Start Debug with Flowchart") {
+    		};
+    		action2.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/resume_co.png"));
+    		
+    	}
+    }
 
+    private void initializeToolBar() {
+        IToolBarManager toolbarManager= getViewSite().getActionBars().getToolBarManager();
+        toolbarManager.add(action2);
+        toolbarManager.add(action);
+        toolbarManager.add(action1);
+    }
+
+    
+
+    @Override
+    public void setFocus() {
+        // set the focus
+    }
 }

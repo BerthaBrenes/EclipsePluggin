@@ -82,6 +82,7 @@ public class GetInfo extends AbstractHandler {
 					}
 					i ++;
 				}
+				break;
 				// System.out.println("Pruebas"+ regex);
 
 			}
