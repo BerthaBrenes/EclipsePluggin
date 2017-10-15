@@ -1,5 +1,6 @@
 package parseoast.views;
 
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
@@ -8,10 +9,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
+
 import org.eclipse.swt.layout.GridLayout;
 
 
 
+import parseoast.handlers.GetInfo;
+
+import org.eclipse.swt.layout.GridLayout;
 
 public class Diagrama extends ViewPart {
 	public Diagrama() {
@@ -25,6 +30,7 @@ public class Diagrama extends ViewPart {
     public void createPartControl(Composite parent) {
 
 		parent.setLayout(new GridLayout(2, false));
+
 
 		
 		Label image2 = new Label(parent, SWT.SHADOW_IN | SWT.CENTER);
@@ -43,20 +49,28 @@ public class Diagrama extends ViewPart {
     	{
     		action = new Action("Step Into") {
     			
-    			public void Run () throws ExecutionException {
-    				System.out.println("Step Into");
+    			public void run () {
+    				
     				
     			}
     			
     		};
-    		action.run();
+    		
     		
     		action.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepinto_co.png"));
     		action1 = new Action("Step Over") {
     		};
     		action1.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepover_co.png"));
     		action2  = new Action ("Start Debug with Flowchart") {
-    			
+    			public void run () {
+    				GetInfo a = new GetInfo();
+    				try {
+						a.execute(new ExecutionEvent());
+					} catch (ExecutionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+    			}
     		};
     		
     		action2.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/resume_co.png"));
