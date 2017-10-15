@@ -1,3 +1,4 @@
+
 package parseoast.handlers;
 
 import java.beans.Statement;
@@ -87,6 +88,7 @@ public class GetInfo extends AbstractHandler {
 					}
 					i ++;
 				}
+				break;
 				// System.out.println("Pruebas"+ regex);
 
 			}
@@ -104,3 +106,4 @@ public class GetInfo extends AbstractHandler {
 	}
 
 }
+
