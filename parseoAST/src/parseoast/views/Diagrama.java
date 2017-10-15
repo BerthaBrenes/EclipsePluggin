@@ -5,6 +5,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.*;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
@@ -14,6 +15,11 @@ import parseoast.handlers.GetInfo;
 
 import org.eclipse.swt.layout.GridLayout;
 
+<<<<<<< HEAD
+//import swing2swt.layout.BoxLayout;
+
+=======
+>>>>>>> 1d00fb97487cd98890cca3b6750049eb22b610e8
 
 
 public class Diagrama extends ViewPart {
@@ -26,8 +32,12 @@ public class Diagrama extends ViewPart {
 
 	@Override
     public void createPartControl(Composite parent) {
+<<<<<<< HEAD
+		//parent.layout(new BoxLayout(BoxLayout.Y_AXIS));
+=======
 		parent.setLayout(new GridLayout(2, false));
 		
+>>>>>>> 1d00fb97487cd98890cca3b6750049eb22b610e8
 		
 		Label image2 = new Label(parent, SWT.SHADOW_IN | SWT.CENTER);
 		image2.setToolTipText("");

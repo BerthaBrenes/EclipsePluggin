@@ -1,5 +1,7 @@
 
+
 package parseoast.handlers;
+
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+
 
 public class GetInfo extends AbstractHandler {
 	private static final String JDT_Nature = "org.eclipse.jdt.core.javanature";
@@ -56,6 +59,7 @@ public class GetInfo extends AbstractHandler {
 			CompilationUnit parse = parse(unit);
 			MethodVisitor visitor = new MethodVisitor();
 			parse.accept(visitor);
+			
 			for (MethodDeclaration method : visitor.getMethods()) {
 				System.out.println("Method name: " + method.getName() + "Return Type: " + method.getReturnType2());
 				
@@ -65,6 +69,10 @@ public class GetInfo extends AbstractHandler {
 				while( i != arraySta.size()) {
 					String regex = method.getBody().statements().get(i).toString();
 					String[] arrOfStr = regex.split(" ");
+					if(method.getBody().VARIABLE_DECLARATION_STATEMENT != 0) {
+						System.out.println(method.getBody().VARIABLE_DECLARATION_STATEMENT);
+						System.out.println("una declaracion de metodos");
+					}
 					//System.out.println(regex);
 					for (String a : arrOfStr) {
 						 System.out.println("["+a+"]");
@@ -97,4 +105,6 @@ public class GetInfo extends AbstractHandler {
 	}
 
 }
+
+
 
