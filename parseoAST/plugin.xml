@@ -58,5 +58,14 @@
          </toolbar>
       </menuContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="parseoast.Diagrama"
+            id="parseoAST.Diagrama"
+            name="Diagrama de Flujo"
+            restorable="true">
+      </view>
+   </extension>
 
 </plugin>
