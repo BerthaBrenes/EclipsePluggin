@@ -8,7 +8,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
-import swing2swt.layout.BoxLayout;
+import org.eclipse.swt.layout.GridLayout;
+
 
 
 public class Diagrama extends ViewPart {
@@ -21,7 +22,8 @@ public class Diagrama extends ViewPart {
 
 	@Override
     public void createPartControl(Composite parent) {
-		parent.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+		parent.setLayout(new GridLayout(2, false));
+		
 		
 		Label image2 = new Label(parent, SWT.SHADOW_IN | SWT.CENTER);
 		image2.setToolTipText("");
