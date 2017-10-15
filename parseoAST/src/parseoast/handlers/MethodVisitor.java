@@ -16,11 +16,7 @@ public class MethodVisitor extends ASTVisitor {
 	public boolean visit(MethodDeclaration node) {
 		methods.add(node);
 		return super.visit(node);
-		//IMethodBinding binding = (IMethodBinding) node.getName().resolveBinding();
-		//ICompilationUnit unit = (ICompilationUnit) binding.getJavaElement().getAncestor( IJavaElement.COMPILATION_UNIT );
-		//if ( unit == null ) {
-		   // not available, external declaration
-		//}
+		
 	}
 	public List<MethodDeclaration> getMethods(){
 		return methods;
