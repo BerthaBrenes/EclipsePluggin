@@ -16,6 +16,7 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
+import org.eclipse.jdt.core.IField;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
@@ -23,7 +24,10 @@ import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 
 public class GetInfo extends AbstractHandler {
 	private static final String JDT_Nature = "org.eclipse.jdt.core.javanature";
@@ -62,21 +66,23 @@ public class GetInfo extends AbstractHandler {
 			parse.accept(visitor);
 			for (MethodDeclaration method : visitor.getMethods()) {
 				System.out.println("Method name: " + method.getName() + "Return Type: " + method.getReturnType2());
+				
 				List arraySta = method.getBody().statements();
 				System.out.println(arraySta.size());
 				int i = 0;
 				while( i != arraySta.size()) {
 					String regex = method.getBody().statements().get(i).toString();
 					String[] arrOfStr = regex.split(" ");
-					System.out.println(regex);
+					//System.out.println(regex);
 					for (String a : arrOfStr) {
 						 System.out.println("["+a+"]");
 						if (a.equals("if")) {
 							System.out.println("salio un if");
-							condicionales.add("if");
+							//condicionales.add("if");
 						} else if (a.equals("for")) {
+							
 							System.out.println("encontre un for");
-							condicionales.add("for");
+							//condicionales.add("for");
 						}
 					}
 					i ++;
@@ -87,6 +93,7 @@ public class GetInfo extends AbstractHandler {
 		}
 
 	}
+	
 
 	private static CompilationUnit parse(ICompilationUnit unit) {
 		ASTParser parser = ASTParser.newParser(AST.JLS3);
