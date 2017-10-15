@@ -1,7 +1,6 @@
 package parseoast.views;
 
-
-
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
@@ -9,7 +8,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
-
 import swing2swt.layout.BoxLayout;
 
 
@@ -46,13 +44,23 @@ public class Diagrama extends ViewPart {
         // Create the actions
     	{
     		action = new Action("Step Into") {
+    			
+    			public void Run () throws ExecutionException {
+    				System.out.println("Step Into");
+    				
+    			}
+    			
     		};
+    		action.run();
+    		
     		action.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepinto_co.png"));
     		action1 = new Action("Step Over") {
     		};
     		action1.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepover_co.png"));
     		action2  = new Action ("Start Debug with Flowchart") {
+    			
     		};
+    		
     		action2.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/resume_co.png"));
     		
     	}
