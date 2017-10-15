@@ -18,6 +18,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IField;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
@@ -65,6 +66,7 @@ public class GetInfo extends AbstractHandler {
 			CompilationUnit parse = parse(unit);
 			MethodVisitor visitor = new MethodVisitor();
 			parse.accept(visitor);
+			
 			for (MethodDeclaration method : visitor.getMethods()) {
 				System.out.println("Method name: " + method.getName() + "Return Type: " + method.getReturnType2());
 				
@@ -74,6 +76,10 @@ public class GetInfo extends AbstractHandler {
 				while( i != arraySta.size()) {
 					String regex = method.getBody().statements().get(i).toString();
 					String[] arrOfStr = regex.split(" ");
+					if(method.getBody().VARIABLE_DECLARATION_STATEMENT != 0) {
+						System.out.println(method.getBody().VARIABLE_DECLARATION_STATEMENT);
+						System.out.println("una declaracion de metodos");
+					}
 					//System.out.println(regex);
 					for (String a : arrOfStr) {
 						 System.out.println("["+a+"]");
