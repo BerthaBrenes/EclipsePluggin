@@ -9,6 +9,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -22,6 +23,11 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 
 public class GetInfo extends AbstractHandler {
@@ -30,20 +36,28 @@ public class GetInfo extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot root = workspace.getRoot();
-		IProject[] projects = root.getProjects();
-		for (IProject project : projects) {
-			try {
-				if (project.isNatureEnabled(JDT_Nature)) {
-					analyseMethods(project);
-				}
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
+	  IWorkbenchWindow window = PlatformUI.getWorkbench()
+	              .getActiveWorkbenchWindow();
+	  IWorkbenchPage activePage = window.getActivePage();
+
+	  IEditorPart activeEditor = activePage.getActiveEditor();
+
+	  if (activeEditor != null) {
+	     IEditorInput input = activeEditor.getEditorInput();
+
+	     IProject project = input.getAdapter(IProject.class);
+	     if (project == null) {
+	        IResource resource = input.getAdapter(IResource.class);
+	        if (resource != null) {
+	           project = resource.getProject();
+	        }
+	     }
+	  }
+			
+			
+	  return null;
+	 }
+	
 
 	private void analyseMethods(IProject project) throws JavaModelException {
 		IPackageFragment[] packages = JavaCore.create(project).getPackageFragments();
