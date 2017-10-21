@@ -31,18 +31,12 @@ public class Diagrama extends ViewPart {
 	
 	@Override
     public void createPartControl(Composite parent) {
-<<<<<<< HEAD
 
-		parent.setLayout(new GridLayout(2, false));		
-		Label image2 = new Label(parent, SWT.SHADOW_IN | SWT.CENTER);
-		image2.setToolTipText("");
-		image2.setImage(ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/decision-symbol.png"));
-=======
 		
 		int posx =254;
 		int posy = 23;
 		parent.setLayout(null);
->>>>>>> 584e6d79a27eabdc6bf96d258164475c4890a8e4
+
 		
 		for (int i = 0; i<array.length;i++) {
 			
