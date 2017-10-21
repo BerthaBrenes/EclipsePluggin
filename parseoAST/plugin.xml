@@ -62,7 +62,8 @@
          point="org.eclipse.ui.views">
       <category
             id="parseoAST"
-            name="Diagrama de Flujo">
+            name="Debug"
+            parentCategory="org.eclipse.debug.ui">
       </category>
       <view
             category="parseoAST"
