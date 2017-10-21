@@ -29,10 +29,7 @@ public class Diagrama extends ViewPart {
 	@Override
     public void createPartControl(Composite parent) {
 
-		parent.setLayout(new GridLayout(2, false));
-
-
-		
+		parent.setLayout(new GridLayout(2, false));		
 		Label image2 = new Label(parent, SWT.SHADOW_IN | SWT.CENTER);
 		image2.setToolTipText("");
 		image2.setImage(ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/decision-symbol.png"));
@@ -55,11 +52,10 @@ public class Diagrama extends ViewPart {
     			}
     			
     		};
-    		
-    		
     		action.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepinto_co.png"));
     		action1 = new Action("Step Over") {
     		};
+    		//ejecuta el get info 
     		action1.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepover_co.png"));
     		action2  = new Action ("Start Debug with Flowchart") {
     			public void run () {
