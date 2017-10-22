@@ -1,4 +1,3 @@
-
 package parseoast.handlers;
 
 import java.util.Iterator;
@@ -79,8 +78,8 @@ public class GetInfo extends AbstractHandler {
 	  return null;
 	 }
 	
-
-		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+	
+	/*	IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IWorkbenchPage activePage = window.getActivePage();
 		IEditorPart activeEditor = activePage.getActiveEditor();
 		System.out.println(activeEditor.getTitle());
@@ -105,8 +104,8 @@ public class GetInfo extends AbstractHandler {
 		}
 
 		return null;
-	}
 
+}*/
 
 	/**
 	 * llama al paquete donde esta situado y se queda ahi
