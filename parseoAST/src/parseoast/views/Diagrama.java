@@ -34,10 +34,12 @@ public class Diagrama extends ViewPart {
 	
 	@Override
     public void createPartControl(Composite parent) {
+
 		
 		int posx =254;
 		int posy = 23;
 		parent.setLayout(null);
+
 		
 		Combo combo = new Combo(parent, SWT.NONE);
 		combo.setBounds(0, 0, 600, 23);
@@ -104,6 +106,7 @@ public class Diagrama extends ViewPart {
     		action.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepinto_co.png"));
     		action1 = new Action("Step Over") {
     		};
+    		//ejecuta el get info 
     		action1.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepover_co.png"));
     		action2  = new Action ("Start Debug with Flowchart") {
     			@SuppressWarnings("static-access")
