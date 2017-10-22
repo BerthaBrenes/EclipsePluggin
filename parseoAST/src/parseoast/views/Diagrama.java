@@ -17,6 +17,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
 
+
+
+
 import parseoast.handlers.GetInfo;
 import org.eclipse.swt.widgets.Combo;
 
@@ -44,21 +47,11 @@ public class Diagrama extends ViewPart {
 		Combo combo = new Combo(parent, SWT.NONE);
 		combo.setBounds(0, 0, 600, 23);
 		combo.setItems(array);
-		System.out.println(combo.getText());
-		combo.addKeyListener(new KeyListener() {
+	
+		
 			
-			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
+		
 			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		for (int i = 0; i<array.length;i++) {
 			
 			if (array[i] == "For") {
