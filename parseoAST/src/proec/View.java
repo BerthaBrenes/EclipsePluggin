@@ -1,7 +1,5 @@
 package proec;
 
-
-
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.editparts.FreeformGraphicalRootEditPart;

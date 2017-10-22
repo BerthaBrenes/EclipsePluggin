@@ -1,4 +1,4 @@
-package proec;
+package parseoast.views;
 
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.RootEditPart;
