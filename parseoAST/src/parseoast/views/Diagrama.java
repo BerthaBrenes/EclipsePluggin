@@ -6,6 +6,10 @@ package parseoast.views;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.Figure;
+import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
@@ -75,15 +79,7 @@ public class Diagrama extends ViewPart {
 		}
 	
 		
-		
-		
-		
 	
-		
-		
-		
-	    
-        
         createActions();
         initializeToolBar();
        
@@ -135,5 +131,7 @@ public class Diagrama extends ViewPart {
         // set the focus
     	
     }
+    
+
 }
 
