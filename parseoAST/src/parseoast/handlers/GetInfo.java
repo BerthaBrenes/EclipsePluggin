@@ -138,6 +138,9 @@ public class GetInfo extends AbstractHandler {
 					}else if(method.getBody().WHILE_STATEMENT !=0) {
 						System.out.println("salio un while");	
 					}
+					else {
+						System.out.println("no hay ningun condicional");
+					}
 					/**
 					 * if (method.getBody().VARIABLE_DECLARATION_STATEMENT != 0) {
 					 * System.out.println(method.getBody().VARIABLE_DECLARATION_STATEMENT);
