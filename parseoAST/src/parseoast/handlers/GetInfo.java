@@ -30,8 +30,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.jdt.debug.*;
-import org.eclipse.jdt.internal.debug.core.breakpoints.*;
+
 
 
 
@@ -53,29 +52,6 @@ public class GetInfo extends AbstractHandler {
 	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-
-	  IWorkbenchWindow window = PlatformUI.getWorkbench()
-	              .getActiveWorkbenchWindow();
-	  IWorkbenchPage activePage = window.getActivePage();
-
-	  IEditorPart activeEditor = activePage.getActiveEditor();
-
-	  if (activeEditor != null) {
-	     IEditorInput input = activeEditor.getEditorInput();
-
-	     IProject project = input.getAdapter(IProject.class);
-	     if (project == null) {
-	        IResource resource = input.getAdapter(IResource.class);
-	        if (resource != null) {
-	           project = resource.getProject();
-	        }
-	     }
-	  }
-			
-			
-	  return null;
-	 }
-	/**
 
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IWorkbenchPage activePage = window.getActivePage();
@@ -104,7 +80,7 @@ public class GetInfo extends AbstractHandler {
 		return null;
 	}
 
-**/
+
 	/**
 	 * llama al paquete donde esta situado y se queda ahi
 	 * 
@@ -147,7 +123,7 @@ public class GetInfo extends AbstractHandler {
 						System.out.println(arraySta);
 						Ifsearch(method.getBody());
 						if (method.getBody().IF_STATEMENT !=0) {
-							System.out.println(arraySta.get(1).toString());
+							
 							System.out.println("salio un if");	
 						}
 					}else if(method.getBody().FOR_STATEMENT != 0) {
