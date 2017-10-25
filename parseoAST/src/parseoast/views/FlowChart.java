@@ -68,6 +68,7 @@ public class FlowChart extends ViewPart{
 	    DecisionFigure dec = new DecisionFigure();
 	    dec.setName("Should I?");
 	    dec.setBounds(new Rectangle(30, 60, 100, 60));
+	    
 	    ProcessFigure proc = new ProcessFigure();
 	    proc.setName("Do it!");
 	    proc.setBounds(new Rectangle(40, 180, 80, 40));
@@ -123,14 +124,24 @@ public class FlowChart extends ViewPart{
     			}
     		};
     		action.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepinto_co.png"));
+    		
     		action1 = new Action("Step Over") {
     		};
     		//ejecuta el get info 
     		action1.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepover_co.png"));
+    		
     		action2  = new Action ("Start Debug with Flowchart") {
     			@SuppressWarnings("static-access")
 				public void run () {
-    				System.out.println(combo.getText());
+    				GetInfo nuevo = new GetInfo();
+    				nuevo.setEleccion(combo.getText());
+    				try {
+						nuevo.execute(new ExecutionEvent());
+						
+					} catch (ExecutionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     				
     			}
     		};

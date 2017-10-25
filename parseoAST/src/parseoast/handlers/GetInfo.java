@@ -44,6 +44,9 @@ public class GetInfo extends AbstractHandler {
 
 	public String Currente;
 	public String eleccion = "getNombre";
+	public void setEleccion(String eleccion) {
+		this.eleccion = eleccion;
+	}
 	//public DebugActivitor debug;
 	private ArrayList<String> condicionales = new ArrayList<>();
 
@@ -51,6 +54,8 @@ public class GetInfo extends AbstractHandler {
 	 * execute ejecuta el primer codigo que encuentra a raiz de un evento Con el
 	 * activePage logra visualizar en cual clase esta ubicado
 	 */
+	
+	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
@@ -140,6 +145,7 @@ public class GetInfo extends AbstractHandler {
 					}
 					else {
 						System.out.println("no hay ningun condicional");
+
 					}
 					/**
 					 * if (method.getBody().VARIABLE_DECLARATION_STATEMENT != 0) {
