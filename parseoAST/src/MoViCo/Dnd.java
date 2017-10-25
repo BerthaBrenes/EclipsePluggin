@@ -14,6 +14,7 @@ public class Dnd extends MouseMotionListener.Stub implements MouseListener {
 	    figure.addMouseMotionListener(this);
 	    figure.addMouseListener(this);
 	    this.message = Name;
+
 	  }
 
 	  Point start;

@@ -26,7 +26,7 @@ public class Diagrama extends ViewPart {
 	private Action action;
 	private Action action1;
 	private Action action2;
-	private String[] array= new String[]{"Start","For","Proceso","For","Proceso","End"};
+	private String[] array= new String[]{"Ejemplo1","Ejemplo2","Ejemplo3"};
 	private Image imagen;
 	
 	@Override
