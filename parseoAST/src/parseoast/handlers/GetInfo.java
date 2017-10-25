@@ -53,30 +53,8 @@ public class GetInfo extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-	  IWorkbenchWindow window = PlatformUI.getWorkbench()
-	              .getActiveWorkbenchWindow();
-	  IWorkbenchPage activePage = window.getActivePage();
-
-	  IEditorPart activeEditor = activePage.getActiveEditor();
-
-	  if (activeEditor != null) {
-	     IEditorInput input = activeEditor.getEditorInput();
-
-	     IProject project = input.getAdapter(IProject.class);
-	     if (project == null) {
-	        IResource resource = input.getAdapter(IResource.class);
-	        if (resource != null) {
-	           project = resource.getProject();
-	        }
-	     }
-	  }
-			
-			
-	  return null;
-	 }
-
-	/*	IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		
 
 		IWorkbenchPage activePage = window.getActivePage();
 		IEditorPart activeEditor = activePage.getActiveEditor();
@@ -104,7 +82,10 @@ public class GetInfo extends AbstractHandler {
 		return null;
 
 
-}*/
+}
+	 
+
+	
 
 	/**
 	 * llama al paquete donde esta situado y se queda ahi
