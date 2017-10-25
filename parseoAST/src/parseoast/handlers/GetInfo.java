@@ -44,7 +44,7 @@ public class GetInfo extends AbstractHandler {
 
 	public String Currente;
 	public String eleccion = "getNombre";
-	public DebugActivitor debug;
+	//public DebugActivitor debug;
 	public static Lista<String> condicionales = new Lista<String>();
 
 	/**
@@ -171,8 +171,7 @@ public class GetInfo extends AbstractHandler {
 					 * } i++;
 					 * } //break; // System.out.println("Pruebas"+ regex);
 					 * 
-					 * }
-					 * @param  
+					 * } 
 					 **/
 				}
 
@@ -207,6 +206,9 @@ public class GetInfo extends AbstractHandler {
 		}
 		condicionales.Imprimir();
 
+	}
+	public Lista getLista() {
+		return this.condicionales;
 	}
 
 }
