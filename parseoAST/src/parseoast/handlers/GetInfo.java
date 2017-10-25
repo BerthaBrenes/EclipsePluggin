@@ -1,5 +1,6 @@
 package parseoast.handlers;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,12 +44,8 @@ public class GetInfo extends AbstractHandler {
 
 	public String Currente;
 	public String eleccion = "getNombre";
-	public DebugActivitor debug;
-	public static Lista<String> condicionales = new Lista<String>();
-
-	public static Lista<String> getCondicionales() {
-		return condicionales;
-	}
+	//public DebugActivitor debug;
+	private ArrayList<String> condicionales = new ArrayList<>();
 
 	/**
 	 * execute ejecuta el primer codigo que encuentra a raiz de un evento Con el
@@ -56,7 +53,7 @@ public class GetInfo extends AbstractHandler {
 	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		
+
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 		
 
@@ -84,13 +81,12 @@ public class GetInfo extends AbstractHandler {
 		}
 
 		return null;
-	  
-	 }
+
+
+}
+	 
 
 	
-
-
-
 
 	/**
 	 * llama al paquete donde esta situado y se queda ahi
@@ -158,8 +154,7 @@ public class GetInfo extends AbstractHandler {
 					 * } i++;
 					 * } //break; // System.out.println("Pruebas"+ regex);
 					 * 
-					 * }
-					 * @param  
+					 * } 
 					 **/
 				}
 
@@ -190,10 +185,14 @@ public class GetInfo extends AbstractHandler {
 	private void ListaMetodos(List<MethodDeclaration> list) throws JavaModelException {
 		Iterator<MethodDeclaration> methods = list.iterator();
 		while (methods.hasNext()) {
-			condicionales.Insertar(methods.next().getName().toString());
+			condicionales.add(methods.next().getName().toString());
 		}
-		condicionales.Imprimir();
+	
 
+	}
+	public String[] getLista() {
+		
+		return this.condicionales.toArray(new String[condicionales.size()]);
 	}
 
 }

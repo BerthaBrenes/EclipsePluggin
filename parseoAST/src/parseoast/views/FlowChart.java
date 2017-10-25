@@ -1,5 +1,8 @@
 package parseoast.views;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.draw2d.LightweightSystem;
@@ -37,35 +40,17 @@ public class FlowChart extends ViewPart{
 	private Action action;
 	private Action action1;
 	private Action action2;
+	private Action refresh;
+	private Combo combo;
 	public void createPartControl(Composite parent) {
 		
 		Canvas canvas = new Canvas(parent, SWT.NONE);
 		
-		canvas.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
-				if (e.button == 1) {
-					getcontrol(canvas);
-				}
-				else if (e.button == 3) {
-					clean(parent);
-				}
-			}
-			
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		combo = new Combo(canvas, SWT.NONE);
+		combo.setBounds(0, 0, 594, 23);
+		
+		
+		
 		
 		createActions();
         initializeToolBar();
@@ -125,39 +110,7 @@ public class FlowChart extends ViewPart{
 		// TODO Auto-generated method stub
 		
 	}
-	public void addcontrol (Composite parent) {
-		parent.setLayout(null);
-		
-		Label lblPruebaQ = new Label(parent, SWT.NONE);
-		lblPruebaQ.setBounds(10, 10, 55, 15);
-		lblPruebaQ.setText("Prueba q");
-		
-		Button btnGen = new Button(parent, SWT.NONE);
-		btnGen.setBounds(10, 49, 75, 25);
-		btnGen.setText("Gen");
-	    btnGen.addListener(SWT.Selection, new Listener() {
-			
-			@Override
-			public void handleEvent(Event event) {
-				// TODO Auto-generated method stub
-				switch (event.type) {
-		        case SWT.Selection:
-					try {
-						ListMethods();
-					} catch (ExecutionException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		          break;
-				}
-			}
-		});
-	}
-	public void ListMethods () throws ExecutionException {
-		GetInfo info = new GetInfo();
-		info.execute(new ExecutionEvent());
-		info.condicionales.Imprimir();
-	}
+	
 	public Canvas clean (Composite parent) {
 		Canvas canvas = new Canvas(parent, SWT.NONE);
 		return canvas;
@@ -177,25 +130,36 @@ public class FlowChart extends ViewPart{
     		action2  = new Action ("Start Debug with Flowchart") {
     			@SuppressWarnings("static-access")
 				public void run () {
-    				GetInfo a = new GetInfo();
-    				try {
-						a.execute(new ExecutionEvent());
-						System.out.println(a.condicionales);
+    				System.out.println(combo.getText());
+    				
+    			}
+    		};
+    		
+    		action2.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/resume_co.png"));
+    		refresh = new Action("Refresh") {
+    			public void run () {
+    				GetInfo nuevo = new GetInfo();
+					
+					try {
+						nuevo.execute(new ExecutionEvent());
+						combo.setItems(nuevo.getLista());
 						
 					} catch (ExecutionException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
+					
     			}
-    		};
-    		
-    		action2.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/resume_co.png"));
-    		
+			};
+			refresh.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/refresh_nav.png"));
+
     	}
     }
 
     private void initializeToolBar() {
         IToolBarManager toolbarManager= getViewSite().getActionBars().getToolBarManager();
+        toolbarManager.add(refresh);
         toolbarManager.add(action2);
         toolbarManager.add(action);
         toolbarManager.add(action1);

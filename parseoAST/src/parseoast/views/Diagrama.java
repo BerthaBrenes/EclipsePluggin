@@ -93,7 +93,7 @@ public class Diagrama extends ViewPart {
     				GetInfo a = new GetInfo();
     				try {
 						a.execute(new ExecutionEvent());
-						System.out.println(a.condicionales);
+						
 						
 					} catch (ExecutionException e) {
 						// TODO Auto-generated catch block
