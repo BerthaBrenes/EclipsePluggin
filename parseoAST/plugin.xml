@@ -67,7 +67,7 @@
       </category>
       <view
             category="parseoAST"
-            class="parseoast.views.Diagrama"
+            class="parseoast.views.FlowChart"
             icon="icons/workflow1600.png"
             id="parseoast.views.DiagramaFlujo"
             inject="true"
