@@ -8,7 +8,7 @@ import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 
-abstract class ActivityFigure extends Figure {
+public abstract class ActivityFigure extends Figure {
 	  public Rectangle r = new Rectangle();
 
 	  public Hashtable targetAnchors = new Hashtable();
@@ -23,6 +23,9 @@ abstract class ActivityFigure extends Figure {
 	  public void setName(String msg) {
 	    message = msg;
 	    repaint();
+	  }
+	  public String getName () {
+		  return message;
 	  }
 	  
 	  public ConnectionAnchor ConnectionAnchorAt(Point p) {

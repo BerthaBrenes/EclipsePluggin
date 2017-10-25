@@ -46,6 +46,10 @@ public class GetInfo extends AbstractHandler {
 	public DebugActivitor debug;
 	public static Lista<String> condicionales = new Lista<String>();
 
+	public static Lista<String> getCondicionales() {
+		return condicionales;
+	}
+
 	/**
 	 * execute ejecuta el primer codigo que encuentra a raiz de un evento Con el
 	 * activePage logra visualizar en cual clase esta ubicado
@@ -67,6 +71,7 @@ public class GetInfo extends AbstractHandler {
 	        IResource resource = input.getAdapter(IResource.class);
 	        if (resource != null) {
 	           project = resource.getProject();
+	          
 	        }
 	     }
 	  }

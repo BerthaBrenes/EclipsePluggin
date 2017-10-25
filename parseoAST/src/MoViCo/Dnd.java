@@ -9,9 +9,11 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 
 public class Dnd extends MouseMotionListener.Stub implements MouseListener {
-	  public Dnd(IFigure figure) {
+	 private String message;
+	public Dnd(IFigure figure,String Name) {
 	    figure.addMouseMotionListener(this);
 	    figure.addMouseListener(this);
+	    this.message = Name;
 	  }
 
 	  Point start;
@@ -23,6 +25,7 @@ public class Dnd extends MouseMotionListener.Stub implements MouseListener {
 	  }
 
 	  public void mouseDoubleClicked(MouseEvent e) {
+		  System.out.println(message);
 	  }
 
 	  public void mousePressed(MouseEvent e) {
