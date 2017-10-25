@@ -130,7 +130,14 @@ public class FlowChart extends ViewPart{
     		action2  = new Action ("Start Debug with Flowchart") {
     			@SuppressWarnings("static-access")
 				public void run () {
-    				System.out.println(combo.getText());
+    				GetInfo nuevo = new GetInfo();
+    				nuevo.setEleccion(combo.getText());
+    				try {
+						nuevo.execute(new ExecutionEvent());
+					} catch (ExecutionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
     				
     			}
     		};
