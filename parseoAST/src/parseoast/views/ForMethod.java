@@ -1,5 +1,7 @@
 package parseoast.views;
 
+import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 import java.util.concurrent.locks.Condition;
 
 import org.eclipse.swt.SWT;
@@ -63,6 +65,8 @@ public class ForMethod extends genLabel {
 			@Override
 			public void paintControl(PaintEvent e) {
 				e.gc.drawLine(getPosx(), getPosy()+30, getPosx()-50, getPosy()+80);
+				
+				
 				e.gc.drawString("Si", getPosx()-25, getPosy()+40);
 				e.gc.drawLine(getPosx()+124, getPosy()+30, getPosx()+50+124, getPosy()+80);
 				e.gc.drawString("No", getPosx()+174, getPosy()+40);
@@ -94,5 +98,7 @@ public class ForMethod extends genLabel {
 		};
 		return m;
 	}
+	
+	
 
 }

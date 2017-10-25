@@ -1,4 +1,3 @@
-
 package parseoast.handlers;
 
 import java.util.Iterator;
@@ -43,7 +42,7 @@ public class GetInfo extends AbstractHandler {
 
 	public String Currente;
 	public String eleccion = "getNombre";
-	public DebugActivitor debug;
+	//public DebugActivitor debug;
 	public static Lista<String> condicionales = new Lista<String>();
 
 	/**
@@ -54,6 +53,8 @@ public class GetInfo extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		
+
 		IWorkbenchPage activePage = window.getActivePage();
 		IEditorPart activeEditor = activePage.getActiveEditor();
 		System.out.println(activeEditor.getTitle());
@@ -78,8 +79,11 @@ public class GetInfo extends AbstractHandler {
 		}
 
 		return null;
-	}
 
+}
+	 
+
+	
 
 	/**
 	 * llama al paquete donde esta situado y se queda ahi
@@ -147,8 +151,7 @@ public class GetInfo extends AbstractHandler {
 					 * } i++;
 					 * } //break; // System.out.println("Pruebas"+ regex);
 					 * 
-					 * }
-					 * @param  
+					 * } 
 					 **/
 				}
 
@@ -183,6 +186,9 @@ public class GetInfo extends AbstractHandler {
 		}
 		condicionales.Imprimir();
 
+	}
+	public Lista getLista() {
+		return this.condicionales;
 	}
 
 }
