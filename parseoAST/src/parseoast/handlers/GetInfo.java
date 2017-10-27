@@ -134,12 +134,13 @@ public class GetInfo extends AbstractHandler {
 						System.out.println("encontre a alguien:" + eleccion);
 						System.out.println(arraySta);
 						Ifsearch(method.getBody());
-						if (method.getBody().IF_STATEMENT !=0) {
-							System.out.println(arraySta.get(1).toString());
-							System.out.println("salio un if");	
-						}
-					}else if(method.getBody().FOR_STATEMENT != 0) {
-						System.out.println("salio un for");	
+						//forsearch(method.getBody());
+						if(method.getBody().FOR_STATEMENT != 0) {
+							System.out.println("salio un foxr");	
+							if(method.getBody().statements().toString().contains("if")){
+								System.out.println("salio un if capa 2");
+							}
+					}
 					}else if(method.getBody().WHILE_STATEMENT !=0) {
 						System.out.println("salio un while");	
 					}
@@ -174,7 +175,25 @@ public class GetInfo extends AbstractHandler {
 	private static String Ifsearch(Block block) {
 		if (block.IF_STATEMENT !=0) {
 			System.out.println("salio un if capa 1");
-			//System.out.print(block.structuralPropertiesForType());
+			System.out.println(block.statements());
+			//for (int i=0; i > block.statements().size(); i++ ) {
+				if(block.statements().toString().contains("if")){
+					System.out.println("salio un if capa 2");
+				}
+			//}
+		}else {
+			System.out.println("no encontre a nadie");
+		}
+		return "encontre un if";
+		
+	}
+	private static String forsearch(Block block) {
+		if (block.FOR_STATEMENT!=0) {
+			System.out.println("salio un if capa 1");
+			System.out.println(block.statements());
+				if(block.statements().toString().contains("if")){
+					System.out.println("salio un if capa 2");
+				}
 			
 		}else {
 			System.out.println("no encontre a nadie");
