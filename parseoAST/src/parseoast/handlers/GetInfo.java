@@ -36,7 +36,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-<<<<<<< HEAD
 import MoViCo.ChartFigure;
 import MoViCo.DecisionFigure;
 import MoViCo.Dnd;
@@ -45,8 +44,7 @@ import MoViCo.TerminatorFigure;
 
 import org.eclipse.jdt.debug.*;
 import org.eclipse.jdt.internal.debug.core.breakpoints.*;
-=======
->>>>>>> 2f3dbfb45e2614817315283c3bbcdf04ee90fa78
+
 
 
 
@@ -106,14 +104,10 @@ public class GetInfo extends AbstractHandler {
 		return null;
 
 }
-	 
 
-<<<<<<< HEAD
 }
 	 
 
-=======
->>>>>>> 2f3dbfb45e2614817315283c3bbcdf04ee90fa78
 	
 
 	/**
@@ -157,25 +151,33 @@ public class GetInfo extends AbstractHandler {
 						System.out.println("encontre a alguien:" + eleccion);
 						System.out.println(arraySta);
 						Ifsearch(method.getBody());
-						
-						
-	    			    
-	    			    
-	    			    
+
 						if (method.getBody().IF_STATEMENT !=0) {
-<<<<<<< HEAD
+
 							System.out.println(arraySta.get(0));
-=======
+
 							
 							System.out.println("salio un if");	
->>>>>>> 2f3dbfb45e2614817315283c3bbcdf04ee90fa78
+
 						}
 					else if(method.getBody().FOR_STATEMENT != 0) {
 						System.out.println("salio un for");	
+
+						//forsearch(method.getBody());
+						if(method.getBody().FOR_STATEMENT != 0) {
+							System.out.println("salio un foxr");	
+							if(method.getBody().statements().toString().contains("if")){
+								System.out.println("salio un if capa 2");
+							}
+					}
+
 					}else if(method.getBody().WHILE_STATEMENT !=0) {
 						System.out.println("salio un while");	
 					}
-					
+
+					else {
+						System.out.println("no hay ningun condicional");
+
 					}
 					/**
 					 * if (method.getBody().VARIABLE_DECLARATION_STATEMENT != 0) {
@@ -204,7 +206,25 @@ public class GetInfo extends AbstractHandler {
 	private static String Ifsearch(Block block) {
 		if (block.IF_STATEMENT !=0) {
 			System.out.println("salio un if capa 1");
-			//System.out.print(block.structuralPropertiesForType());
+			System.out.println(block.statements());
+			//for (int i=0; i > block.statements().size(); i++ ) {
+				if(block.statements().toString().contains("if")){
+					System.out.println("salio un if capa 2");
+				}
+			//}
+		}else {
+			System.out.println("no encontre a nadie");
+		}
+		return "encontre un if";
+		
+	}
+	private static String forsearch(Block block) {
+		if (block.FOR_STATEMENT!=0) {
+			System.out.println("salio un if capa 1");
+			System.out.println(block.statements());
+				if(block.statements().toString().contains("if")){
+					System.out.println("salio un if capa 2");
+				}
 			
 		}else {
 			System.out.println("no encontre a nadie");
@@ -229,14 +249,10 @@ public class GetInfo extends AbstractHandler {
 	
 
 	}
-<<<<<<< HEAD
+
 	public String[] getLista() {
 		
 		return this.condicionales.toArray(new String[condicionales.size()]);
-=======
-	public Lista getLista() {
-		return this.condicionales;
->>>>>>> 2f3dbfb45e2614817315283c3bbcdf04ee90fa78
-	}
+
 
 }
