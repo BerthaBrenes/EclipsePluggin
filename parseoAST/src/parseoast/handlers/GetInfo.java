@@ -36,6 +36,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+<<<<<<< HEAD
 import MoViCo.ChartFigure;
 import MoViCo.DecisionFigure;
 import MoViCo.Dnd;
@@ -44,6 +45,8 @@ import MoViCo.TerminatorFigure;
 
 import org.eclipse.jdt.debug.*;
 import org.eclipse.jdt.internal.debug.core.breakpoints.*;
+=======
+>>>>>>> 2f3dbfb45e2614817315283c3bbcdf04ee90fa78
 
 
 
@@ -56,6 +59,7 @@ public class GetInfo extends AbstractHandler {
 	private static final String JDT_Nature = "org.eclipse.jdt.core.javanature";
 
 	public String Currente;
+
 	public String eleccion = "getNobombre";
 	public void setEleccion(String eleccion) {
 		this.eleccion = eleccion;
@@ -63,6 +67,7 @@ public class GetInfo extends AbstractHandler {
 	//public DebugActivitor debug;
 	private ArrayList<String> condicionales = new ArrayList<>();
 	public Canvas canvas;
+
 	/**
 	 * execute ejecuta el primer codigo que encuentra a raiz de un evento Con el
 	 * activePage logra visualizar en cual clase esta ubicado
@@ -100,10 +105,15 @@ public class GetInfo extends AbstractHandler {
 
 		return null;
 
-
 }
 	 
 
+<<<<<<< HEAD
+}
+	 
+
+=======
+>>>>>>> 2f3dbfb45e2614817315283c3bbcdf04ee90fa78
 	
 
 	/**
@@ -153,7 +163,12 @@ public class GetInfo extends AbstractHandler {
 	    			    
 	    			    
 						if (method.getBody().IF_STATEMENT !=0) {
+<<<<<<< HEAD
 							System.out.println(arraySta.get(0));
+=======
+							
+							System.out.println("salio un if");	
+>>>>>>> 2f3dbfb45e2614817315283c3bbcdf04ee90fa78
 						}
 					else if(method.getBody().FOR_STATEMENT != 0) {
 						System.out.println("salio un for");	
@@ -214,9 +229,14 @@ public class GetInfo extends AbstractHandler {
 	
 
 	}
+<<<<<<< HEAD
 	public String[] getLista() {
 		
 		return this.condicionales.toArray(new String[condicionales.size()]);
+=======
+	public Lista getLista() {
+		return this.condicionales;
+>>>>>>> 2f3dbfb45e2614817315283c3bbcdf04ee90fa78
 	}
 
 }
