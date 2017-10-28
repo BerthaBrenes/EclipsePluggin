@@ -6,7 +6,7 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PrecisionPoint;
 import org.eclipse.draw2d.geometry.Rectangle;
 
-class FixedAnchor extends AbstractConnectionAnchor {
+public class FixedAnchor extends AbstractConnectionAnchor {
 	  Point place;
 
 	  public FixedAnchor(IFigure owner) {
