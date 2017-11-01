@@ -129,26 +129,33 @@ public class GetInfo extends AbstractHandler {
 					System.out.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
 					List<Statement> arraySta = method.getBody().statements();
 					System.out.println(arraySta.size());
-					int i = 0;
 					if (eleccion.equals(method.getName().toString())) {
 						System.out.println("encontre a alguien:" + eleccion);
-						System.out.println(arraySta);
-						Ifsearch(method.getBody());
-						//forsearch(method.getBody());
-						if(method.getBody().FOR_STATEMENT != 0) {
-							System.out.println("salio un foxr");	
-							if(method.getBody().statements().toString().contains("if")){
-								System.out.println("salio un if capa 2");
-							}
+						int i=0;
+						int limite = arraySta.size();
+						System.out.print(method.getBody().getClass());
+						if(method.getBody().IF_STATEMENT !=0) {
+							System.out.println("salio un if");	
+						}
+						while(i != limite) {
+							System.out.println(method.getBody().statements().get(i));
+							System.out.println(arraySta.get(i).toString().trim().substring(0, 2));
+							
+							i++;
+						}
+						
+						
 					}
-					}else if(method.getBody().WHILE_STATEMENT !=0) {
+					}
+					/**
+					 * 
+					 * else if(method.getBody().WHILE_STATEMENT !=0) {
 						System.out.println("salio un while");	
 					}
 					else {
 						System.out.println("no hay ningun condicional");
 
 					}
-					/**
 					 * if (method.getBody().VARIABLE_DECLARATION_STATEMENT != 0) {
 					 * System.out.println(method.getBody().VARIABLE_DECLARATION_STATEMENT);
 					 * System.out.println("una declaracion de metodos");
@@ -171,7 +178,7 @@ public class GetInfo extends AbstractHandler {
 			}
 
 		}
-	}
+	
 	private static String Ifsearch(Block block) {
 		if (block.IF_STATEMENT !=0) {
 			System.out.println("salio un if capa 1");
@@ -187,18 +194,24 @@ public class GetInfo extends AbstractHandler {
 		return "encontre un if";
 		
 	}
-	private static String forsearch(Block block) {
+	private static void forsearch(Statement block) {
+		//.out.println("salio un for capa 1");
+		String arrayS2= block.toString().trim();
+		System.out.println(arrayS2);
+		/**
 		if (block.FOR_STATEMENT!=0) {
-			System.out.println("salio un if capa 1");
-			System.out.println(block.statements());
-				if(block.statements().toString().contains("if")){
-					System.out.println("salio un if capa 2");
-				}
+			System.out.println("salio un for capa 1");
 			
-		}else {
+		}
+		if (block.IF_STATEMENT !=0) {
+			System.out.println("salio un if capa 1");}
+		if(block.WHILE_STATEMENT !=0) {
+			System.out.println("salio un while");	
+		}
+		else {
 			System.out.println("no encontre a nadie");
 		}
-		return "encontre un if";
+		**/
 		
 	}
 	private static CompilationUnit parse(ICompilationUnit unit) {
