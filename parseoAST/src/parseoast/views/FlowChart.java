@@ -1,4 +1,4 @@
-package parseoast.views;
+package src.parseoast.views;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -17,10 +17,10 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.wb.swt.ResourceManager;
+import src.org.eclipse.wb.swt.ResourceManager;
 
-import listas.Lista;
-import parseoast.handlers.GetInfo;
+import src.listas.Lista;
+import src.parseoast.handlers.GetInfo;
 
 public class FlowChart extends ViewPart{
 	/**
@@ -32,7 +32,7 @@ public class FlowChart extends ViewPart{
 	/**
 	 * Variables needed
 	 */
-	public String[] array= new String[]{"Método1","Método2","Método3","Método4"};
+	public String[] array= new String[]{"MÃ©todo1","MÃ©todo2","MÃ©todo3","MÃ©todo4"};
 
 	private Lista<PaintListener> active = new Lista<>();
 	private Lista<CLabel> labels = new Lista<>();
@@ -218,7 +218,7 @@ public class FlowChart extends ViewPart{
     	}
     }
 	/**
-	 * Metodo para añadir iconos al toolbar
+	 * Metodo para aÃ±adir iconos al toolbar
 	 */
     private void initializeToolBar() {
         IToolBarManager toolbarManager= getViewSite().getActionBars().getToolBarManager();

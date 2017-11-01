@@ -1,4 +1,4 @@
-package MoViCo;
+package src.MoViCo;
 
 import org.eclipse.draw2d.AbstractConnectionAnchor;
 import org.eclipse.draw2d.IFigure;

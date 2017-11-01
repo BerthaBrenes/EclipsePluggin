@@ -1,4 +1,4 @@
-package MoViCo;
+package src.MoViCo;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -17,7 +17,7 @@ public abstract class ActivityFigure extends Figure {
 
 	  public String message = new String();
 	  /**
-	   * Setea el nombre que tendrá la caja o figure del diagrama
+	   * Setea el nombre que tendrï¿½ la caja o figure del diagrama
 	   * @param msg
 	   */
 	  public void setName(String msg) {

@@ -1,4 +1,4 @@
-package MoViCo;
+package src.MoViCo;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.FreeformLayeredPane;

@@ -1,4 +1,4 @@
-package parseoast.views;
+package src.parseoast.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;

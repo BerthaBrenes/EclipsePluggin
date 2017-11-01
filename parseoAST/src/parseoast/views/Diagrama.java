@@ -1,4 +1,4 @@
-package parseoast.views;
+package src.parseoast.views;
 
 
 
@@ -22,9 +22,9 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.wb.swt.ResourceManager;
+import src.org.eclipse.wb.swt.ResourceManager;
 
-import parseoast.handlers.GetInfo;
+import src.parseoast.handlers.GetInfo;
 
 
 

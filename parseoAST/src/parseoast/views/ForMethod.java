@@ -1,4 +1,4 @@
-package parseoast.views;
+package src.parseoast.views;
 
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
@@ -17,8 +17,8 @@ import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.wb.swt.ResourceManager;
-import MoViCo.FixedAnchor;
+import src.org.eclipse.wb.swt.ResourceManager;
+import src.MoViCo.FixedAnchor;
 public class ForMethod extends genLabel {
 	private String Yes;
 	private String No;

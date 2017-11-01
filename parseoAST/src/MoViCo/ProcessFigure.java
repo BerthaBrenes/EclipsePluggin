@@ -1,4 +1,4 @@
-package MoViCo;
+package src.MoViCo;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Point;

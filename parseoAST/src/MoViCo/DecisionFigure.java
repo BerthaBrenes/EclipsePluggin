@@ -1,4 +1,4 @@
-package MoViCo;
+package src.MoViCo;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Point;
@@ -8,7 +8,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
 public class DecisionFigure extends ActivityFigure {
 	  public FixedAnchor inAnchor, yesAnchor, noAnchor;
 	  /**
-	   * Genera las Figuras de decisión que tendrá ya sea de verdad o falso
+	   * Genera las Figuras de decisiï¿½n que tendrï¿½ ya sea de verdad o falso
 	   */
 	  public DecisionFigure() {
 	    inAnchor = new FixedAnchor(this);

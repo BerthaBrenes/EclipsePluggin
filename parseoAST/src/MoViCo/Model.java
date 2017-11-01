@@ -1,4 +1,4 @@
-package MoViCo;
+package src.MoViCo;
 
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.draw2d.geometry.Rectangle;

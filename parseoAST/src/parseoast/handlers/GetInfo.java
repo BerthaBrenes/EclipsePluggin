@@ -1,4 +1,4 @@
-package parseoast.handlers;
+package src.parseoast.handlers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,10 +22,14 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.ThisExpression;
+import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.ui.IPackagesViewPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Canvas;
@@ -36,20 +40,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-import MoViCo.ChartFigure;
-import MoViCo.DecisionFigure;
-import MoViCo.Dnd;
-import MoViCo.FigureFactoryMethod;
-import MoViCo.TerminatorFigure;
-
-import org.eclipse.jdt.debug.*;
-import org.eclipse.jdt.internal.debug.core.breakpoints.*;
-
-
-
-
-import listas.Lista;
-import parseoast.views.FlowChart;
 //import org.osgi.framework.BundleContext;
 
 
@@ -105,7 +95,7 @@ public class GetInfo extends AbstractHandler {
 
 }
 
-}
+
 	 
 
 	
@@ -147,6 +137,7 @@ public class GetInfo extends AbstractHandler {
 					List<Statement> arraySta = method.getBody().statements();
 					System.out.println(arraySta.size());
 					if (eleccion.equals(method.getName().toString())) {
+						method.getBody().statements();
 						System.out.println("encontre a alguien:" + eleccion);
 						int i=0;
 						int limite = arraySta.size();
@@ -157,7 +148,15 @@ public class GetInfo extends AbstractHandler {
 						while(i != limite) {
 							System.out.println(method.getBody().statements().get(i));
 							String a = arraySta.get(i).toString().trim().substring(0, 2);
-							
+							method.getBody().statements().get(i).getClass().getSimpleName();
+							if (method.getBody().statements().get(i) instanceof IfStatement) {
+						        System.out.println("Entre");
+						        IfStatement statement = (IfStatement) method.getBody().statements().get(i);
+						        
+						        
+						        List<Statement> nueva = ((Block) (statement).getThenStatement()).statements();
+						        
+						       }
 							i++;
 						}
 						
@@ -219,7 +218,20 @@ public class GetInfo extends AbstractHandler {
 			}
 
 		}
-	
+	private static void descomponedorAux(Object object, ArrayList<Statement> listaStatements) {
+		 if(object instanceof IfStatement) {
+		  descomponedorAux(((Block) ((IfStatement) object).getThenStatement()).statements(),listaStatements);}
+		 if(object instanceof WhileStatement) {
+		  descomponedorAux(((Block) ((WhileStatement) object).getBody()).statements(),listaStatements);
+		 }
+		 if(object instanceof ForStatement) {
+		  descomponedorAux(((Block) ((ForStatement) object).getBody()).statements(),listaStatements);
+		  
+		 }
+		 if(object instanceof EnhancedForStatement) {
+		  descomponedorAux(((Block) ((EnhancedForStatement) object).getBody()).statements(),listaStatements);
+		 }
+		}
 	private static String Ifsearch(Block block) {
 		if (block.IF_STATEMENT !=0) {
 			System.out.println("salio un if capa 1");
@@ -277,5 +289,5 @@ public class GetInfo extends AbstractHandler {
 		
 		return this.condicionales.toArray(new String[condicionales.size()]);
 
-
+	}
 }
