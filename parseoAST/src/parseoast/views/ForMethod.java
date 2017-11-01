@@ -12,13 +12,17 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.TouchEvent;
 import org.eclipse.swt.events.TouchListener;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
-
+import MoViCo.FixedAnchor;
 public class ForMethod extends genLabel {
 	private String Yes;
 	private String No;
+	public FixedAnchor outanchor;
 	public ForMethod(String Texto, int posx, int posy,Composite parent,String Yes,String No) {
 		super(Texto, posx, posy, parent);
 		this.Yes = Yes;
@@ -64,12 +68,22 @@ public class ForMethod extends genLabel {
 			
 			@Override
 			public void paintControl(PaintEvent e) {
-				e.gc.drawLine(getPosx(), getPosy()+30, getPosx()-50, getPosy()+80);
+				Display display = getParent().getDisplay();
+				e.gc.drawString("Yes", getPosx()-30, getPosy()+30);
+				e.gc.drawString("No",getPosx()+124, getPosy()+30);
+				
+				e.gc.setLineWidth(1);
+				e.gc.setForeground(display.getSystemColor(SWT.COLOR_BLACK));
+				e.gc.setBackground(display.getSystemColor(SWT.COLOR_BLACK));
+				drawArrow(e.gc,getPosx(), getPosy()+30, getPosx()-50, getPosy()+80, 10, Math.toRadians(40));
+				
+			
 				
 				
-				e.gc.drawString("Si", getPosx()-25, getPosy()+40);
-				e.gc.drawLine(getPosx()+124, getPosy()+30, getPosx()+50+124, getPosy()+80);
-				e.gc.drawString("No", getPosx()+174, getPosy()+40);
+				
+				
+				drawArrow(e.gc,getPosx()+124, getPosy()+30, getPosx()+50+124, getPosy()+80, 10, Math.toRadians(40));
+				
 			}
 		};
 		return pintar;
@@ -98,7 +112,22 @@ public class ForMethod extends genLabel {
 		};
 		return m;
 	}
-	
+	public static void drawArrow(GC gc, int x1, int y1, int x2, int y2, double arrowLength, double arrowAngle) {
+	    double theta = Math.atan2(y2 - y1, x2 - x1);
+	    double offset = (arrowLength - 2) * Math.cos(arrowAngle);
+
+	    gc.drawLine(x1, y1, (int)(x2 - offset * Math.cos(theta)), (int)(y2 - offset * Math.sin(theta)));
+
+	    Path path = new Path(gc.getDevice());
+	    path.moveTo((float)(x2 - arrowLength * Math.cos(theta - arrowAngle)), (float)(y2 - arrowLength * Math.sin(theta - arrowAngle)));
+	    path.lineTo((float)x2, (float)y2);
+	    path.lineTo((float)(x2 - arrowLength * Math.cos(theta + arrowAngle)), (float)(y2 - arrowLength * Math.sin(theta + arrowAngle)));
+	    path.close();
+
+	    gc.fillPath(path);
+
+	    path.dispose();
+	}
 	
 
 }

@@ -9,6 +9,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.draw2d.LightweightSystem;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageFragment;
@@ -25,17 +27,29 @@ import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.ThisExpression;
 import org.eclipse.jdt.ui.IPackagesViewPart;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+
+import MoViCo.ChartFigure;
+import MoViCo.DecisionFigure;
+import MoViCo.Dnd;
+import MoViCo.FigureFactoryMethod;
+import MoViCo.TerminatorFigure;
+
 import org.eclipse.jdt.debug.*;
 import org.eclipse.jdt.internal.debug.core.breakpoints.*;
 
 
 
+
 import listas.Lista;
+import parseoast.views.FlowChart;
 //import org.osgi.framework.BundleContext;
 
 
@@ -43,12 +57,14 @@ public class GetInfo extends AbstractHandler {
 	private static final String JDT_Nature = "org.eclipse.jdt.core.javanature";
 
 	public String Currente;
-	public String eleccion = "getNombre";
+
+	public String eleccion = "getNobombre";
 	public void setEleccion(String eleccion) {
 		this.eleccion = eleccion;
 	}
 	//public DebugActivitor debug;
 	private ArrayList<String> condicionales = new ArrayList<>();
+	public Canvas canvas;
 
 	/**
 	 * execute ejecuta el primer codigo que encuentra a raiz de un evento Con el
@@ -87,6 +103,7 @@ public class GetInfo extends AbstractHandler {
 
 		return null;
 
+}
 
 }
 	 
@@ -139,7 +156,7 @@ public class GetInfo extends AbstractHandler {
 						}
 						while(i != limite) {
 							System.out.println(method.getBody().statements().get(i));
-							System.out.println(arraySta.get(i).toString().trim().substring(0, 2));
+							String a = arraySta.get(i).toString().trim().substring(0, 2);
 							
 							i++;
 						}
@@ -150,8 +167,32 @@ public class GetInfo extends AbstractHandler {
 					/**
 					 * 
 					 * else if(method.getBody().WHILE_STATEMENT !=0) {
+						System.out.println(arraySta);
+						Ifsearch(method.getBody());
+
+						if (method.getBody().IF_STATEMENT !=0) {
+
+							System.out.println(arraySta.get(0));
+
+							
+							System.out.println("salio un if");	
+
+						}
+					else if(method.getBody().FOR_STATEMENT != 0) {
+						System.out.println("salio un for");	
+
+						//forsearch(method.getBody());
+						if(method.getBody().FOR_STATEMENT != 0) {
+							System.out.println("salio un foxr");	
+							if(method.getBody().statements().toString().contains("if")){
+								System.out.println("salio un if capa 2");
+							}
+					}
+
+					}else if(method.getBody().WHILE_STATEMENT !=0) {
 						System.out.println("salio un while");	
 					}
+
 					else {
 						System.out.println("no hay ningun condicional");
 
@@ -231,9 +272,10 @@ public class GetInfo extends AbstractHandler {
 	
 
 	}
+
 	public String[] getLista() {
 		
 		return this.condicionales.toArray(new String[condicionales.size()]);
-	}
+
 
 }

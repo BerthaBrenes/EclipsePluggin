@@ -2,7 +2,7 @@ package MoViCo;
 
 import org.eclipse.draw2d.IFigure;
 
-class FigureFactory {
+public class FigureFactory {
 	  public static IFigure createTerminatorFigure() {
 	    return new TerminatorFigure();
 	  }
