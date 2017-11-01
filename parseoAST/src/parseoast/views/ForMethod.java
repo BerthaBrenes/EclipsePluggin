@@ -18,12 +18,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.ResourceManager;
-import MoViCo.FixedAnchor;
+
 public class ForMethod extends genLabel {
 	private String Yes;
 	private String No;
-	public FixedAnchor outanchor;
-	public ForMethod(String Texto, int posx, int posy,Composite parent,String Yes,String No) {
+		public ForMethod(String Texto, int posx, int posy,Composite parent,String Yes,String No) {
 		super(Texto, posx, posy, parent);
 		this.Yes = Yes;
 		this.No = No;
