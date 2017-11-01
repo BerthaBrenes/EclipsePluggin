@@ -32,7 +32,7 @@ public class FlowChart extends ViewPart{
 	/**
 	 * Variables needed
 	 */
-	public String[] array= new String[]{"Método1","Método2","Método3","Método4"};
+	public String[] array= new String[]{"MÃ©todo1","MÃ©todo2","MÃ©todo3","MÃ©todo4"};
 
 	private Lista<PaintListener> active = new Lista<>();
 	private Lista<CLabel> labels = new Lista<>();
@@ -218,7 +218,7 @@ public class FlowChart extends ViewPart{
     	}
     }
 	/**
-	 * Metodo para añadir iconos al toolbar
+	 * Metodo para aÃ±adir iconos al toolbar
 	 */
     private void initializeToolBar() {
         IToolBarManager toolbarManager= getViewSite().getActionBars().getToolBarManager();
