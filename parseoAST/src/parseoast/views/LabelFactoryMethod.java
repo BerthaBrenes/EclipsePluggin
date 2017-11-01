@@ -1,4 +1,4 @@
-package src.parseoast.views;
+package parseoast.views;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;

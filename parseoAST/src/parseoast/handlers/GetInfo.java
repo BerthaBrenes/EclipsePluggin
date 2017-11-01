@@ -1,4 +1,4 @@
-package src.parseoast.handlers;
+package parseoast.handlers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,16 +43,10 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-
 import org.eclipse.jdt.debug.*;
 import org.eclipse.jdt.internal.debug.core.breakpoints.*;
 
-
-
-
-
 //import org.osgi.framework.BundleContext;
-
 
 public class GetInfo extends AbstractHandler {
 	private static final String JDT_Nature = "org.eclipse.jdt.core.javanature";
@@ -60,10 +54,12 @@ public class GetInfo extends AbstractHandler {
 	public String Currente;
 
 	public String eleccion = "getNobombre";
+
 	public void setEleccion(String eleccion) {
 		this.eleccion = eleccion;
 	}
-	//public DebugActivitor debug;
+
+	// public DebugActivitor debug;
 	private ArrayList<String> condicionales = new ArrayList<>();
 	public Canvas canvas;
 
@@ -71,13 +67,11 @@ public class GetInfo extends AbstractHandler {
 	 * execute ejecuta el primer codigo que encuentra a raiz de un evento Con el
 	 * activePage logra visualizar en cual clase esta ubicado
 	 */
-	
-	
+
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-		
 
 		IWorkbenchPage activePage = window.getActivePage();
 		IEditorPart activeEditor = activePage.getActiveEditor();
@@ -104,12 +98,7 @@ public class GetInfo extends AbstractHandler {
 
 		return null;
 
-}
-
-
-	 
-
-	
+	}
 
 	/**
 	 * llama al paquete donde esta situado y se queda ahi
@@ -144,155 +133,74 @@ public class GetInfo extends AbstractHandler {
 				ListaMetodos(visitor.getMethods());
 				for (MethodDeclaration method : visitor.getMethods()) {
 					System.out.println(Currente);
-					System.out.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
+					System.out
+							.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
 					List<Statement> arraySta = method.getBody().statements();
-					
+
 					System.out.println(arraySta.size());
 					if (eleccion.equals(method.getName().toString())) {
 						method.getBody().statements();
 						System.out.println("encontre a alguien:" + eleccion);
-						int i=0;
+						int i = 0;
 						int limite = arraySta.size();
 						System.out.print(method.getBody().getClass());
-						if(method.getBody().IF_STATEMENT !=0) {
-							System.out.println("salio un if");	
+						if (method.getBody().IF_STATEMENT != 0) {
+							System.out.println("salio un if");
 						}
-						while(i != limite) {
-							System.out.println(method.getBody().statements().get(i));
-							
-							if (method.getBody().statements().get(i) instanceof IfStatement) {
-								System.out.println("Entre");
-								IfStatement statement = (IfStatement) method.getBody().statements().get(i);
-								List<Statement> nueva = ((Block) (statement).getThenStatement()).statements();
-								
-							}
-									
-							
-
-							
+						while (i != limite) {
+							// System.out.println(method.getBody().statements().get(i));
 							String a = arraySta.get(i).toString().trim().substring(0, 2);
 							method.getBody().statements().get(i).getClass().getSimpleName();
 							if (method.getBody().statements().get(i) instanceof IfStatement) {
-						        System.out.println("Entre");
-						        IfStatement statement = (IfStatement) method.getBody().statements().get(i);
-						        
-						        
-						        List<Statement> nueva = ((Block) (statement).getThenStatement()).statements();
-						        
-						       }
+								System.out.println("Entre If");
+								IfStatement statement = (IfStatement) method.getBody().statements().get(i);
+								List<Statement> nuevaIf = ((Block) (statement).getThenStatement()).statements();
+
+							}
+							if (method.getBody().statements().get(i) instanceof ForStatement) {
+								System.out.println("Entre For");
+								ForStatement statement = (ForStatement) method.getBody().statements().get(i);
+								List<Statement> nuevaFor = ((Block) (statement).getBody()).statements();
+
+							}
+
+							if (method.getBody().statements().get(i) instanceof WhileStatement) {
+								System.out.println("Entre While");
+								WhileStatement statement = (WhileStatement) method.getBody().statements().get(i);
+								List<Statement> nuevaWhile = ((Block) (statement).getBody()).statements();
+								System.out.println(nuevaWhile);
+
+							}
+
 							i++;
 						}
-						
-						
-					}
-				}
-			}}
-		
-				
-					
-					/**
-					 * 
-					 * else if(method.getBody().WHILE_STATEMENT !=0) {
-						System.out.println(arraySta);
-						Ifsearch(method.getBody());
-
-						if (method.getBody().IF_STATEMENT !=0) {
-
-							System.out.println(arraySta.get(0));
-
-							
-							System.out.println("salio un if");	
-
-						}
-					else if(method.getBody().FOR_STATEMENT != 0) {
-						System.out.println("salio un for");	
-
-						//forsearch(method.getBody());
-						if(method.getBody().FOR_STATEMENT != 0) {
-							System.out.println("salio un foxr");	
-							if(method.getBody().statements().toString().contains("if")){
-								System.out.println("salio un if capa 2");
-							}
-					}
-
-					}else if(method.getBody().WHILE_STATEMENT !=0) {
-						System.out.println("salio un while");	
-					}
-
-					else {
-						System.out.println("no hay ningun condicional");
-
-					}
 
 					}
 				}
 			}
 		}
-					/**
 
-					 * if (method.getBody().VARIABLE_DECLARATION_STATEMENT != 0) {
-					 * System.out.println(method.getBody().VARIABLE_DECLARATION_STATEMENT);
-					 * System.out.println("una declaracion de metodos");
-					 * } 
-					 * if (a.equals("if")) { 
-					 * // condicionales.add("if");
-					 *  }
-					 *   else if (a.equals("for"))
-					 * {
-					 * 
-					 * System.out.println("encontre un for"); // 
-					 * condicionales.add("for"); }
-					 * } i++;
-					 * } //break; // System.out.println("Pruebas"+ regex);
-					 * 
-					 * } 
-					 **/
-				
-
-			
-
-		
-	
-
-		}
+	}
 
 	private static String Ifsearch(Block block) {
-		if (block.IF_STATEMENT !=0) {
+		if (block.IF_STATEMENT != 0) {
 			System.out.println("salio un if capa 1");
 			System.out.println(block.statements());
 			System.out.println(block.IF_STATEMENT);
-			System.out.println("Stataments property: "+block.STATEMENTS_PROPERTY);
-			//for (int i=0; i > block.statements().size(); i++ ) {
-				if(block.statements().toString().contains("if")){
-					System.out.println("salio un if capa 2");
-				}
-			//}
-		}else {
+			System.out.println("Stataments property: " + block.STATEMENTS_PROPERTY);
+			// for (int i=0; i > block.statements().size(); i++ ) {
+			if (block.statements().toString().contains("if")) {
+				System.out.println("salio un if capa 2");
+			}
+			// }
+		} else {
 			System.out.println("no encontre a nadie");
 		}
 		return "encontre un if";
-		
+
 	}
-	private static void forsearch(Statement block) {
-		//.out.println("salio un for capa 1");
-		String arrayS2= block.toString().trim();
-		System.out.println(arrayS2);
-		/**
-		if (block.FOR_STATEMENT!=0) {
-			System.out.println("salio un for capa 1");
-			
-		}
-		if (block.IF_STATEMENT !=0) {
-			System.out.println("salio un if capa 1");}
-		if(block.WHILE_STATEMENT !=0) {
-			System.out.println("salio un while");	
-		}
-		else {
-			System.out.println("no encontre a nadie");
-		}
-		**/
-		
-	}
+
+
 	private static CompilationUnit parse(ICompilationUnit unit) {
 		ASTParser parser = ASTParser.newParser(AST.JLS3);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
@@ -307,12 +215,11 @@ public class GetInfo extends AbstractHandler {
 		while (methods.hasNext()) {
 			condicionales.add(methods.next().getName().toString());
 		}
-	
 
 	}
 
 	public String[] getLista() {
-		
+
 		return this.condicionales.toArray(new String[condicionales.size()]);
 
 	}

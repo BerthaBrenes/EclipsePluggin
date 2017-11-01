@@ -1,4 +1,4 @@
-package src.parseoast.views;
+package parseoast.views;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -17,10 +17,10 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
-import src.org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.ResourceManager;
 
-import src.listas.Lista;
-import src.parseoast.handlers.GetInfo;
+import listas.Lista;
+import parseoast.handlers.GetInfo;
 
 public class FlowChart extends ViewPart{
 	/**

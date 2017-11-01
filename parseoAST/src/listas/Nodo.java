@@ -1,4 +1,4 @@
-package src.listas;
+package listas;
 
 public class Nodo<T> {
 	private Nodo<T> next;

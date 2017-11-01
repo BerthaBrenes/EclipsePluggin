@@ -1,4 +1,4 @@
-package src.parseoast.handlers;
+package parseoast.handlers;
 
 import java.util.ArrayList;
 import java.util.Collections;

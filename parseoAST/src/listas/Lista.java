@@ -1,4 +1,4 @@
-package src.listas;
+package listas;
 
 public class Lista<T> {
 	protected Nodo<T> head;

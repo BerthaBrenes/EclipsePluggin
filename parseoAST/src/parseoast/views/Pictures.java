@@ -1,7 +1,7 @@
-package src.parseoast.views;
+package parseoast.views;
 
 import org.eclipse.swt.graphics.Image;
-import src.org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.ResourceManager;
 
 public class Pictures {
 	private int x = 238;

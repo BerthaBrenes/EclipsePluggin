@@ -1,4 +1,4 @@
-package src.parseoast.views;
+package parseoast.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;

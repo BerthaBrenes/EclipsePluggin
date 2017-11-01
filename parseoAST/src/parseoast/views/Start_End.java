@@ -1,9 +1,9 @@
-package src.parseoast.views;
+package parseoast.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import src.org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.ResourceManager;
 
 public class Start_End extends genLabel {
 
