@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.sql.StatementEventListener;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -19,6 +21,7 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -39,6 +42,14 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+
+
+import org.eclipse.jdt.debug.*;
+import org.eclipse.jdt.internal.debug.core.breakpoints.*;
+
+
+
+
 
 //import org.osgi.framework.BundleContext;
 
@@ -135,6 +146,7 @@ public class GetInfo extends AbstractHandler {
 					System.out.println(Currente);
 					System.out.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
 					List<Statement> arraySta = method.getBody().statements();
+					
 					System.out.println(arraySta.size());
 					if (eleccion.equals(method.getName().toString())) {
 						method.getBody().statements();
@@ -147,6 +159,17 @@ public class GetInfo extends AbstractHandler {
 						}
 						while(i != limite) {
 							System.out.println(method.getBody().statements().get(i));
+							
+							if (method.getBody().statements().get(i) instanceof IfStatement) {
+								System.out.println("Entre");
+								IfStatement statement = (IfStatement) method.getBody().statements().get(i);
+								List<Statement> nueva = ((Block) (statement).getThenStatement()).statements();
+								
+							}
+									
+							
+
+							
 							String a = arraySta.get(i).toString().trim().substring(0, 2);
 							method.getBody().statements().get(i).getClass().getSimpleName();
 							if (method.getBody().statements().get(i) instanceof IfStatement) {
@@ -162,7 +185,11 @@ public class GetInfo extends AbstractHandler {
 						
 						
 					}
-					}
+				}
+			}}
+		
+				
+					
 					/**
 					 * 
 					 * else if(method.getBody().WHILE_STATEMENT !=0) {
@@ -196,6 +223,13 @@ public class GetInfo extends AbstractHandler {
 						System.out.println("no hay ningun condicional");
 
 					}
+
+					}
+				}
+			}
+		}
+					/**
+
 					 * if (method.getBody().VARIABLE_DECLARATION_STATEMENT != 0) {
 					 * System.out.println(method.getBody().VARIABLE_DECLARATION_STATEMENT);
 					 * System.out.println("una declaracion de metodos");
@@ -213,29 +247,21 @@ public class GetInfo extends AbstractHandler {
 					 * 
 					 * } 
 					 **/
-				}
+				
 
-			}
+			
+
+		
+	
 
 		}
-	private static void descomponedorAux(Object object, ArrayList<Statement> listaStatements) {
-		 if(object instanceof IfStatement) {
-		  descomponedorAux(((Block) ((IfStatement) object).getThenStatement()).statements(),listaStatements);}
-		 if(object instanceof WhileStatement) {
-		  descomponedorAux(((Block) ((WhileStatement) object).getBody()).statements(),listaStatements);
-		 }
-		 if(object instanceof ForStatement) {
-		  descomponedorAux(((Block) ((ForStatement) object).getBody()).statements(),listaStatements);
-		  
-		 }
-		 if(object instanceof EnhancedForStatement) {
-		  descomponedorAux(((Block) ((EnhancedForStatement) object).getBody()).statements(),listaStatements);
-		 }
-		}
+
 	private static String Ifsearch(Block block) {
 		if (block.IF_STATEMENT !=0) {
 			System.out.println("salio un if capa 1");
 			System.out.println(block.statements());
+			System.out.println(block.IF_STATEMENT);
+			System.out.println("Stataments property: "+block.STATEMENTS_PROPERTY);
 			//for (int i=0; i > block.statements().size(); i++ ) {
 				if(block.statements().toString().contains("if")){
 					System.out.println("salio un if capa 2");

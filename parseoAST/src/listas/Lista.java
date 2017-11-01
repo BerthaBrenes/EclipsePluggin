@@ -10,13 +10,14 @@ public class Lista<T> {
         tail = null;
         length = 0;
     }
-
+    
     /**
      * Me retorna el valor de la posicion (i) donde se encuentre el nodo
      *
      * @param i
      * @return
      */
+    
     public T Iterador(int i) {
         if (i > length) {
             return null;
