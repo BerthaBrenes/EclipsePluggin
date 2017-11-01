@@ -105,7 +105,7 @@ public class GetInfo extends AbstractHandler {
 
 }
 
-}
+
 	 
 
 	
@@ -179,6 +179,10 @@ public class GetInfo extends AbstractHandler {
 						System.out.println("no hay ningun condicional");
 
 					}
+					}
+				}
+			}
+		}
 					/**
 					 * if (method.getBody().VARIABLE_DECLARATION_STATEMENT != 0) {
 					 * System.out.println(method.getBody().VARIABLE_DECLARATION_STATEMENT);
@@ -197,11 +201,11 @@ public class GetInfo extends AbstractHandler {
 					 * 
 					 * } 
 					 **/
-				}
+				
 
-			}
+			
 
-		}
+		
 	}
 	private static String Ifsearch(Block block) {
 		if (block.IF_STATEMENT !=0) {
@@ -254,5 +258,5 @@ public class GetInfo extends AbstractHandler {
 		
 		return this.condicionales.toArray(new String[condicionales.size()]);
 
-
+	}
 }
