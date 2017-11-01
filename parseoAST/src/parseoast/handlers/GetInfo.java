@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.sql.StatementEventListener;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -19,9 +21,11 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
@@ -36,11 +40,6 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-import MoViCo.ChartFigure;
-import MoViCo.DecisionFigure;
-import MoViCo.Dnd;
-import MoViCo.FigureFactoryMethod;
-import MoViCo.TerminatorFigure;
 
 import org.eclipse.jdt.debug.*;
 import org.eclipse.jdt.internal.debug.core.breakpoints.*;
@@ -49,7 +48,7 @@ import org.eclipse.jdt.internal.debug.core.breakpoints.*;
 
 
 import listas.Lista;
-import parseoast.views.FlowChart;
+
 //import org.osgi.framework.BundleContext;
 
 
@@ -145,6 +144,7 @@ public class GetInfo extends AbstractHandler {
 					System.out.println(Currente);
 					System.out.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
 					List<Statement> arraySta = method.getBody().statements();
+					
 					System.out.println(arraySta.size());
 					if (eleccion.equals(method.getName().toString())) {
 						System.out.println("encontre a alguien:" + eleccion);
@@ -156,6 +156,17 @@ public class GetInfo extends AbstractHandler {
 						}
 						while(i != limite) {
 							System.out.println(method.getBody().statements().get(i));
+							
+							if (method.getBody().statements().get(i) instanceof IfStatement) {
+								System.out.println("Entre");
+								IfStatement statement = (IfStatement) method.getBody().statements().get(i);
+								List<Statement> nueva = ((Block) (statement).getThenStatement()).statements();
+								
+							}
+									
+							
+
+							
 							String a = arraySta.get(i).toString().trim().substring(0, 2);
 							
 							i++;
@@ -240,6 +251,8 @@ public class GetInfo extends AbstractHandler {
 		if (block.IF_STATEMENT !=0) {
 			System.out.println("salio un if capa 1");
 			System.out.println(block.statements());
+			System.out.println(block.IF_STATEMENT);
+			System.out.println("Stataments property: "+block.STATEMENTS_PROPERTY);
 			//for (int i=0; i > block.statements().size(); i++ ) {
 				if(block.statements().toString().contains("if")){
 					System.out.println("salio un if capa 2");
