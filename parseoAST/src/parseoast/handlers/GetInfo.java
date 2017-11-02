@@ -160,10 +160,10 @@ public class GetInfo extends AbstractHandler {
 		}
 
 	}
-	private static String recursividad(Object obj,int nivel) {
-		List<Statement> nuevaIf;
-		List<Statement> nuevaFor;
-		List<Statement> nuevaWhile;
+	private static List<Statement> recursividad(Object obj,int nivel) {
+		List<Statement> nuevaIf = null;
+		List<Statement> nuevaFor = null;
+		List<Statement> nuevaWhile = null;
 		
 		obj.getClass().getSimpleName();
 
@@ -171,12 +171,20 @@ public class GetInfo extends AbstractHandler {
 			System.out.println("Entre If");
 			IfStatement statement = (IfStatement) obj;
 			nuevaIf = ((Block) (statement).getThenStatement()).statements();
+			recursividad(statement.getThenStatement(),nivel++);
 			
+			
+			
+			
+			
+			
+			return nuevaIf;
 		}
 		if (obj instanceof ForStatement) {
 			System.out.println("Entre For");
 			ForStatement statement = (ForStatement) obj;
 			nuevaFor = ((Block) (statement).getBody()).statements();
+			return nuevaFor;
 
 		}
 
@@ -188,20 +196,20 @@ public class GetInfo extends AbstractHandler {
 			recursividad(statement.getBody().toString(), nivel++);
 			System.out.print("segundo despues"+ statement.getBody());
 			//System.out.println(nuevaWhile);
-
+			return nuevaWhile;
 		}
 		if (obj instanceof EnhancedForStatement) {
 			System.out.println("Entre ForEnhance");
 			EnhancedForStatement statement = (EnhancedForStatement) obj;
 			nuevaWhile = ((Block) (statement).getBody()).statements();
-			
 			System.out.println(nuevaWhile);
+			return nuevaFor;
+			
 
 		}
 		else {
-			return "salir";
+			return nuevaIf;
 		}
-		return "recuersividad 1";
 	}
 
 
