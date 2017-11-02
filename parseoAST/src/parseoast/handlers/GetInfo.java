@@ -119,7 +119,7 @@ public class GetInfo extends AbstractHandler {
 
 		}
 	}
-
+	
 	private void createAST(IPackageFragment mypackage) throws JavaModelException {
 
 		for (ICompilationUnit unit : mypackage.getCompilationUnits()) {
@@ -149,30 +149,13 @@ public class GetInfo extends AbstractHandler {
 						}
 						while (i != limite) {
 							// System.out.println(method.getBody().statements().get(i));
+							int nivel =0 ;
 							String a = arraySta.get(i).toString().trim().substring(0, 2);
-							method.getBody().statements().get(i).getClass().getSimpleName();
-							if (method.getBody().statements().get(i) instanceof IfStatement) {
-								System.out.println("Entre If");
-								IfStatement statement = (IfStatement) method.getBody().statements().get(i);
-								List<Statement> nuevaIf = ((Block) (statement).getThenStatement()).statements();
-
-							}
-							if (method.getBody().statements().get(i) instanceof ForStatement) {
-								System.out.println("Entre For");
-								ForStatement statement = (ForStatement) method.getBody().statements().get(i);
-								List<Statement> nuevaFor = ((Block) (statement).getBody()).statements();
-
-							}
-
-							if (method.getBody().statements().get(i) instanceof WhileStatement) {
-								System.out.println("Entre While");
-								WhileStatement statement = (WhileStatement) method.getBody().statements().get(i);
-								List<Statement> nuevaWhile = ((Block) (statement).getBody()).statements();
-								System.out.println(nuevaWhile);
-
-							}
+							condicionalsearch(method.getBody().statements().get(i), nivel);
+							
 
 							i++;
+						
 						}
 
 					}
@@ -181,7 +164,35 @@ public class GetInfo extends AbstractHandler {
 		}
 
 	}
+	private static void condicionalsearch(Object object, int nivel) {
+		
+		if (object instanceof IfStatement) {
+			System.out.println("Entre If");
+			IfStatement statement = (IfStatement) object;
+			List<Statement> nuevaIf = ((Block) (statement).getThenStatement()).statements();
+			Block bloque = ((Block) (statement).getThenStatement());
+			System.out.println("State pruebas: " + bloque.statements().isEmpty());
+			System.out.println("State pruebasPrint: " + bloque.statements().get(1).getClass());
+			
+		}
+		if (object instanceof ForStatement) {
+			System.out.println("Entre For");
+			ForStatement statement = (ForStatement) object;
+			List<Statement> nuevaFor = ((Block) (statement).getBody()).statements();
+			
 
+		}
+		if (object instanceof WhileStatement) {
+			System.out.println("Entre While");
+			WhileStatement statement = (WhileStatement) object;
+			List<Statement> nuevaWhile = ((Block) (statement).getBody()).statements();
+			System.out.println(nuevaWhile);
+			
+
+		}
+		 
+		
+	}
 	private static String Ifsearch(Block block) {
 		if (block.IF_STATEMENT != 0) {
 			System.out.println("salio un if capa 1");
