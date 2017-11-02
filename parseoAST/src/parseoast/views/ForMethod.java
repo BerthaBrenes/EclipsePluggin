@@ -22,8 +22,10 @@ import org.eclipse.wb.swt.ResourceManager;
 public class ForMethod extends genLabel {
 	private String Yes;
 	private String No;
-	
-	public ForMethod(String Texto, int posx, int posy,Composite parent,String Yes,String No) {
+
+		public ForMethod(String Texto, int posx, int posy,Composite parent,String Yes,String No) {
+
+
 		super(Texto, posx, posy, parent);
 		this.Yes = Yes;
 		this.No = No;
