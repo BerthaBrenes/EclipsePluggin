@@ -144,71 +144,121 @@ public class GetInfo extends AbstractHandler {
 						int i = 0;
 						int limite = arraySta.size();
 						System.out.print(method.getBody().getClass());
-						if (method.getBody().IF_STATEMENT != 0) {
-							System.out.println("salio un if");
-						}
 						while (i != limite) {
+
 							// System.out.println(method.getBody().statements().get(i));
 							int nivel =0 ;
+
+							System.out.println(i+": {"+method.getBody().statements().get(i)+"}");
 							String a = arraySta.get(i).toString().trim().substring(0, 2);
-							condicionalsearch(method.getBody().statements().get(i), nivel);
-							
+							System.out.print(recursividad(method.getBody().statements().get(i),0));
+
 
 							i++;
 						
 						}
-
 					}
 				}
 			}
 		}
 
 	}
-	private static void condicionalsearch(Object object, int nivel) {
+
+	
+	
+	private static List<Statement> separar(List ojk, int niveli){
 		
-		if (object instanceof IfStatement) {
+		//Block casteo = (Block) ojk;
+		List<Statement> list = null;
+		for (int i=0; i> ojk.size(); i++ ) {
+			System.out.println("estoy en separar");
+			//recursividad(list.get(i), niveli);
+
+		}
+		return list;
+	}
+	private static List<Statement> recursividad(Object obj,int nivel) {
+		List<Statement> nuevaIf = null;
+		List<Statement> nuevaFor = null;
+		List<Statement> nuevaWhile = null;
+		
+		obj.getClass().getSimpleName();
+
+		/**if (obj instanceof IfStatement) {
 			System.out.println("Entre If");
-			IfStatement statement = (IfStatement) object;
-			List<Statement> nuevaIf = ((Block) (statement).getThenStatement()).statements();
+			IfStatement statement = (IfStatement) obj;
+			nuevaIf = ((Block) (statement).getThenStatement()).statements();
+			separar(((Block) (statement).getThenStatement()).statements(),nivel++);
+			
+			//nuevaIf.add(statement.getExpression().toString()); 
+			return nuevaIf;
+		}
+		*/
+		if (obj instanceof IfStatement) {
+			System.out.println("Entre If");
+			IfStatement statement = (IfStatement) obj;
+			nuevaIf = ((Block) (statement).getThenStatement()).statements();
 			Block bloque = ((Block) (statement).getThenStatement());
 			System.out.println("State pruebas: " + bloque.statements().isEmpty());
-			System.out.println("State pruebasPrint: " + bloque.statements().get(1).getClass());
-			
-		}
-		if (object instanceof ForStatement) {
-			System.out.println("Entre For");
-			ForStatement statement = (ForStatement) object;
-			List<Statement> nuevaFor = ((Block) (statement).getBody()).statements();
-			
-
-		}
-		if (object instanceof WhileStatement) {
-			System.out.println("Entre While");
-			WhileStatement statement = (WhileStatement) object;
-			List<Statement> nuevaWhile = ((Block) (statement).getBody()).statements();
-			System.out.println(nuevaWhile);
-			
-
-		}
-		 
-		
-	}
-	private static String Ifsearch(Block block) {
-		if (block.IF_STATEMENT != 0) {
-			System.out.println("salio un if capa 1");
-			System.out.println(block.statements());
-			System.out.println(block.IF_STATEMENT);
-			System.out.println("Stataments property: " + block.STATEMENTS_PROPERTY);
-			// for (int i=0; i > block.statements().size(); i++ ) {
-			if (block.statements().toString().contains("if")) {
-				System.out.println("salio un if capa 2");
+			if(!bloque.statements().isEmpty()) {
+				int o = 0;
+				while(o !=bloque.statements().size()) {
+					System.out.println("entre aqui");
+					recursividad(bloque.statements().get(o), nivel++);
+					o++;
+				}
 			}
-			// }
-		} else {
-			System.out.println("no encontre a nadie");
+			
+			
 		}
-		return "encontre un if";
+			
+		if (obj instanceof ForStatement) {
+			System.out.println("Entre For");
+			ForStatement statement = (ForStatement) obj;
+			nuevaFor = ((Block) (statement).getBody()).statements();
+			//nuevaFor.add(statement.getExpression());
+			Block bloque = ((Block) (statement).getBody());
+			if(!bloque.statements().isEmpty()) {
+				int o = 0;
+				while(o !=bloque.statements().size()) {
+					System.out.println("entre aqui");
+					recursividad(bloque.statements().get(o), nivel++);
+					o++;
+				}
+			}
+			return nuevaFor;
+		}
 
+		if (obj instanceof WhileStatement) {
+			System.out.println("Entre While");
+			WhileStatement statement = (WhileStatement) obj;
+			nuevaWhile = ((Block) (statement).getBody()).statements();
+			Block bloque = ((Block) (statement).getBody());
+			if(!bloque.statements().isEmpty()) {
+				int o = 0;
+				while(o !=bloque.statements().size()) {
+					System.out.println("entre aqui");
+					recursividad(bloque.statements().get(o), nivel++);
+					o++;
+				}
+			}
+			
+			
+			//nuevaWhile.add(statement.getExpression().toString());
+			return nuevaWhile;
+		}
+		if (obj instanceof EnhancedForStatement) {
+			System.out.println("Entre ForEnhance");
+			EnhancedForStatement statement = (EnhancedForStatement) obj;
+			nuevaWhile = ((Block) (statement).getBody()).statements();
+			System.out.println(nuevaWhile);
+			return nuevaFor;
+			
+
+		}
+		else {
+			return nuevaIf;
+		}
 	}
 
 
