@@ -145,8 +145,6 @@ public class GetInfo extends AbstractHandler {
 						int limite = arraySta.size();
 						System.out.print(method.getBody().getClass());
 						while (i != limite) {
-
-							// System.out.println(method.getBody().statements().get(i));
 							int nivel =0 ;
 
 							System.out.println(i+": {"+method.getBody().statements().get(i)+"}");
@@ -164,65 +162,44 @@ public class GetInfo extends AbstractHandler {
 
 	}
 
-	
-	
-	private static List<Statement> separar(List ojk, int niveli){
-		
-		//Block casteo = (Block) ojk;
-		List<Statement> list = null;
-		for (int i=0; i> ojk.size(); i++ ) {
-			System.out.println("estoy en separar");
-			//recursividad(list.get(i), niveli);
 
-		}
-		return list;
-	}
-	private static List<Statement> recursividad(Object obj,int nivel) {
+	
+	
+	
+
+	private static List<Statement> recursividad(Object obj, int nivel) {
 		List<Statement> nuevaIf = null;
 		List<Statement> nuevaFor = null;
 		List<Statement> nuevaWhile = null;
-		
-		obj.getClass().getSimpleName();
 
-		/**if (obj instanceof IfStatement) {
-			System.out.println("Entre If");
-			IfStatement statement = (IfStatement) obj;
-			nuevaIf = ((Block) (statement).getThenStatement()).statements();
-			separar(((Block) (statement).getThenStatement()).statements(),nivel++);
-			
-			//nuevaIf.add(statement.getExpression().toString()); 
-			return nuevaIf;
-		}
-		*/
+		obj.getClass().getSimpleName();
 		if (obj instanceof IfStatement) {
 			System.out.println("Entre If");
 			IfStatement statement = (IfStatement) obj;
 			nuevaIf = ((Block) (statement).getThenStatement()).statements();
 			Block bloque = ((Block) (statement).getThenStatement());
 			System.out.println("State pruebas: " + bloque.statements().isEmpty());
-			if(!bloque.statements().isEmpty()) {
+			if (!bloque.statements().isEmpty()) {
 				int o = 0;
-				while(o !=bloque.statements().size()) {
+				while (o != bloque.statements().size()) {
 					System.out.println("entre aqui");
-					recursividad(bloque.statements().get(o), nivel++);
+					recursividad(nuevaIf.get(o), nivel++);
 					o++;
 				}
 			}
-			
-			
 		}
-			
+
 		if (obj instanceof ForStatement) {
 			System.out.println("Entre For");
 			ForStatement statement = (ForStatement) obj;
 			nuevaFor = ((Block) (statement).getBody()).statements();
-			//nuevaFor.add(statement.getExpression());
+			// nuevaFor.add(statement.getExpression());
 			Block bloque = ((Block) (statement).getBody());
-			if(!bloque.statements().isEmpty()) {
+			if (!bloque.statements().isEmpty()) {
 				int o = 0;
-				while(o !=bloque.statements().size()) {
+				while (o != bloque.statements().size()) {
 					System.out.println("entre aqui");
-					recursividad(bloque.statements().get(o), nivel++);
+					recursividad(nuevaFor.get(o), nivel++);
 					o++;
 				}
 			}
@@ -234,40 +211,35 @@ public class GetInfo extends AbstractHandler {
 			WhileStatement statement = (WhileStatement) obj;
 			nuevaWhile = ((Block) (statement).getBody()).statements();
 			Block bloque = ((Block) (statement).getBody());
-			if(!bloque.statements().isEmpty()) {
+			if (!bloque.statements().isEmpty()) {
 				int o = 0;
-				while(o !=bloque.statements().size()) {
+				while (o != bloque.statements().size()) {
 					System.out.println("entre aqui");
-					recursividad(bloque.statements().get(o), nivel++);
+					recursividad(nuevaWhile.get(o), nivel++);
 					o++;
 				}
 			}
-			
-			
-			//nuevaWhile.add(statement.getExpression().toString());
 			return nuevaWhile;
 		}
+		
+		
+		
 		if (obj instanceof EnhancedForStatement) {
 			System.out.println("Entre ForEnhance");
 			EnhancedForStatement statement = (EnhancedForStatement) obj;
-			nuevaWhile = ((Block) (statement).getBody()).statements();
-			System.out.println(nuevaWhile);
+			nuevaFor = ((Block) (statement).getBody()).statements();
 			return nuevaFor;
-			
 
-		}
-		else {
+		} else {
 			return nuevaIf;
 		}
 	}
-
 
 	private static CompilationUnit parse(ICompilationUnit unit) {
 		ASTParser parser = ASTParser.newParser(AST.JLS3);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);
 		parser.setSource(unit);
 		parser.setResolveBindings(true);
-
 		return (CompilationUnit) parser.createAST(null);
 	}
 
