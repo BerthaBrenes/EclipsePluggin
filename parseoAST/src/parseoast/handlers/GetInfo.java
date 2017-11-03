@@ -119,7 +119,7 @@ public class GetInfo extends AbstractHandler {
 
 		}
 	}
-
+	
 	private void createAST(IPackageFragment mypackage) throws JavaModelException {
 
 		for (ICompilationUnit unit : mypackage.getCompilationUnits()) {
@@ -145,11 +145,15 @@ public class GetInfo extends AbstractHandler {
 						int limite = arraySta.size();
 						System.out.print(method.getBody().getClass());
 						while (i != limite) {
-							System.out.println(i + ": {" + method.getBody().statements().get(i) + "}");
+							int nivel =0 ;
+
+							System.out.println(i+": {"+method.getBody().statements().get(i)+"}");
 							String a = arraySta.get(i).toString().trim().substring(0, 2);
-							System.out.print(recursividad(method.getBody().statements().get(i), 0));
+							System.out.print(recursividad(method.getBody().statements().get(i),0));
+
 
 							i++;
+						
 						}
 					}
 				}
@@ -158,16 +162,10 @@ public class GetInfo extends AbstractHandler {
 
 	}
 
-	private static List<Statement> separar(List ojk, int niveli) {
 
-		// Block casteo = (Block) ojk;
-		List<Statement> list = null;
-		for (int i = 0; i > ojk.size(); i++) {
-			System.out.println("estoy en separar");
-			// recursividad(list.get(i), niveli);
-		}
-		return list;
-	}
+	
+	
+	
 
 	private static List<Statement> recursividad(Object obj, int nivel) {
 		List<Statement> nuevaIf = null;
