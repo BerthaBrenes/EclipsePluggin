@@ -179,6 +179,7 @@ public class GetInfo extends AbstractHandler {
 			nuevaIf = ((Block) (statement).getThenStatement()).statements();
 			Block bloque = ((Block) (statement).getThenStatement());
 			System.out.println("State pruebas: " + bloque.statements().isEmpty());
+			System.out.println("lineas de codigo"+statement.getThenStatement().getStartPosition());
 			if (!bloque.statements().isEmpty()) {
 				int o = 0;
 				while (o != bloque.statements().size()) {
@@ -195,6 +196,7 @@ public class GetInfo extends AbstractHandler {
 			nuevaFor = ((Block) (statement).getBody()).statements();
 			// nuevaFor.add(statement.getExpression());
 			Block bloque = ((Block) (statement).getBody());
+			
 			if (!bloque.statements().isEmpty()) {
 				int o = 0;
 				while (o != bloque.statements().size()) {
@@ -205,6 +207,7 @@ public class GetInfo extends AbstractHandler {
 			}
 			return nuevaFor;
 		}
+		
 
 		if (obj instanceof WhileStatement) {
 			System.out.println("Entre While");
