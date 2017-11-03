@@ -35,13 +35,18 @@ import org.eclipse.jdt.core.dom.ThisExpression;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import org.eclipse.jdt.ui.IPackagesViewPart;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+
+import listas.Lista;
+import parseoast.views.Fabrica_de_simbolos;
 
 import org.eclipse.jdt.debug.*;
 import org.eclipse.jdt.internal.debug.core.breakpoints.*;
@@ -61,7 +66,12 @@ public class GetInfo extends AbstractHandler {
 
 	// public DebugActivitor debug;
 	private ArrayList<String> condicionales = new ArrayList<>();
-	public Canvas canvas;
+	private Lista<Statement> flujo = new Lista<>();
+	public Composite composite;
+
+	public void setComposite(Composite composite) {
+		this.composite = composite;
+	}
 
 	/**
 	 * execute ejecuta el primer codigo que encuentra a raiz de un evento Con el
@@ -121,7 +131,8 @@ public class GetInfo extends AbstractHandler {
 	}
 	
 	private void createAST(IPackageFragment mypackage) throws JavaModelException {
-
+		Fabrica_de_simbolos simbolos = new Fabrica_de_simbolos();
+		
 		for (ICompilationUnit unit : mypackage.getCompilationUnits()) {
 			CompilationUnit parse = parse(unit);
 			MethodVisitor visitor = new MethodVisitor();
@@ -131,8 +142,10 @@ public class GetInfo extends AbstractHandler {
 			if (unit.getElementName().equals(Currente)) {
 				// System.out.println(visitor.getMethods());
 				ListaMetodos(visitor.getMethods());
+				
 				for (MethodDeclaration method : visitor.getMethods()) {
 					System.out.println(Currente);
+					
 					System.out
 							.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
 					List<Statement> arraySta = method.getBody().statements();
@@ -141,6 +154,7 @@ public class GetInfo extends AbstractHandler {
 					if (eleccion.equals(method.getName().toString())) {
 						method.getBody().statements();
 						System.out.println("encontre a alguien:" + eleccion);
+						
 						int i = 0;
 						int limite = arraySta.size();
 						System.out.print(method.getBody().getClass());
@@ -163,20 +177,20 @@ public class GetInfo extends AbstractHandler {
 	}
 
 
-	
-	
-	
 
-	private static List<Statement> recursividad(Object obj, int nivel) {
+	private List<Statement> recursividad(Object obj, int nivel) {
+		
 		List<Statement> nuevaIf = null;
 		List<Statement> nuevaFor = null;
 		List<Statement> nuevaWhile = null;
-
-		obj.getClass().getSimpleName();
+		List<Statement> nuevaForEnc = null;
+		
+		
 		if (obj instanceof IfStatement) {
 			System.out.println("Entre If");
 			IfStatement statement = (IfStatement) obj;
 			nuevaIf = ((Block) (statement).getThenStatement()).statements();
+			flujo.Insertar(statement);
 			Block bloque = ((Block) (statement).getThenStatement());
 			System.out.println("State pruebas: " + bloque.statements().isEmpty());
 			System.out.println("lineas de codigo"+statement.getThenStatement().getStartPosition());
@@ -188,15 +202,17 @@ public class GetInfo extends AbstractHandler {
 					o++;
 				}
 			}
+
 		}
 
 		if (obj instanceof ForStatement) {
 			System.out.println("Entre For");
 			ForStatement statement = (ForStatement) obj;
 			nuevaFor = ((Block) (statement).getBody()).statements();
+			flujo.Insertar(statement);
 			// nuevaFor.add(statement.getExpression());
 			Block bloque = ((Block) (statement).getBody());
-			
+
 			if (!bloque.statements().isEmpty()) {
 				int o = 0;
 				while (o != bloque.statements().size()) {
@@ -205,6 +221,7 @@ public class GetInfo extends AbstractHandler {
 					o++;
 				}
 			}
+
 			return nuevaFor;
 		}
 		
@@ -213,15 +230,9 @@ public class GetInfo extends AbstractHandler {
 			System.out.println("Entre While");
 			WhileStatement statement = (WhileStatement) obj;
 			nuevaWhile = ((Block) (statement).getBody()).statements();
+			flujo.Insertar(statement);
 			Block bloque = ((Block) (statement).getBody());
-			if (!bloque.statements().isEmpty()) {
-				int o = 0;
-				while (o != bloque.statements().size()) {
-					System.out.println("entre aqui");
-					recursividad(nuevaWhile.get(o), nivel++);
-					o++;
-				}
-			}
+			
 			return nuevaWhile;
 		}
 		
@@ -230,12 +241,19 @@ public class GetInfo extends AbstractHandler {
 		if (obj instanceof EnhancedForStatement) {
 			System.out.println("Entre ForEnhance");
 			EnhancedForStatement statement = (EnhancedForStatement) obj;
-			nuevaFor = ((Block) (statement).getBody()).statements();
-			return nuevaFor;
+			nuevaForEnc = ((Block) (statement).getBody()).statements();
+			flujo.Insertar(statement);
+			Block bloque = ((Block) (statement).getBody());
+			
+			return nuevaForEnc;
 
 		} else {
-			return nuevaIf;
+			return null;
 		}
+	}
+
+	public Lista<Statement> getFlujo() {
+		return flujo;
 	}
 
 	private static CompilationUnit parse(ICompilationUnit unit) {

@@ -2,6 +2,10 @@ package parseoast.views;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.ForStatement;
+import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
@@ -13,6 +17,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -162,18 +167,32 @@ public class FlowChart extends ViewPart{
 					composite.addPaintListener(listener);
 					composite.redraw();
 					posy+=100;
-					sc.setMinSize(new Point(posx, posy));
-    				sc.update();
+					
     				action2.setEnabled(false);
     				current = 0;
     				bucle = 0;
     				try {
 						nuevo.execute(new ExecutionEvent());
+						for (int i = 0;i<nuevo.getFlujo().Largo();i++) {
+					
+						
+						Recursion recur = new Recursion();
+						recur.Recursion(nuevo.getFlujo().Iterador(i), 0, composite,labels);
+						posx+=100;
+						posy=recur.getPosy();
+						Rectangle rec = composite.getBounds();
+	    				sc.setMinSize(new Point(rec.width,rec.height));
+						
+	    				sc.update();
+	    			
+						
+						}
 						
 					} catch (ExecutionException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+    				
     				
     			}
     		};
@@ -189,6 +208,7 @@ public class FlowChart extends ViewPart{
 					
 					try {
 						nuevo.execute(new ExecutionEvent());
+						
 						combo.setItems(nuevo.getLista());
 						action2.setEnabled(true);
 					} catch (ExecutionException e) {
@@ -205,6 +225,7 @@ public class FlowChart extends ViewPart{
 						labels.Iterador(i).dispose();
 					}
 	    				posy = 50;
+	    				posx=150;
 	    				composite.redraw();
 	    				sc.setMinSize(new Point(posx, posy));
 	    				sc.update();
@@ -220,6 +241,9 @@ public class FlowChart extends ViewPart{
 	/**
 	 * Metodo para añadir iconos al toolbar
 	 */
+	private void Lector_Flujo () {
+		
+	}
     private void initializeToolBar() {
         IToolBarManager toolbarManager= getViewSite().getActionBars().getToolBarManager();
         toolbarManager.add(refresh);
