@@ -163,9 +163,6 @@ public class GetInfo extends AbstractHandler {
 	}
 
 
-	
-	
-	
 
 	private static List<Statement> recursividad(Object obj, int nivel) {
 		List<Statement> nuevaIf = null;
