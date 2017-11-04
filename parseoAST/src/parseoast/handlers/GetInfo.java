@@ -43,6 +43,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -85,7 +86,25 @@ public class GetInfo extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-
+		
+		Thread debugThread = new Thread(new Runnable() {
+			         public void run() {
+			            while (true) {
+			               try { Thread.sleep(500); } catch (Exception e) { }
+			               Display.getDefault().asyncExec(new Runnable() {
+			                  public void run() {
+			                   try {
+			        leerdebug();
+			       } catch (DebugException e) {
+			        e.printStackTrace();
+			        System.out.println("se cayo ");
+			       }
+			                  }
+			               });
+			            }
+			         }
+			      });
+		debugThread.start();
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 
 		IWorkbenchPage activePage = window.getActivePage();
@@ -150,15 +169,9 @@ public class GetInfo extends AbstractHandler {
 				for (MethodDeclaration method : visitor.getMethods()) {
 					System.out.println(Currente);
 					
-					System.out
-							.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
+					System.out.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
 					List<Statement> arraySta = method.getBody().statements();
-					try {
-						leerdebug();
-					} catch (DebugException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
 					System.out.println(arraySta.size());
 					if (eleccion.equals(method.getName().toString())) {
 						method.getBody().statements();
@@ -288,7 +301,7 @@ public class GetInfo extends AbstractHandler {
 			ILaunchManager manager = plugin.getLaunchManager();
 			IDebugTarget[] target = manager.getDebugTargets();
 			System.out.print("entro aqui");
-			System.out.println(target[0].getThreads()[4].getStackFrames()[0].getLineNumber());
+			System.out.println(target[0].getThreads()[4]);
 			return target[0].getThreads()[4].getStackFrames()[0].getLineNumber();
 		}catch(Exception e) {
 			
