@@ -11,6 +11,11 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.debug.core.DebugException;
+import org.eclipse.debug.core.DebugPlugin;
+import org.eclipse.debug.core.ILaunchManager;
+import org.eclipse.debug.core.model.IDebugTarget;
+import org.eclipse.debug.core.model.IThread;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -138,7 +143,6 @@ public class GetInfo extends AbstractHandler {
 			MethodVisitor visitor = new MethodVisitor();
 			parse.accept(visitor);
 			System.out.println("unit:" + unit.getElementName());
-
 			if (unit.getElementName().equals(Currente)) {
 				// System.out.println(visitor.getMethods());
 				ListaMetodos(visitor.getMethods());
@@ -149,7 +153,12 @@ public class GetInfo extends AbstractHandler {
 					System.out
 							.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
 					List<Statement> arraySta = method.getBody().statements();
-
+					try {
+						leerdebug();
+					} catch (DebugException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					System.out.println(arraySta.size());
 					if (eleccion.equals(method.getName().toString())) {
 						method.getBody().statements();
@@ -164,7 +173,7 @@ public class GetInfo extends AbstractHandler {
 							System.out.println(i+": {"+method.getBody().statements().get(i)+"}");
 							String a = arraySta.get(i).toString().trim().substring(0, 2);
 							System.out.print(recursividad(method.getBody().statements().get(i),0));
-
+							
 
 							i++;
 						
@@ -184,7 +193,8 @@ public class GetInfo extends AbstractHandler {
 		List<Statement> nuevaFor = null;
 		List<Statement> nuevaWhile = null;
 		List<Statement> nuevaForEnc = null;
-		
+		List<Statement> nuevaDecla = null;
+ 		
 		
 		if (obj instanceof IfStatement) {
 			System.out.println("Entre If");
@@ -247,7 +257,8 @@ public class GetInfo extends AbstractHandler {
 			
 			return nuevaForEnc;
 
-		} else {
+		}
+		else {
 			return null;
 		}
 	}
@@ -271,7 +282,20 @@ public class GetInfo extends AbstractHandler {
 		}
 
 	}
-
+	public static int leerdebug() throws DebugException{
+		try {
+			DebugPlugin plugin = DebugPlugin.getDefault();
+			ILaunchManager manager = plugin.getLaunchManager();
+			IDebugTarget[] target = manager.getDebugTargets();
+			System.out.print("entro aqui");
+			System.out.println(target[0].getThreads()[4].getStackFrames()[0].getLineNumber());
+			return target[0].getThreads()[4].getStackFrames()[0].getLineNumber();
+		}catch(Exception e) {
+			
+		}
+		return 0;
+		
+	}
 	public String[] getLista() {
 
 		return this.condicionales.toArray(new String[condicionales.size()]);
