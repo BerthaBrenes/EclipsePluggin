@@ -21,6 +21,25 @@ public class Fabrica_de_simbolos {
 	private Image f_decision = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/filled-decision_symbol-60x46.PNG");
 	private Image f_process = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/filled-action-process-symbol.png");
 	private Image f_start_end = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/filled-start-end-process-symbol.png");
+	private Image for_proc = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/for-symbol-cycle.png/");
+	public PaintListener horizontal (int posx,int posy,Display display) {
+		PaintListener listener = new PaintListener() {
+			
+				@Override
+				public void paintControl(PaintEvent e) {
+					
+					// TODO Auto-generated method stub
+					
+					
+					e.gc.setLineWidth(1);
+					e.gc.setForeground(display.getSystemColor(SWT.COLOR_BLACK));
+					e.gc.setBackground(display.getSystemColor(SWT.COLOR_BLACK));
+					drawArrow(e.gc, posx+110, posy+32, posx+120, posy+32, 10, Math.toRadians(40));
+					
+				}
+			};
+			return listener;
+	}
 	
 	public PaintListener Process_Lineas (int posx, int posy,Display display) {
 		PaintListener listener = new PaintListener() {
@@ -60,7 +79,7 @@ public class Fabrica_de_simbolos {
 		};
 		return listener;
 }
-	public CLabel For (int posx,int posy,Composite parent, String name) {
+	public CLabel IF (int posx,int posy,Composite parent, String name) {
 		CLabel label = new CLabel(parent, SWT.NONE);
 		label.setBackground(decision);
 		label.setBounds(posx,posy,110,65);
@@ -73,26 +92,8 @@ public class Fabrica_de_simbolos {
 					e.gc.drawString(name, label.getBounds().width/3, label.getBounds().height/3,true);
 				}
 			});
-		label.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// TODO Auto-generated method stub
-				label.setBackground(decision);
-			}
-			
-			@Override
-			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
-				label.setBackground(f_decision);
-			}
-			
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(name);
-			}
-		});
+		
+		
 		return label;
 	}
 	public CLabel Process (int posx,int posy,Composite parent, String name) {
@@ -107,27 +108,37 @@ public class Fabrica_de_simbolos {
 				e.gc.drawString(name, label.getBounds().width/3, label.getBounds().height/3,true);
 			}
 		});
-		label.addMouseListener(new MouseListener() {
+		
+		return label;
+	}
+	public CLabel start (int posx,int posy,Composite parent, String name) {
+		CLabel label = new CLabel(parent, SWT.NONE);
+		label.setBackground(start_end);
+		label.setBounds(posx, posy, 110, 60);
+		label.addPaintListener(new PaintListener() {
 			
 			@Override
-			public void mouseUp(MouseEvent e) {
+			public void paintControl(PaintEvent e) {
 				// TODO Auto-generated method stub
-				label.setBackground(process);
-			}
-			
-			@Override
-			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
-				label.setBackground(f_process);
-			}
-			
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(name);
+				e.gc.drawString(name, label.getBounds().width/3, label.getBounds().height/3,true);
 			}
 		});
 		return label;
+	}
+	public CLabel FOR (int posx,int posy,Composite parent, String name) {
+		CLabel label = new CLabel(parent, SWT.NONE);
+		label.setBackground(for_proc);
+		label.setBounds(posx, posy, 110, 65);
+		label.addPaintListener(new PaintListener() {
+			
+			@Override
+			public void paintControl(PaintEvent e) {
+				// TODO Auto-generated method stub
+				e.gc.drawString(name, label.getBounds().width/3, label.getBounds().height/3,true);
+			}
+		});
+		return label;
+		
 	}
 	public static void drawArrow(GC gc, int x1, int y1, int x2, int y2, double arrowLength, double arrowAngle) {
 	    double theta = Math.atan2(y2 - y1, x2 - x1);
@@ -145,4 +156,16 @@ public class Fabrica_de_simbolos {
 
 	    path.dispose();
 	}
+	private Image resize(Image image, int width, int height) {
+		Image scaled = new Image(Display.getDefault(), width, height);
+		GC gc = new GC(scaled);
+		gc.setAntialias(SWT.ON);
+		gc.setInterpolation(SWT.HIGH);
+		gc.drawImage(image, 0, 0, 
+		image.getBounds().width, image.getBounds().height, 
+		0, 0, width, height);
+		gc.dispose();
+		image.dispose(); // don't forget about me!
+		return scaled;
+		}
 }

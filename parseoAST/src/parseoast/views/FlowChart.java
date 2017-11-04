@@ -11,21 +11,28 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
 
+import javafx.scene.input.KeyCode;
 import listas.Lista;
 import parseoast.handlers.GetInfo;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 
 public class FlowChart extends ViewPart{
 	/**
@@ -54,13 +61,7 @@ public class FlowChart extends ViewPart{
 	private Composite composite;
 	private ScrolledComposite sc;
 	private PaintListener listener;
-	private Label label;
 	private Image decision = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/decision_symbol-60x46.PNG");
-	private Image process = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/action-process-symbol.png");
-	private Image start_end = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/start-end-process-symbol.png");
-	private Image f_decision = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/filled-decision_symbol-60x46.PNG");
-	private Image f_process = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/filled-action-process-symbol.png");
-	private Image f_start_end = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/filled-start-end-process-symbol.png");
 	
 	/**
 	 * Se inicia al ejecutar el plugin, este contiene todos los widgets que deben abrirse al iniciar este
@@ -74,16 +75,37 @@ public class FlowChart extends ViewPart{
 		sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 	    sc.setExpandHorizontal(true);
 	    sc.setExpandVertical(true);
+	   
 	    
 	    composite = new Composite(sc, SWT.NONE);
 	    
-	    
+	    composite.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseUp(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				System.out.println(e.x + ","+e.y);
+			}
+			
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	    
 	    /**
 	     * Defect widgets in the part control
 	     */
 	    
 	    combo = new Combo(composite, SWT.NONE);
+	   
 	    combo.setBounds(10, 10, 330, 23);
 	    
 	   
@@ -158,7 +180,7 @@ public class FlowChart extends ViewPart{
     				Fabrica_de_simbolos simbolos = new Fabrica_de_simbolos();
     				
     				nuevo.setEleccion(combo.getText());
-    				CLabel label = simbolos.Process(posx, posy, composite,combo.getText());
+    				CLabel label = simbolos.start(posx, posy, composite,combo.getText());
     				labels.Insertar(label);
     				
     				
@@ -173,21 +195,13 @@ public class FlowChart extends ViewPart{
     				bucle = 0;
     				try {
 						nuevo.execute(new ExecutionEvent());
-						for (int i = 0;i<nuevo.getFlujo().Largo();i++) {
-					
+						Recursion recur = new Recursion(nuevo.getFlujo(), composite,labels,active);
 						
-						Recursion recur = new Recursion();
-						recur.Recursion(nuevo.getFlujo().Iterador(i), 0, composite,labels);
-						posx+=100;
-						posy=recur.getPosy();
-						Rectangle rec = composite.getBounds();
-	    				sc.setMinSize(new Point(rec.width,rec.height));
+						
+						
+						sc.setMinSize(new Point(recur.getHeight(),recur.getWidth()));
 						
 	    				sc.update();
-	    			
-						
-						}
-						
 					} catch (ExecutionException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -244,6 +258,8 @@ public class FlowChart extends ViewPart{
 	private void Lector_Flujo () {
 		
 	}
+	
+	
     private void initializeToolBar() {
         IToolBarManager toolbarManager= getViewSite().getActionBars().getToolBarManager();
         toolbarManager.add(refresh);

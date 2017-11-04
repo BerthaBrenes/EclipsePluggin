@@ -63,7 +63,7 @@ public class Precaucion extends ViewPart{
 	    combo = new Combo(composite, SWT.NONE);
 	    combo.setBounds(10, 10, 330, 23);
 	    Fabrica_de_simbolos symbol = new Fabrica_de_simbolos();
-	    symbol.For(posx, posy, composite, "Prueba");
+	  
 	    /**
 	     * Final create part
 	     */
