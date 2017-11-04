@@ -11,6 +11,11 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.debug.core.DebugException;
+import org.eclipse.debug.core.DebugPlugin;
+import org.eclipse.debug.core.ILaunchManager;
+import org.eclipse.debug.core.model.IDebugTarget;
+import org.eclipse.debug.core.model.IThread;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -38,6 +43,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -80,7 +86,25 @@ public class GetInfo extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-
+		
+		Thread debugThread = new Thread(new Runnable() {
+			         public void run() {
+			            while (true) {
+			               try { Thread.sleep(500); } catch (Exception e) { }
+			               Display.getDefault().asyncExec(new Runnable() {
+			                  public void run() {
+			                   try {
+			        leerdebug();
+			       } catch (DebugException e) {
+			        e.printStackTrace();
+			        System.out.println("se cayo ");
+			       }
+			                  }
+			               });
+			            }
+			         }
+			      });
+		debugThread.start();
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 
 		IWorkbenchPage activePage = window.getActivePage();
@@ -138,7 +162,6 @@ public class GetInfo extends AbstractHandler {
 			MethodVisitor visitor = new MethodVisitor();
 			parse.accept(visitor);
 			System.out.println("unit:" + unit.getElementName());
-
 			if (unit.getElementName().equals(Currente)) {
 				// System.out.println(visitor.getMethods());
 				ListaMetodos(visitor.getMethods());
@@ -146,10 +169,9 @@ public class GetInfo extends AbstractHandler {
 				for (MethodDeclaration method : visitor.getMethods()) {
 					System.out.println(Currente);
 					
-					System.out
-							.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
+					System.out.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
 					List<Statement> arraySta = method.getBody().statements();
-
+					
 					System.out.println(arraySta.size());
 					if (eleccion.equals(method.getName().toString())) {
 						method.getBody().statements();
@@ -164,7 +186,7 @@ public class GetInfo extends AbstractHandler {
 							System.out.println(i+": {"+method.getBody().statements().get(i)+"}");
 							String a = arraySta.get(i).toString().trim().substring(0, 2);
 							System.out.print(recursividad(method.getBody().statements().get(i),0));
-
+							
 
 							i++;
 						
@@ -184,7 +206,8 @@ public class GetInfo extends AbstractHandler {
 		List<Statement> nuevaFor = null;
 		List<Statement> nuevaWhile = null;
 		List<Statement> nuevaForEnc = null;
-		
+		List<Statement> nuevaDecla = null;
+ 		
 		
 		if (obj instanceof IfStatement) {
 			System.out.println("Entre If");
@@ -193,7 +216,16 @@ public class GetInfo extends AbstractHandler {
 			flujo.Insertar(statement);
 			Block bloque = ((Block) (statement).getThenStatement());
 			System.out.println("State pruebas: " + bloque.statements().isEmpty());
-			
+			System.out.println("lineas de codigo"+statement.getThenStatement().getStartPosition());
+			if (!bloque.statements().isEmpty()) {
+				int o = 0;
+				while (o != bloque.statements().size()) {
+					System.out.println("entre aqui");
+					recursividad(nuevaIf.get(o), nivel++);
+					o++;
+				}
+			}
+
 		}
 
 		if (obj instanceof ForStatement) {
@@ -203,9 +235,19 @@ public class GetInfo extends AbstractHandler {
 			flujo.Insertar(statement);
 			// nuevaFor.add(statement.getExpression());
 			Block bloque = ((Block) (statement).getBody());
-			
+
+			if (!bloque.statements().isEmpty()) {
+				int o = 0;
+				while (o != bloque.statements().size()) {
+					System.out.println("entre aqui");
+					recursividad(nuevaFor.get(o), nivel++);
+					o++;
+				}
+			}
+
 			return nuevaFor;
 		}
+		
 
 		if (obj instanceof WhileStatement) {
 			System.out.println("Entre While");
@@ -228,7 +270,8 @@ public class GetInfo extends AbstractHandler {
 			
 			return nuevaForEnc;
 
-		} else {
+		}
+		else {
 			return null;
 		}
 	}
@@ -252,7 +295,20 @@ public class GetInfo extends AbstractHandler {
 		}
 
 	}
-
+	public static int leerdebug() throws DebugException{
+		try {
+			DebugPlugin plugin = DebugPlugin.getDefault();
+			ILaunchManager manager = plugin.getLaunchManager();
+			IDebugTarget[] target = manager.getDebugTargets();
+			System.out.print("entro aqui");
+			System.out.println(target[0].getThreads()[4]);
+			return target[0].getThreads()[4].getStackFrames()[0].getLineNumber();
+		}catch(Exception e) {
+			
+		}
+		return 0;
+		
+	}
 	public String[] getLista() {
 
 		return this.condicionales.toArray(new String[condicionales.size()]);
