@@ -87,7 +87,7 @@ public class GetInfo extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		
-		Thread debugThread = new Thread(new Runnable() {
+		/**Thread debugThread = new Thread(new Runnable() {
 			         public void run() {
 			            while (true) {
 			               try { Thread.sleep(500); } catch (Exception e) { }
@@ -104,12 +104,12 @@ public class GetInfo extends AbstractHandler {
 			            }
 			         }
 			      });
-		debugThread.start();
+		debugThread.start();*/
 		IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 
 		IWorkbenchPage activePage = window.getActivePage();
 		IEditorPart activeEditor = activePage.getActiveEditor();
-		System.out.println(activeEditor.getTitle());
+		
 		Currente = activeEditor.getTitle();
 		if (activeEditor != null) {
 			IEditorInput input = activeEditor.getEditorInput();
@@ -119,7 +119,7 @@ public class GetInfo extends AbstractHandler {
 				IResource resource = input.getAdapter(IResource.class);
 				if (resource != null) {
 					project = resource.getProject();
-					System.out.println("nombre projecto: " + project.getName());
+					
 					try {
 						analyseMethods(project);
 					} catch (JavaModelException e) {
@@ -145,7 +145,7 @@ public class GetInfo extends AbstractHandler {
 		IPackageFragment[] packages = JavaCore.create(project).getPackageFragments();
 		for (IPackageFragment mypackage : packages) {
 			if (mypackage.getKind() == IPackageFragmentRoot.K_SOURCE) {
-				System.out.println("nombre paquete: " + mypackage.getElementName() + "\n");
+				
 				// System.out.println("nombre paquete padre: " + mypackage.getParent());
 				createAST(mypackage);
 
@@ -161,21 +161,18 @@ public class GetInfo extends AbstractHandler {
 			CompilationUnit parse = parse(unit);
 			MethodVisitor visitor = new MethodVisitor();
 			parse.accept(visitor);
-			System.out.println("unit:" + unit.getElementName());
+			
 			if (unit.getElementName().equals(Currente)) {
 				// System.out.println(visitor.getMethods());
 				ListaMetodos(visitor.getMethods());
 				
 				for (MethodDeclaration method : visitor.getMethods()) {
-					System.out.println(Currente);
 					
-					System.out.println("Method name: " + method.getName() + "\nReturn Type: " + method.getReturnType2());
 					List<Statement> arraySta = method.getBody().statements();
 					
-					System.out.println(arraySta.size());
+					
 					if (eleccion.equals(method.getName().toString())) {
 						method.getBody().statements();
-						System.out.println("encontre a alguien:" + eleccion);
 						
 						int i = 0;
 						int limite = arraySta.size();
@@ -183,7 +180,7 @@ public class GetInfo extends AbstractHandler {
 						while (i != limite) {
 							int nivel =0 ;
 
-							System.out.println(i+": {"+method.getBody().statements().get(i)+"}");
+							
 							String a = arraySta.get(i).toString().trim().substring(0, 2);
 							System.out.print(recursividad(method.getBody().statements().get(i),0));
 							
@@ -210,47 +207,32 @@ public class GetInfo extends AbstractHandler {
  		
 		
 		if (obj instanceof IfStatement) {
-			System.out.println("Entre If");
+		
 			IfStatement statement = (IfStatement) obj;
 			nuevaIf = ((Block) (statement).getThenStatement()).statements();
 			flujo.Insertar(statement);
 			Block bloque = ((Block) (statement).getThenStatement());
-			System.out.println("State pruebas: " + bloque.statements().isEmpty());
-			System.out.println("lineas de codigo"+statement.getThenStatement().getStartPosition());
-			if (!bloque.statements().isEmpty()) {
-				int o = 0;
-				while (o != bloque.statements().size()) {
-					System.out.println("entre aqui");
-					recursividad(nuevaIf.get(o), nivel++);
-					o++;
-				}
-			}
+			
+			
 
 		}
 
 		if (obj instanceof ForStatement) {
-			System.out.println("Entre For");
+		
 			ForStatement statement = (ForStatement) obj;
 			nuevaFor = ((Block) (statement).getBody()).statements();
 			flujo.Insertar(statement);
 			// nuevaFor.add(statement.getExpression());
 			Block bloque = ((Block) (statement).getBody());
 
-			if (!bloque.statements().isEmpty()) {
-				int o = 0;
-				while (o != bloque.statements().size()) {
-					System.out.println("entre aqui");
-					recursividad(nuevaFor.get(o), nivel++);
-					o++;
-				}
-			}
+			
 
 			return nuevaFor;
 		}
 		
 
 		if (obj instanceof WhileStatement) {
-			System.out.println("Entre While");
+			
 			WhileStatement statement = (WhileStatement) obj;
 			nuevaWhile = ((Block) (statement).getBody()).statements();
 			flujo.Insertar(statement);
@@ -262,7 +244,7 @@ public class GetInfo extends AbstractHandler {
 		
 		
 		if (obj instanceof EnhancedForStatement) {
-			System.out.println("Entre ForEnhance");
+		
 			EnhancedForStatement statement = (EnhancedForStatement) obj;
 			nuevaForEnc = ((Block) (statement).getBody()).statements();
 			flujo.Insertar(statement);
@@ -301,7 +283,7 @@ public class GetInfo extends AbstractHandler {
 			ILaunchManager manager = plugin.getLaunchManager();
 			IDebugTarget[] target = manager.getDebugTargets();
 			System.out.print("entro aqui");
-			System.out.println(target[0].getThreads()[4]);
+			
 			return target[0].getThreads()[4].getStackFrames()[0].getLineNumber();
 		}catch(Exception e) {
 			
