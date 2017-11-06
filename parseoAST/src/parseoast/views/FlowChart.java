@@ -2,37 +2,24 @@ package parseoast.views;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.EnhancedForStatement;
-import org.eclipse.jdt.core.dom.ForStatement;
-import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
 
-import javafx.scene.input.KeyCode;
 import listas.Lista;
 import parseoast.handlers.GetInfo;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
 
 public class FlowChart extends ViewPart{
 	/**
@@ -61,7 +48,8 @@ public class FlowChart extends ViewPart{
 	private Composite composite;
 	private ScrolledComposite sc;
 	private PaintListener listener;
-	private Image decision = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/decision_symbol-60x46.PNG");
+	
+
 	
 	/**
 	 * Se inicia al ejecutar el plugin, este contiene todos los widgets que deben abrirse al iniciar este
@@ -79,26 +67,7 @@ public class FlowChart extends ViewPart{
 	    
 	    composite = new Composite(sc, SWT.NONE);
 	    
-	    composite.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseUp(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseDown(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(e.x + ","+e.y);
-			}
-			
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+	    
 	    
 	    /**
 	     * Defect widgets in the part control
@@ -108,7 +77,7 @@ public class FlowChart extends ViewPart{
 	   
 	    combo.setBounds(10, 10, 330, 23);
 	    
-	   
+	    
 	    /**
 	     * Final create part
 	     */
@@ -135,18 +104,30 @@ public class FlowChart extends ViewPart{
     		*Obtiene el paso siguiente
     		*/	
     		action = new Action("Step Into") {
-    			Color red = new Color(composite.getDisplay(), 255,0,0);
+    			
+    			public void run () {
+    				
+    			}
+    		};
+    		action.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepinto_co.png"));
+    		action.setEnabled(false);
+    		/**
+    		 * Obtiene el interior en un paso
+    		 */
+    		action1 = new Action("Step Over") {
+    			
     			public void run () {
     				if (bucle <= labels.Largo()) {
+    					Color red = new Color(composite.getDisplay(), 255,0,0);
     					if (bucle == current) {
     						labels.Iterador(bucle).setForeground(red);
-    						System.out.println(labels.Iterador(bucle).getBackground());
     						bucle++;
     					}
     					else if (current < bucle && bucle == labels.Largo()) {
     						labels.Iterador(current).setForeground(null);
     						bucle =0;
     						current = 0;
+        					refresh.run();
     					}
     					else if (current < bucle) {
     						labels.Iterador(current).setForeground(null);
@@ -156,18 +137,10 @@ public class FlowChart extends ViewPart{
     					}
     					
     				}
-    			}
-    		};
-    		action.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepinto_co.png"));
-    		/**
-    		 * Obtiene el interior en un paso
-    		 */
-    		action1 = new Action("Step Over") {
-    			
-    			public void run () {
     				
     			}
     		};
+    		action1.setEnabled(false);
     		//ejecuta el get info 
     		action1.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/stepover_co.png"));
     		/**
@@ -176,37 +149,40 @@ public class FlowChart extends ViewPart{
     		action2  = new Action ("Start Debug with Flowchart") {
     			@SuppressWarnings("static-access")
 				public void run () {
+    				if (combo.getText().isEmpty()) {
+    					MessageDialog.openConfirm(composite.getShell(), "Alerta", "Debe ingresar el nombre de un método");
+    				}
+    				
+    				else {
+    				//Obtener datos del metodo
     				GetInfo nuevo = new GetInfo();
     				Fabrica_de_simbolos simbolos = new Fabrica_de_simbolos();
-    				
     				nuevo.setEleccion(combo.getText());
+    				//Inicio del proceso con el label respectivo
     				CLabel label = simbolos.start(posx, posy, composite,combo.getText());
     				labels.Insertar(label);
-    				
-    				
     				listener = simbolos.Process_Lineas(posx, posy,composite.getDisplay());
 					active.Insertar(listener);
 					composite.addPaintListener(listener);
 					composite.redraw();
 					posy+=100;
-					
+					//Botones del toolbar
     				action2.setEnabled(false);
+    				action.setEnabled(true);
+    				action1.setEnabled(true);
+    				//Variables del step over
     				current = 0;
     				bucle = 0;
     				try {
 						nuevo.execute(new ExecutionEvent());
 						Recursion recur = new Recursion(nuevo.getFlujo(), composite,labels,active);
-						
-						
-						
-						sc.setMinSize(new Point(recur.getHeight(),recur.getWidth()));
-						
+						sc.setMinSize(new Point(recur.getWidth(),recur.getHeight()));
 	    				sc.update();
 					} catch (ExecutionException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-    				
+    				}
     				
     			}
     		};
@@ -224,7 +200,10 @@ public class FlowChart extends ViewPart{
 						nuevo.execute(new ExecutionEvent());
 						
 						combo.setItems(nuevo.getLista());
+						
 						action2.setEnabled(true);
+						action.setEnabled(false);
+	    				action1.setEnabled(false);
 					} catch (ExecutionException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -238,8 +217,14 @@ public class FlowChart extends ViewPart{
 					for (int i = 0; i<labels.Largo();i++) {
 						labels.Iterador(i).dispose();
 					}
-	    				posy = 50;
+					/**
+					 * Modifica las variables como al inicio
+					 */
+	    				posy =50;
 	    				posx=150;
+	    			/**
+	    			 * Actualizamos el area
+	    			 */
 	    				composite.redraw();
 	    				sc.setMinSize(new Point(posx, posy));
 	    				sc.update();
@@ -255,9 +240,7 @@ public class FlowChart extends ViewPart{
 	/**
 	 * Metodo para aÃ±adir iconos al toolbar
 	 */
-	private void Lector_Flujo () {
-		
-	}
+	
 	
 	
     private void initializeToolBar() {

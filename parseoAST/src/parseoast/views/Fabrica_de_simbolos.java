@@ -2,11 +2,8 @@ package parseoast.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Path;
@@ -156,16 +153,5 @@ public class Fabrica_de_simbolos {
 
 	    path.dispose();
 	}
-	private Image resize(Image image, int width, int height) {
-		Image scaled = new Image(Display.getDefault(), width, height);
-		GC gc = new GC(scaled);
-		gc.setAntialias(SWT.ON);
-		gc.setInterpolation(SWT.HIGH);
-		gc.drawImage(image, 0, 0, 
-		image.getBounds().width, image.getBounds().height, 
-		0, 0, width, height);
-		gc.dispose();
-		image.dispose(); // don't forget about me!
-		return scaled;
-		}
+	
 }
