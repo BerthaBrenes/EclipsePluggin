@@ -1,4 +1,4 @@
-package listas;
+package Estructuras_de_datos;
 
 public class Nodo<T> {
 	private Nodo<T> next;

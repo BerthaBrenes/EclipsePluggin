@@ -1,4 +1,4 @@
-package listas;
+package Estructuras_de_datos;
 
 public class Lista<T> {
 	protected Nodo<T> head;

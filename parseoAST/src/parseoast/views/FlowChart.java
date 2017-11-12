@@ -10,16 +10,29 @@ import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
 
-import listas.Lista;
+import Estructuras_de_datos.Lista;
 import parseoast.handlers.GetInfo;
+import org.eclipse.swt.widgets.Label;
+import java.awt.Frame;
+import org.eclipse.swt.awt.SWT_AWT;
+import java.awt.Panel;
+import java.awt.BorderLayout;
+import javax.swing.JRootPane;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 public class FlowChart extends ViewPart{
 	/**
@@ -48,7 +61,9 @@ public class FlowChart extends ViewPart{
 	private Composite composite;
 	private ScrolledComposite sc;
 	private PaintListener listener;
-	
+	private Label lblNewLabel;
+	private Image for_proc = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/for-symbol-cycle.png/");
+
 
 	
 	/**
@@ -66,33 +81,24 @@ public class FlowChart extends ViewPart{
 	   
 	    
 	    composite = new Composite(sc, SWT.NONE);
-	    
-	    
-	    
-	    /**
-	     * Defect widgets in the part control
-	     */
-	    
+	    composite.setLayout(new GridLayout());
+	
+	   
 	    combo = new Combo(composite, SWT.NONE);
 	   
 	    combo.setBounds(10, 10, 330, 23);
 	    
-	    
-	    /**
-	     * Final create part
-	     */
-	    sc.setContent(composite);
-	    sc.setMinSize(new Point(posx, posy));
-	   
-		createActions();
-        initializeToolBar();
 		
+		sc.setContent(composite);
+	    sc.setMinSize(new Point(posx, posy));
+	    createActions();
+        initializeToolBar();
 }
 
 	@Override
 	public void setFocus() {
 		// TODO Auto-generated method stub
-	
+		
 	}
 	
 	/**
@@ -132,6 +138,7 @@ public class FlowChart extends ViewPart{
     					else if (current < bucle) {
     						labels.Iterador(current).setForeground(null);
     						labels.Iterador(bucle).setForeground(red);
+    						
     						bucle++;
     						current++;
     					}
@@ -150,7 +157,7 @@ public class FlowChart extends ViewPart{
     			@SuppressWarnings("static-access")
 				public void run () {
     				if (combo.getText().isEmpty()) {
-    					MessageDialog.openConfirm(composite.getShell(), "Alerta", "Debe ingresar el nombre de un método");
+    					MessageDialog.openInformation(composite.getShell(), "Alerta", "Debe ingresar el nombre de un método");
     				}
     				
     				else {
@@ -175,7 +182,7 @@ public class FlowChart extends ViewPart{
     				bucle = 0;
     				try {
 						nuevo.execute(new ExecutionEvent());
-						Recursion recur = new Recursion(nuevo.getFlujo(), composite,labels,active);
+						Recursion recur = new Recursion(nuevo.getFlujo(), composite,labels,active,nuevo.getCurrente());
 						sc.setMinSize(new Point(recur.getWidth(),recur.getHeight()));
 	    				sc.update();
 					} catch (ExecutionException e) {

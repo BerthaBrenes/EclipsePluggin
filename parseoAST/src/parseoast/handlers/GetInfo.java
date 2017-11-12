@@ -3,9 +3,6 @@ package parseoast.handlers;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.sql.StatementEventListener;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -15,47 +12,32 @@ import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.core.model.IDebugTarget;
-import org.eclipse.debug.core.model.IThread;
-import org.eclipse.draw2d.LightweightSystem;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jdt.core.ICompilationUnit;
-import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
-import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.EnhancedForStatement;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.ForStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SimpleName;
 import org.eclipse.jdt.core.dom.Statement;
-import org.eclipse.jdt.core.dom.ThisExpression;
+import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
-import org.eclipse.jdt.ui.IPackagesViewPart;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-import listas.Lista;
+import Estructuras_de_datos.Lista;
 import parseoast.views.Fabrica_de_simbolos;
-
-import org.eclipse.jdt.debug.*;
-import org.eclipse.jdt.internal.debug.core.breakpoints.*;
 
 //import org.osgi.framework.BundleContext;
 
@@ -63,6 +45,10 @@ public class GetInfo extends AbstractHandler {
 	private static final String JDT_Nature = "org.eclipse.jdt.core.javanature";
 
 	public String Currente;
+
+	public String getCurrente() {
+		return Currente;
+	}
 
 	public String eleccion = "getNobombre";
 
@@ -155,7 +141,7 @@ public class GetInfo extends AbstractHandler {
 	}
 	
 	private void createAST(IPackageFragment mypackage) throws JavaModelException {
-		Fabrica_de_simbolos simbolos = new Fabrica_de_simbolos();
+		
 		
 		for (ICompilationUnit unit : mypackage.getCompilationUnits()) {
 			CompilationUnit parse = parse(unit);
@@ -167,7 +153,7 @@ public class GetInfo extends AbstractHandler {
 				ListaMetodos(visitor.getMethods());
 				
 				for (MethodDeclaration method : visitor.getMethods()) {
-					
+
 					List<Statement> arraySta = method.getBody().statements();
 					
 					
@@ -176,13 +162,13 @@ public class GetInfo extends AbstractHandler {
 						
 						int i = 0;
 						int limite = arraySta.size();
-						System.out.print(method.getBody().getClass());
+					
 						while (i != limite) {
 							int nivel =0 ;
 
 							
 							String a = arraySta.get(i).toString().trim().substring(0, 2);
-							System.out.print(recursividad(method.getBody().statements().get(i),0));
+							recursividad(method.getBody().statements().get(i),0);
 							
 
 							i++;
@@ -241,7 +227,15 @@ public class GetInfo extends AbstractHandler {
 			return nuevaWhile;
 		}
 		
-		
+		if (obj instanceof ExpressionStatement) {
+			ExpressionStatement statement = (ExpressionStatement) obj;
+			flujo.Insertar(statement);
+			
+		}
+		if (obj instanceof VariableDeclarationStatement) {
+			VariableDeclarationStatement statement = (VariableDeclarationStatement) obj;
+			flujo.Insertar(statement);
+		}
 		
 		if (obj instanceof EnhancedForStatement) {
 		
@@ -253,9 +247,13 @@ public class GetInfo extends AbstractHandler {
 			return nuevaForEnc;
 
 		}
+		
 		else {
+			
 			return null;
 		}
+		
+		
 	}
 
 	public Lista<Statement> getFlujo() {
