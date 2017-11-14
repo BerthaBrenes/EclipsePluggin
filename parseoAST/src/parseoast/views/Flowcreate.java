@@ -2,19 +2,21 @@ package parseoast.views;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.draw2d.Figure;
+import org.eclipse.draw2d.LightweightSystem;
+import org.eclipse.draw2d.XYLayout;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
@@ -22,20 +24,12 @@ import org.eclipse.wb.swt.ResourceManager;
 
 import Estructuras_de_datos.Lista;
 import parseoast.handlers.GetInfo;
-import org.eclipse.swt.widgets.Label;
-import java.awt.Frame;
-import org.eclipse.swt.awt.SWT_AWT;
-import java.awt.Panel;
-import java.awt.BorderLayout;
-import javax.swing.JRootPane;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 
-public class FlowChart extends ViewPart{
+public class Flowcreate extends ViewPart{
 	/**
 	 * Constructor
 	 */
-	public FlowChart() {
+	public Flowcreate() {
 		
 	}
 	/**
@@ -44,7 +38,7 @@ public class FlowChart extends ViewPart{
 	public String[] array= new String[]{"Método1","Método2","Método3","Método4"};
 
 	private Lista<PaintListener> active = new Lista<>();
-	private Lista<CLabel> labels = new Lista<>();
+	private Lista<Figure> figuras = new Lista<>();
 	private int posx = 150;
 	private int posy = 50;
 	private int bucle=0;
@@ -58,11 +52,8 @@ public class FlowChart extends ViewPart{
 	private Composite composite;
 	private ScrolledComposite sc;
 	private PaintListener listener;
-	private Label lblNewLabel;
-	private Image for_proc = ResourceManager.getPluginImage("parseoAST", "Iconos de Diagrama/for-symbol-cycle.png/");
-
-
-	
+	private Canvas canvas;
+	private Figure root;
 	/**
 	 * Se inicia al ejecutar el plugin, este contiene todos los widgets que deben abrirse al iniciar este
 	 * el parametro que recibe es el area donde se colocan cada widget
@@ -75,26 +66,22 @@ public class FlowChart extends ViewPart{
 		sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 	    sc.setExpandHorizontal(true);
 	    sc.setExpandVertical(true);
-	   
+	    
 	    
 	    composite = new Composite(sc, SWT.NONE);
-
-	    /**
-	     * Defect widgets in the part control
-	     */
+	    composite.setLayout(new GridLayout());
 	    
-	    combo = new Combo(composite, SWT.NONE);
-	   
+	    canvas = new Canvas(composite, SWT.DOUBLE_BUFFERED);
+	    canvas.setLayoutData(new GridData(GridData.FILL_BOTH));
+	    
+	    combo = new Combo(canvas, SWT.NONE);
 	    combo.setBounds(10, 10, 330, 23);
-	    /**
-	     * Final create part
-	     */
-	    sc.setContent(composite);
+	    
+		sc.setContent(composite);
 	    sc.setMinSize(new Point(posx, posy));
-	   
-		createActions();
+	    
+	    createActions();
         initializeToolBar();
-		
 }
 
 	@Override
@@ -125,27 +112,7 @@ public class FlowChart extends ViewPart{
     		action1 = new Action("Step Over") {
     			
     			public void run () {
-    				if (bucle <= labels.Largo()) {
-    					Color red = new Color(composite.getDisplay(), 255,0,0);
-    					if (bucle == current) {
-    						labels.Iterador(bucle).setForeground(red);
-    						bucle++;
-    					}
-    					else if (current < bucle && bucle == labels.Largo()) {
-    						labels.Iterador(current).setForeground(null);
-    						bucle =0;
-    						current = 0;
-        					refresh.run();
-    					}
-    					else if (current < bucle) {
-    						labels.Iterador(current).setForeground(null);
-    						labels.Iterador(bucle).setForeground(red);
-    						
-    						bucle++;
-    						current++;
-    					}
-    					
-    				}
+    				
     				
     			}
     		};
@@ -165,26 +132,30 @@ public class FlowChart extends ViewPart{
     				else {
     				//Obtener datos del metodo
     				GetInfo nuevo = new GetInfo();
-    				Fabrica_de_simbolos simbolos = new Fabrica_de_simbolos();
+    				
     				nuevo.setEleccion(combo.getText());
     				//Inicio del proceso con el label respectivo
-    				CLabel label = simbolos.start(posx, posy, composite,combo.getText());
-    				labels.Insertar(label);
-    				listener = simbolos.Process_Lineas(posx, posy,composite.getDisplay());
-					active.Insertar(listener);
-					composite.addPaintListener(listener);
-					composite.redraw();
-					posy+=100;
+    				
+					
 					//Botones del toolbar
     				action2.setEnabled(false);
     				action.setEnabled(true);
     				action1.setEnabled(true);
     				//Variables del step over
-    				current = 0;
-    				bucle = 0;
+    				
+    			    
+    			    
+    			    
+    				
     				try {
 						nuevo.execute(new ExecutionEvent());
-						Recursion recur = new Recursion(nuevo.getFlujo(), composite,labels,active,nuevo.getCurrente());
+						root = new Figure();
+	    				root.setFont(composite.getFont());
+	    				LightweightSystem lws = new LightweightSystem(canvas);
+	    				lws.setContents(root);
+						root.setLayoutManager( new XYLayout() );
+	    				recur recur = new recur();
+	    				root = recur.Draw(nuevo.getFlujo(), composite,root, figuras,nuevo.getCurrente(),combo.getText());
 						sc.setMinSize(new Point(recur.getWidth(),recur.getHeight()));
 	    				sc.update();
 					} catch (ExecutionException e) {
@@ -220,11 +191,11 @@ public class FlowChart extends ViewPart{
 					/**
 					 * Elimina todos los simbolos existentes
 					 */
-					for (int i = 0; i<active.Largo();i++) {
-	    				composite.removePaintListener(active.Iterador(i));
-	    				}
-					for (int i = 0; i<labels.Largo();i++) {
-						labels.Iterador(i).dispose();
+					if (root != null) {
+	    				root.removeAll();
+	    				} 
+					for (int i = 0; i<figuras.Largo();i++) {
+						figuras.Iterador(i).erase();
 					}
 					/**
 					 * Modifica las variables como al inicio
@@ -239,7 +210,7 @@ public class FlowChart extends ViewPart{
 	    				sc.update();
 	    				current = 0;
 	    				bucle = 0;
-	    				labels = new Lista<>();
+	    				figuras = new Lista<>();
     			}
 			};
 			refresh.setImageDescriptor(ResourceManager.getPluginImageDescriptor("parseoAST", "icons/refresh_nav.png"));
