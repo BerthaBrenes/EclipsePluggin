@@ -4,7 +4,9 @@ package parseoast.views;
 import java.io.PrintStream;
 import java.util.List;
 
+import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.Figure;
+import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jdt.core.dom.Block;
@@ -33,6 +35,7 @@ public class recur {
 	private String CurrentClass;
 	private boolean First = true;
 	private Pila<Figure> bases = new Pila<>();
+	private Figure While = null;
 	/**
 	 * Retorna el tamaño maximo para el ScrolledComposite
 	 * @return
@@ -52,6 +55,7 @@ public class recur {
 	  
 	  
 	public Figure Draw (Lista<Statement> list,Composite composite, Figure root, Lista<Figure> figuras, String current,String method) {
+		
 		CurrentClass = current;
 		ThickLinkDraw recus = new ThickLinkDraw();
 		Figure start = recus.Start_End(method);
@@ -59,40 +63,42 @@ public class recur {
 	    new Rectangle( new Point(posx, posy),  
 	      start.getPreferredSize() ) );
 		figuras.Insertar(start);
+		
 		posy+=100;
+
 		if (list.Largo() == 0) {
 			Figure fin = recus.Start_End("End");
 			root.add(fin,new Rectangle( new Point(posx, posy),  
 				      fin.getPreferredSize() ) );
 			root.add(recus.connect(fin, start, ""));
-			height+=100;
+			
 		}
 		else {
 		for (int i = 0;i<list.Largo();i++) {
 			if (i==0) {
-				int curr = posy;
+				
 				Figure uno = Diagrama(list.Iterador(i), 0, composite,figuras,root);
-				root.add(uno, 
-						new Rectangle( new Point(posx, curr),  
-								start.getPreferredSize() ) );
+				
 				root.add(recus.connect (uno, start,""));
 				bases.Push(uno);	
 			}
 			else {
+				
 				Figure base = Diagrama(list.Iterador(i), 0, composite,figuras,root);
-				root.add(base,new Rectangle( new Point(posx, posy),  
-					      start.getPreferredSize() ) );
+				
+				
 				root.add(recus.connect(base, bases.Pop(), ""));
 				bases.Push(base);	
 				
 			}
+			While = null;
 			width+=120;
 			posy+=100;
 			height+=100;
 			posx=150;
 			derecha=150;
-		
 			Compara();
+			
 			
 		}
 		Figure fin = recus.Start_End("End");
@@ -110,7 +116,8 @@ public class recur {
 		List<Statement> nuevaFor = null;
 		List<Statement> nuevaWhile = null;
 		List<Statement> nuevaForEnc = null;
-		List<Statement> nuevaelse = null;
+		
+		
 		ThickLinkDraw draw = new ThickLinkDraw();
 			if (obj instanceof IfStatement) {
 				
@@ -122,36 +129,46 @@ public class recur {
 				root.add(a, new Rectangle( new Point(posx, posy), a.getPreferredSize() ) );      
 				
 				
+					
 				Block bloque = ((Block) (statement).getThenStatement());
 				
 				if (!bloque.statements().isEmpty()) {
+					
 					int o = 0;
 					derecha+=120;
 					width+=120;
 					while (o != bloque.statements().size()) {
 						posy+=100;
 						height+=100;
-						
+						Figure IF = null;
 						if (First== true) {
-						Figure IF = Diagrama(nuevaIf.get(o), nivel++,composite,lista,root);
+						IF = Diagrama(nuevaIf.get(o), nivel++,composite,lista,root);
 						root.add(draw.connect(IF, a, "Yes"));
-						bases.Push(IF);
+						
 						First = false;
 						}
 						else {
-							Figure IF = Diagrama(nuevaIf.get(o), nivel++,composite,lista,root);
+							IF = Diagrama(nuevaIf.get(o), nivel++,composite,lista,root);
+							
 							root.add(draw.connect(IF, bases.Pop(),""));
 							bases.Push(IF);
 						}
-						
+						if (While != null) {
+							root.add(draw.connect2(While, IF, "next"));
+						}
 						o++;
 					}
+					
 					First = true;
 					derecha-=120;
 					posx-=120;
 					
 				}
+				
+				
 				if (statement.getElseStatement() != null) {
+					if (!(statement.getElseStatement() instanceof IfStatement)) {
+					
 					Block bloqu = (Block)statement.getElseStatement();
 					
 					nuevaIf = bloqu.statements();
@@ -165,7 +182,7 @@ public class recur {
 							if (First== true) {
 							Figure IF = Diagrama(nuevaIf.get(o), nivel++,composite,lista,root);
 							root.add(draw.connect(IF, a, ""));
-							bases.Push(IF);
+							
 							First = false;
 							}
 							else {
@@ -179,6 +196,15 @@ public class recur {
 						First = true;
 						derecha-=120;
 						posx-=120;
+					}
+					}
+				
+					else {
+						IfStatement ifincl = (IfStatement) statement.getElseStatement();
+						Figure nueva = Diagrama(ifincl, nivel++, composite, lista, root);
+						root.add(draw.connect(nueva, bases.Pop(), ""));
+						bases.Push(nueva);
+						
 					}
 					
 				}
@@ -194,7 +220,7 @@ public class recur {
 						" ; "+statement.updaters().get(0).toString();
 				Figure a = draw.FOR(variable);
 				root.add(a, new Rectangle( new Point(posx, posy), a.getPreferredSize() ) );   
-				
+				While = a;
 				Block bloque = ((Block) (statement).getBody());
 				if (!bloque.statements().isEmpty()) {
 					int o = 0;
@@ -235,11 +261,12 @@ public class recur {
 			
 			if (obj instanceof WhileStatement) {
 				WhileStatement statement = (WhileStatement) obj;
+				
 				nuevaWhile = ((Block) (statement).getBody()).statements();
 				Compara();
 				Figure a = draw.While(statement.getExpression().toString());
 				root.add(a, new Rectangle( new Point(posx, posy), a.getPreferredSize() ) );      
-				
+				While = a;
 				Block bloque = ((Block) (statement).getBody());
 				if (!bloque.statements().isEmpty()) {
 					int o = 0;
@@ -261,6 +288,7 @@ public class recur {
 								bases.Push(IF);
 							}
 						o++;
+						
 					}
 					First = true;
 					root.add(draw.connect2(a, bases.Pop(), "next"));
@@ -273,6 +301,7 @@ public class recur {
 				if (bloque.statements().isEmpty()) {
 					root.add(draw.connectbucle( a, "next"));
 				}
+				
 				return a;
 				
 				
@@ -289,6 +318,7 @@ public class recur {
 				
 				Figure a = draw.FOR(statement.getParameter().toString()+" : "+statement.getExpression().toString());
 				root.add(a, new Rectangle( new Point(posx, posy), a.getPreferredSize() ) );   
+				While = a;
 				Block bloque = ((Block) (statement).getBody());
 				if (!bloque.statements().isEmpty()) {
 					int o = 0;
@@ -365,7 +395,7 @@ public class recur {
 				
 			}
 			
-			if (obj.getClass().getSimpleName().equals("IfStatement")) {
+			/*if (obj.getClass().getSimpleName().equals("IfStatement")) {
 				IfStatement statement = (IfStatement) obj;
 				System.out.println(statement.toString());
 				if (statement.getElseStatement() != null) {
@@ -383,12 +413,12 @@ public class recur {
 						
 					}
 				}
-			}
+			}*/
 			
 			if (obj instanceof VariableDeclarationStatement) {
 				
 				
-				Compara();
+				
 				VariableDeclarationStatement statement = (VariableDeclarationStatement) obj;
 				
 				Figure a = draw.process(statement.toString());
@@ -399,7 +429,7 @@ public class recur {
 			
 			}
 			if (obj instanceof ReturnStatement) {
-				Compara();
+				
 				ReturnStatement statement = (ReturnStatement) obj;
 				Figure a = draw.input_output(statement.getExpression().toString());
 				root.add(a, new Rectangle( new Point(posx, posy), a.getPreferredSize() ) );   
@@ -407,7 +437,7 @@ public class recur {
 				return a;
 			}
 			if (obj instanceof PrintStream) {
-				Compara();
+				
 				PrintStream statement = (PrintStream) obj;
 				Figure a = draw.input_output(statement.toString());
 				root.add(a, new Rectangle( new Point(posx, posy), a.getPreferredSize() ) );   
